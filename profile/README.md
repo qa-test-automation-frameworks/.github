@@ -66,7 +66,7 @@ The following repositories are in planning or active development:
 
 | Repository | Stack | Focus |
 |---|---|---|
-| `playwright-java-framework` | Playwright · Java 21 | Modern browser automation with network interception and trace viewer integration |
+| `playwright-typescript-framework` | Playwright · TypeScript | Modern browser automation with network interception and trace viewer integration |
 | `k6-performance-framework` | k6 · JavaScript | API and load performance testing with CI threshold enforcement |
 | `selenide-spring-boot-framework` | Selenide · Spring Boot · Gradle · Testcontainers | UI automation with Spring-managed dependency injection and container lifecycle |
 | `mobile-appium-framework` | Appium · Java 21 · TestNG | Native and hybrid mobile automation for Android and iOS |
