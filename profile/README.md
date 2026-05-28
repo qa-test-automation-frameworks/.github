@@ -56,7 +56,7 @@ A portfolio-grade REST API test automation framework covering the full testing s
 - Testcontainers for reproducible service-level integration tests without shared environments
 - OpenAPI coverage validation to detect undocumented or drifted endpoints
 
-📄 [Live Allure Report](https://qa-test-automation-frameworks.github.io/aria-api-framework/) · [Architecture Docs](https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/ARCHITECTURE.md)
+📄 [Live Allure Report](https://qa-test-automation-frameworks.github.io/aria-api-framework/) · [Architecture Docs](https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/ARCHITECTURE.md) · [Portfolio Review Guide](https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/Portfolio_Review_Guide.md)
 
 ---
 
