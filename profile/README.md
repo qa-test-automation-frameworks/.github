@@ -56,7 +56,7 @@ A portfolio-grade REST API test automation framework covering the full testing s
 - Testcontainers for reproducible service-level integration tests without shared environments
 - OpenAPI coverage validation to detect undocumented or drifted endpoints
 
-📄 [Live Allure Report](https://qa-test-automation-frameworks.github.io/aria-api-framework/)
+📄 [Live Allure Report](https://qa-test-automation-frameworks.github.io/aria-api-framework/) · [Architecture Docs](https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/ARCHITECTURE.md)
 
 ---
 
@@ -66,11 +66,11 @@ The following repositories are in planning or active development:
 
 | Repository | Stack | Focus |
 |---|---|---|
+| `playwright-java-framework` | Playwright · Java 21 | Modern browser automation with network interception and trace viewer integration |
+| `k6-performance-framework` | k6 · JavaScript | API and load performance testing with CI threshold enforcement |
 | `selenide-spring-boot-framework` | Selenide · Spring Boot · Gradle · Testcontainers | UI automation with Spring-managed dependency injection and container lifecycle |
 | `mobile-appium-framework` | Appium · Java 21 · TestNG | Native and hybrid mobile automation for Android and iOS |
 | `ta-commons` | Java 21 · Maven | Shared utilities: auth providers, email validation, payload factories, data cleanup |
-| `playwright-java-framework` | Playwright · Java 21 | Modern browser automation with network interception and trace viewer integration |
-| `k6-performance-framework` | k6 · JavaScript | API and load performance testing with CI threshold enforcement |
 
 ---
 
