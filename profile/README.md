@@ -2,7 +2,7 @@
 
 > A structured portfolio of production-grade test automation frameworks, each demonstrating a distinct technology stack — designed and maintained by a Senior SDET with 7+ years of quality engineering experience.
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Prayag%20Vyas-0A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/prayag-vyas-757200144/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Prayag%20Vyas-0A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/prayag-vyas/)
 ![Java](https://img.shields.io/badge/Java-21-007396?style=flat&logo=openjdk)
 ![CI](https://img.shields.io/badge/CI-GitHub%20Actions-2088FF?style=flat&logo=github-actions)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat)
@@ -116,7 +116,7 @@ Career highlights include:
 - Driving org-wide adoption of Modern Testing Pyramid strategy and reshaping CI regression pipelines
 - Operating under AI-first engineering practices with measurable reduction in manual test authoring overhead
 
-[![LinkedIn](https://img.shields.io/badge/Connect%20on-LinkedIn-0A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/prayag-vyas-757200144/)
+[![LinkedIn](https://img.shields.io/badge/Connect%20on-LinkedIn-0A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/prayag-vyas/)
 
 ---
 
