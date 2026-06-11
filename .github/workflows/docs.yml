@@ -1,0 +1,29 @@
+name: Documentation
+
+on:
+  pull_request:
+    paths:
+      - '**/*.md'
+      - 'portfolio/**'
+      - 'site/**'
+  push:
+    branches: [main]
+    paths:
+      - '**/*.md'
+      - 'portfolio/**'
+      - 'site/**'
+
+permissions:
+  contents: read
+
+jobs:
+  local-links-and-claims:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Reject local links and unsupported self-assessment
+        shell: bash
+        run: |
+          set -euo pipefail
+          ! grep -RInE 'file:///|production-grade|enterprise-grade|expert-level|staff-level|bulletproof' \
+            --include='*.md' .
