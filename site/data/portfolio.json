@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-11T18:29:22.730Z",
+  "organization": "qa-test-automation-frameworks",
+  "recommendedReviewOrder": [
+    "playwright-typescript-framework",
+    "aria-api-framework",
+    "selenium-testng-java-framework"
+  ],
+  "repositories": [
+    {
+      "name": "playwright-typescript-framework",
+      "label": "Playwright TypeScript",
+      "status": "review-ready",
+      "workflow": {
+        "conclusion": "failure",
+        "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/27339969903",
+        "updatedAt": "2026-06-11T10:21:29Z",
+        "durationSeconds": 273,
+        "medianDurationSeconds": 192,
+        "sampleSize": 10
+      },
+      "reportUrl": "https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/",
+      "docsUrl": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/tree/main/docs",
+      "screenshotUrl": "https://raw.githubusercontent.com/qa-test-automation-frameworks/playwright-typescript-framework/main/docs/assets/screenshots/debugging-failure.png",
+      "reviewMinutes": 12,
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework",
+      "description": "Playwright TypeScript automation framework for scalable UI, API, accessibility, and visual testing with reusable fixtures, page objects, CI workflows, reporting, Docker support, and controlled test environment guidance.",
+      "defaultBranch": "main",
+      "pushedAt": "2026-06-08T16:09:35Z",
+      "pullRequestCount": 11,
+      "release": null,
+      "commitCount": 19,
+      "stars": 0,
+      "forks": 0
+    },
+    {
+      "name": "aria-api-framework",
+      "label": "ARIA API",
+      "status": "review-ready",
+      "workflow": {
+        "conclusion": "success",
+        "url": "https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/runs/27146263278",
+        "updatedAt": "2026-06-08T14:56:14Z",
+        "durationSeconds": 101,
+        "medianDurationSeconds": 101,
+        "sampleSize": 10
+      },
+      "reportUrl": "https://qa-test-automation-frameworks.github.io/aria-api-framework/",
+      "docsUrl": "https://github.com/qa-test-automation-frameworks/aria-api-framework/tree/main/docs",
+      "screenshotUrl": "https://raw.githubusercontent.com/qa-test-automation-frameworks/aria-api-framework/main/docs/assets/allure/allure-diagnostic-attachment.png",
+      "reviewMinutes": 10,
+      "url": "https://github.com/qa-test-automation-frameworks/aria-api-framework",
+      "description": "Portfolio-grade Java 21 REST API test automation framework with JUnit 5, RestAssured, Allure, WireMock, Pact, Testcontainers, OpenAPI coverage, security tests, and CI/CD quality gates.",
+      "defaultBranch": "main",
+      "pushedAt": "2026-06-09T03:14:25Z",
+      "pullRequestCount": 26,
+      "release": {
+        "tag": "v1.0.0",
+        "name": "ARIA API Framework v1.0.0",
+        "url": "https://github.com/qa-test-automation-frameworks/aria-api-framework/releases/tag/v1.0.0",
+        "publishedAt": "2026-06-09T03:17:23Z"
+      },
+      "commitCount": 26,
+      "stars": 0,
+      "forks": 0
+    },
+    {
+      "name": "selenium-testng-java-framework",
+      "label": "Selenium TestNG Java",
+      "status": "review-ready",
+      "workflow": {
+        "conclusion": "success",
+        "url": "https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/runs/27146254744",
+        "updatedAt": "2026-06-08T15:01:50Z",
+        "durationSeconds": 445,
+        "medianDurationSeconds": 261,
+        "sampleSize": 10
+      },
+      "reportUrl": "https://qa-test-automation-frameworks.github.io/selenium-testng-java-framework/",
+      "docsUrl": "https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/tree/main/docs",
+      "screenshotUrl": "https://raw.githubusercontent.com/qa-test-automation-frameworks/selenium-testng-java-framework/main/docs/images/allure-failed-screenshot-attachment-preview.png",
+      "reviewMinutes": 10,
+      "url": "https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework",
+      "description": "Java 21 Selenium TestNG automation framework for Sauce Demo with Allure reporting, Selenium Grid, CI, diagnostics, accessibility smoke checks, and visual regression scaffold.",
+      "defaultBranch": "main",
+      "pushedAt": "2026-06-09T03:14:24Z",
+      "pullRequestCount": 19,
+      "release": {
+        "tag": "v1.0.0",
+        "name": "Selenium TestNG Java Framework v1.0.0",
+        "url": "https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/releases/tag/v1.0.0",
+        "publishedAt": "2026-06-09T03:17:25Z"
+      },
+      "commitCount": 57,
+      "stars": 0,
+      "forks": 0
+    },
+    {
+      "name": "k6-performance-framework",
+      "label": "k6 Performance",
+      "status": "work-in-progress",
+      "workflow": null,
+      "reportUrl": null,
+      "docsUrl": "https://github.com/qa-test-automation-frameworks/k6-performance-framework/tree/main/docs",
+      "screenshotUrl": null,
+      "reviewMinutes": null,
+      "url": "https://github.com/qa-test-automation-frameworks/k6-performance-framework",
+      "description": "Production-grade k6 and TypeScript performance testing framework for the Conduit RealWorld API, featuring reusable service clients, six workload types, SLO-based thresholds, Grafana/InfluxDB observability, OpenTelemetry, automated reporting, and GitHub Actions performance gates.",
+      "defaultBranch": "main",
+      "pushedAt": "2026-06-11T11:16:22Z",
+      "pullRequestCount": 0,
+      "release": null,
+      "commitCount": 6,
+      "stars": 0,
+      "forks": 0
+    }
+  ]
+}

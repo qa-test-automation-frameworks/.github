@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Current evidence and review order for the QA Test Automation Frameworks portfolio."
+    />
+    <title>QA Framework Portfolio Evidence</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" type="module"></script>
+  </head>
+  <body>
+    <header class="masthead">
+      <a class="brand" href="https://github.com/qa-test-automation-frameworks">
+        QA Test Automation Frameworks
+      </a>
+      <p>Current repository evidence, reliability state, and review order.</p>
+      <div class="freshness" aria-live="polite">
+        <span id="freshness-state">Loading evidence</span>
+        <span id="generated-at"></span>
+      </div>
+    </header>
+
+    <main>
+      <section aria-labelledby="review-order-title">
+        <div class="section-heading">
+          <p class="eyebrow">Start here</p>
+          <h1 id="review-order-title">Recommended review order</h1>
+        </div>
+        <ol id="review-order" class="review-order"></ol>
+      </section>
+
+      <section aria-labelledby="matrix-title">
+        <div class="section-heading">
+          <p class="eyebrow">Repository matrix</p>
+          <h2 id="matrix-title">Evidence at a glance</h2>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Repository</th>
+                <th>Status</th>
+                <th>Latest CI</th>
+                <th>Median runtime</th>
+                <th>Release</th>
+                <th>Activity</th>
+                <th>Evidence</th>
+              </tr>
+            </thead>
+            <tbody id="repository-rows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="case-study" aria-labelledby="case-study-title" class="case-study">
+        <div class="section-heading">
+          <p class="eyebrow">Platform case study</p>
+          <h2 id="case-study-title">Scaling shared automation with reliability controls</h2>
+        </div>
+        <div class="case-study-grid">
+          <p>
+            An anonymized professional case study covering growth beyond 10,000 automated
+            checks, throughput improvement, CI feedback constraints, framework migration,
+            and cross-team operating standards.
+          </p>
+          <dl>
+            <div><dt>Problem</dt><dd>Suite scale outgrew manual ownership and serial feedback.</dd></div>
+            <div><dt>Controls</dt><dd>Layer allocation, parallelism, ownership, release policy, and triage standards.</dd></div>
+            <div><dt>Evidence rule</dt><dd>Professional outcomes are labeled separately from public repository metrics.</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <aside class="wip" aria-labelledby="wip-title">
+        <p class="eyebrow">Work in progress</p>
+        <h2 id="wip-title">k6 is excluded from portfolio scoring</h2>
+        <p>
+          The repository remains visible for implementation review. It enters the review
+          order only after reproducible CI, runtime evidence, documentation, and a release
+          are published.
+        </p>
+      </aside>
+    </main>
+
+    <footer>
+      <a href="https://github.com/qa-test-automation-frameworks">GitHub organization</a>
+      <a href="https://github.com/qa-test-automation-frameworks/.github">Dashboard source</a>
+    </footer>
+  </body>
+</html>
