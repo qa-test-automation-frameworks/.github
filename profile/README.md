@@ -27,8 +27,9 @@ execution, explicit trade-offs, failure evidence, and measurable CI behavior.
 | [Selenium TestNG Java](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework) | Grid browser matrix, typed configuration, parallel drivers, and failure diagnostics | [![CI](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/workflows/ui-tests.yml/badge.svg?branch=main)](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/workflows/ui-tests.yml) | [Allure](https://qa-test-automation-frameworks.github.io/selenium-testng-java-framework/) | [Releases](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/releases) | [Review guide](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/PORTFOLIO_REVIEW_GUIDE.md) |
 
 > **Work in progress:** [`k6-performance-framework`](https://github.com/qa-test-automation-frameworks/k6-performance-framework)
-> is public for implementation review, but it is excluded from portfolio scoring
-> and recommended review order until its CI, evidence, and first release are complete.
+> is under active development and will be available soon. CI evidence, runtime
+> details, documentation, and release information will be published as the
+> implementation is completed.
 
 ## Platform case study
 
@@ -44,4 +45,4 @@ metrics and professional outcomes are presented separately.
 - Controlled targets are identified as controlled targets; external compatibility
   checks are reported separately.
 - Retries, quarantines, and known limitations remain visible.
-- Work in progress is not counted as completed portfolio evidence.
+- Work-in-progress repositories are clearly identified until implementation is complete.
