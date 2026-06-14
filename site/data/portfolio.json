@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-14T14:43:25.791Z",
+  "generatedAt": "2026-06-14T14:59:28.369Z",
   "organization": "qa-test-automation-frameworks",
   "recommendedReviewOrder": [
     "playwright-typescript-framework",
@@ -15,10 +15,10 @@
       "status": "review-ready",
       "workflow": {
         "conclusion": "success",
-        "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/27501594755",
-        "updatedAt": "2026-06-14T14:20:21Z",
-        "durationSeconds": 181,
-        "medianDurationSeconds": 192,
+        "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/27502508485",
+        "updatedAt": "2026-06-14T14:56:22Z",
+        "durationSeconds": 190,
+        "medianDurationSeconds": 190,
         "sampleSize": 10
       },
       "reportUrl": "https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/",
@@ -28,10 +28,15 @@
       "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework",
       "description": "Playwright TypeScript automation framework for scalable UI, API, accessibility, and visual testing with reusable fixtures, page objects, CI workflows, reporting, Docker support, and controlled test environment guidance.",
       "defaultBranch": "main",
-      "pushedAt": "2026-06-14T14:17:18Z",
+      "pushedAt": "2026-06-14T14:53:12Z",
       "pullRequestCount": 21,
-      "release": null,
-      "commitCount": 31,
+      "release": {
+        "tag": "v1.0.0",
+        "name": "v1.0.0",
+        "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases/tag/v1.0.0",
+        "publishedAt": "2026-06-14T14:53:23Z"
+      },
+      "commitCount": 32,
       "stars": 0,
       "forks": 0
     },
