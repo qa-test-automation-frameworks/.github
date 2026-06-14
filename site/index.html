@@ -8,34 +8,69 @@
       content="Current evidence and review order for the QA Test Automation Frameworks portfolio."
     />
     <title>QA Framework Portfolio Evidence</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23080b09'/%3E%3Cpath d='M14 16h36v8H34v8h12v8H34v16h-8V24H14z' fill='%23b9f447'/%3E%3C/svg%3E"
+    />
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" type="module"></script>
   </head>
   <body>
     <header class="masthead">
-      <a class="brand" href="https://github.com/qa-test-automation-frameworks">
-        QA Test Automation Frameworks
-      </a>
-      <p>Current repository evidence, reliability state, and review order.</p>
-      <div class="freshness" aria-live="polite">
-        <span id="freshness-state">Loading evidence</span>
-        <span id="generated-at"></span>
+      <nav class="topline" aria-label="Primary navigation">
+        <a class="wordmark" href="https://github.com/qa-test-automation-frameworks">QATF / 04</a>
+        <div>
+          <a href="#evidence">Evidence</a>
+          <a href="#standards">Standards</a>
+          <a href="https://github.com/qa-test-automation-frameworks">GitHub</a>
+        </div>
+      </nav>
+      <div class="hero-copy">
+        <p class="eyebrow">Automation engineering portfolio</p>
+        <h1>Four frameworks.<br />One engineering standard.</h1>
+        <p class="hero-deck">
+          Browser, API, and performance automation designed as observable,
+          reproducible systems, not collections of test scripts.
+        </p>
+        <div class="hero-actions">
+          <a class="primary-action" href="#evidence">Review the evidence</a>
+          <a href="https://www.linkedin.com/in/prayag-vyas/">Contact on LinkedIn</a>
+        </div>
+      </div>
+      <div class="hero-meta">
+        <div id="portfolio-summary" class="portfolio-summary" aria-live="polite">
+          Loading portfolio signals
+        </div>
+        <div class="freshness" aria-live="polite">
+          <span id="freshness-state">Loading evidence</span>
+          <span id="generated-at"></span>
+        </div>
       </div>
     </header>
 
     <main>
-      <section aria-labelledby="review-order-title">
+      <section class="reveal" aria-labelledby="review-order-title">
         <div class="section-heading">
-          <p class="eyebrow">Start here</p>
-          <h1 id="review-order-title">Recommended review order</h1>
+          <p class="eyebrow">A deliberate path</p>
+          <div>
+            <h2 id="review-order-title">Review the system, not just the syntax.</h2>
+            <p class="section-intro">
+              Start broad, then move through performance, API depth, and enterprise browser execution.
+            </p>
+          </div>
         </div>
         <ol id="review-order" class="review-order"></ol>
       </section>
 
-      <section aria-labelledby="matrix-title">
+      <section id="evidence" class="reveal" aria-labelledby="matrix-title">
         <div class="section-heading">
-          <p class="eyebrow">Repository matrix</p>
-          <h2 id="matrix-title">Evidence at a glance</h2>
+          <p class="eyebrow">Live repository matrix</p>
+          <div>
+            <h2 id="matrix-title">Evidence before assertion.</h2>
+            <p class="section-intro">
+              Current CI, measured runtime, releases, activity, reports, and failure evidence.
+            </p>
+          </div>
         </div>
         <div class="table-wrap">
           <table>
@@ -55,10 +90,45 @@
         </div>
       </section>
 
-      <section id="case-study" aria-labelledby="case-study-title" class="case-study">
+      <section id="standards" class="disciplines reveal" aria-labelledby="standards-title">
+        <div class="section-heading">
+          <p class="eyebrow">Coverage with intent</p>
+          <div>
+            <h2 id="standards-title">Different tools. Shared controls.</h2>
+            <p class="section-intro">
+              Every framework exposes its trade-offs, reliability policy, runtime evidence,
+              diagnostics, and path from local execution to CI.
+            </p>
+          </div>
+        </div>
+        <div class="discipline-list">
+          <article>
+            <span>01 / Browser</span>
+            <h3>Playwright TypeScript</h3>
+            <p>Typed clients, controlled target, visual and accessibility checks, sharded execution.</p>
+          </article>
+          <article>
+            <span>02 / Performance</span>
+            <h3>k6 TypeScript</h3>
+            <p>SLO gates, six workload models, baselines, observability, and controlled-load safety.</p>
+          </article>
+          <article>
+            <span>03 / API</span>
+            <h3>ARIA Java</h3>
+            <p>Contracts, OpenAPI coverage, deterministic providers, security boundaries, redacted evidence.</p>
+          </article>
+          <article>
+            <span>04 / Enterprise UI</span>
+            <h3>Selenium TestNG</h3>
+            <p>Grid execution, parallel lifecycle, typed configuration, diagnostics, and governance.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="case-study" aria-labelledby="case-study-title" class="case-study reveal">
         <div class="section-heading">
           <p class="eyebrow">Platform case study</p>
-          <h2 id="case-study-title">Scaling shared automation with reliability controls</h2>
+          <h2 id="case-study-title">Scale is an operating-model problem.</h2>
         </div>
         <div class="case-study-grid">
           <p>
@@ -74,15 +144,19 @@
         </div>
       </section>
 
-      <aside class="wip" aria-labelledby="wip-title">
-        <p class="eyebrow">Work in progress</p>
-        <h2 id="wip-title">k6 framework is currently in progress</h2>
-        <p>
-          The framework is under active development and will be available soon. CI evidence,
-          runtime details, documentation, and release information will be published as the
-          implementation is completed.
-        </p>
-      </aside>
+      <section class="closing reveal" aria-labelledby="closing-title">
+        <p class="eyebrow">The next conversation</p>
+        <h2 id="closing-title">Looking for engineering judgment, not test-count theatre?</h2>
+        <div>
+          <p>
+            Review the source, inspect the failures, challenge the trade-offs, and run the gates.
+            The evidence is public by design.
+          </p>
+          <a class="primary-action" href="https://github.com/qa-test-automation-frameworks">
+            Explore all repositories
+          </a>
+        </div>
+      </section>
     </main>
 
     <footer>

@@ -3,6 +3,7 @@
   "organization": "qa-test-automation-frameworks",
   "recommendedReviewOrder": [
     "playwright-typescript-framework",
+    "k6-performance-framework",
     "aria-api-framework",
     "selenium-testng-java-framework"
   ],
@@ -40,12 +41,12 @@
     {
       "name": "k6-performance-framework",
       "label": "k6 Performance",
-      "status": "work-in-progress",
-      "workflow": null,
-      "reportUrl": null,
+      "status": "review-ready",
+      "workflow": "main-load.yml",
+      "reportUrl": "https://qa-test-automation-frameworks.github.io/k6-performance-framework/",
       "docsUrl": "https://github.com/qa-test-automation-frameworks/k6-performance-framework/tree/main/docs",
-      "screenshotUrl": null,
-      "reviewMinutes": null
+      "screenshotUrl": "https://raw.githubusercontent.com/qa-test-automation-frameworks/k6-performance-framework/main/docs/images/performance-overview-example.svg",
+      "reviewMinutes": 12
     }
   ]
 }

@@ -25,6 +25,14 @@ freshnessState.classList.add(ageHours <= 36 ? 'success' : 'failure');
 document.querySelector('#generated-at').textContent = generatedAt.toLocaleString();
 
 const repositories = new Map(data.repositories.map((repository) => [repository.name, repository]));
+const successfulRepositories = data.repositories.filter(
+  (repository) => repository.workflow?.conclusion === 'success',
+).length;
+const releasedRepositories = data.repositories.filter((repository) => repository.release).length;
+document.querySelector('#portfolio-summary').textContent =
+  `${data.repositories.length} frameworks · ${successfulRepositories} green CI signals · ` +
+  `${releasedRepositories} published releases`;
+
 const reviewOrder = document.querySelector('#review-order');
 for (const name of data.recommendedReviewOrder) {
   const repository = repositories.get(name);
@@ -46,7 +54,7 @@ for (const repository of data.repositories) {
   row.append(name);
 
   const status = document.createElement('td');
-  const statusLabel = repository.status === 'work-in-progress' ? 'WIP' : 'Review ready';
+  const statusLabel = repository.status === 'review-ready' ? 'Review ready' : repository.status;
   status.textContent = statusLabel;
   status.className = `status ${repository.status}`;
   row.append(status);
@@ -90,3 +98,16 @@ for (const repository of data.repositories) {
 
   rows.append(row);
 }
+
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      entry.target.classList.add('is-visible');
+      revealObserver.unobserve(entry.target);
+    }
+  },
+  { threshold: 0.12 },
+);
+
+for (const element of document.querySelectorAll('.reveal')) revealObserver.observe(element);

@@ -1,9 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-12T03:07:51.010Z",
+  "generatedAt": "2026-06-14T14:02:06.214Z",
   "organization": "qa-test-automation-frameworks",
   "recommendedReviewOrder": [
     "playwright-typescript-framework",
+    "k6-performance-framework",
     "aria-api-framework",
     "selenium-testng-java-framework"
   ],
@@ -14,10 +15,10 @@
       "status": "review-ready",
       "workflow": {
         "conclusion": "success",
-        "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/27390349962",
-        "updatedAt": "2026-06-12T02:24:31Z",
-        "durationSeconds": 178,
-        "medianDurationSeconds": 192,
+        "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/27500675272",
+        "updatedAt": "2026-06-14T13:44:16Z",
+        "durationSeconds": 182,
+        "medianDurationSeconds": 203,
         "sampleSize": 10
       },
       "reportUrl": "https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/",
@@ -27,10 +28,10 @@
       "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework",
       "description": "Playwright TypeScript automation framework for scalable UI, API, accessibility, and visual testing with reusable fixtures, page objects, CI workflows, reporting, Docker support, and controlled test environment guidance.",
       "defaultBranch": "main",
-      "pushedAt": "2026-06-12T02:28:41Z",
-      "pullRequestCount": 12,
+      "pushedAt": "2026-06-14T13:41:58Z",
+      "pullRequestCount": 20,
       "release": null,
-      "commitCount": 21,
+      "commitCount": 28,
       "stars": 0,
       "forks": 0
     },
@@ -99,19 +100,31 @@
     {
       "name": "k6-performance-framework",
       "label": "k6 Performance",
-      "status": "work-in-progress",
-      "workflow": null,
-      "reportUrl": null,
+      "status": "review-ready",
+      "workflow": {
+        "conclusion": "success",
+        "url": "https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/runs/27491700520",
+        "updatedAt": "2026-06-14T07:26:50Z",
+        "durationSeconds": 532,
+        "medianDurationSeconds": 526,
+        "sampleSize": 10
+      },
+      "reportUrl": "https://qa-test-automation-frameworks.github.io/k6-performance-framework/",
       "docsUrl": "https://github.com/qa-test-automation-frameworks/k6-performance-framework/tree/main/docs",
-      "screenshotUrl": null,
-      "reviewMinutes": null,
+      "screenshotUrl": "https://raw.githubusercontent.com/qa-test-automation-frameworks/k6-performance-framework/main/docs/images/performance-overview-example.svg",
+      "reviewMinutes": 12,
       "url": "https://github.com/qa-test-automation-frameworks/k6-performance-framework",
       "description": "Production-grade k6 and TypeScript performance testing framework for the Conduit RealWorld API, featuring reusable service clients, six workload types, SLO-based thresholds, Grafana/InfluxDB observability, OpenTelemetry, automated reporting, and GitHub Actions performance gates.",
       "defaultBranch": "main",
-      "pushedAt": "2026-06-12T02:18:04Z",
-      "pullRequestCount": 0,
-      "release": null,
-      "commitCount": 6,
+      "pushedAt": "2026-06-14T10:46:53Z",
+      "pullRequestCount": 14,
+      "release": {
+        "tag": "v0.4.0",
+        "name": "v0.4.0",
+        "url": "https://github.com/qa-test-automation-frameworks/k6-performance-framework/releases/tag/v0.4.0",
+        "publishedAt": "2026-06-14T05:59:04Z"
+      },
+      "commitCount": 121,
       "stars": 0,
       "forks": 0
     }
