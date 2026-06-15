@@ -13,10 +13,19 @@ const link = (label, href) => {
   return anchor;
 };
 
-const response = await fetch('data/portfolio.json', { cache: 'no-store' });
-if (!response.ok) throw new Error(`Portfolio data returned ${response.status}`);
-const data = await response.json();
+let data;
+try {
+  const response = await fetch('data/portfolio.json', { cache: 'no-store' });
+  if (!response.ok) throw new Error(`Portfolio data returned ${response.status}`);
+  data = await response.json();
+} catch (error) {
+  const freshnessState = document.querySelector('#freshness-state');
+  freshnessState.textContent = 'Static evidence snapshot';
+  freshnessState.classList.add('warning');
+  console.warn('Dynamic portfolio refresh unavailable; retaining static snapshot.', error);
+}
 
+if (data) {
 const generatedAt = new Date(data.generatedAt);
 const ageHours = (Date.now() - generatedAt.getTime()) / 3_600_000;
 const freshnessState = document.querySelector('#freshness-state');
@@ -25,15 +34,8 @@ freshnessState.classList.add(ageHours <= 36 ? 'success' : 'failure');
 document.querySelector('#generated-at').textContent = generatedAt.toLocaleString();
 
 const repositories = new Map(data.repositories.map((repository) => [repository.name, repository]));
-const successfulRepositories = data.repositories.filter(
-  (repository) => repository.workflow?.conclusion === 'success',
-).length;
-const releasedRepositories = data.repositories.filter((repository) => repository.release).length;
-document.querySelector('#portfolio-summary').textContent =
-  `${data.repositories.length} frameworks · ${successfulRepositories} green CI signals · ` +
-  `${releasedRepositories} published releases`;
-
 const reviewOrder = document.querySelector('#review-order');
+reviewOrder.replaceChildren();
 for (const name of data.recommendedReviewOrder) {
   const repository = repositories.get(name);
   if (!repository) continue;
@@ -46,6 +48,7 @@ for (const name of data.recommendedReviewOrder) {
 }
 
 const rows = document.querySelector('#repository-rows');
+rows.replaceChildren();
 for (const repository of data.repositories) {
   const row = document.createElement('tr');
 
@@ -54,7 +57,7 @@ for (const repository of data.repositories) {
   row.append(name);
 
   const status = document.createElement('td');
-  const statusLabel = repository.status === 'review-ready' ? 'Review ready' : repository.status;
+  const statusLabel = repository.status === 'work-in-progress' ? 'WIP' : 'Review ready';
   status.textContent = statusLabel;
   status.className = `status ${repository.status}`;
   row.append(status);
@@ -98,16 +101,4 @@ for (const repository of data.repositories) {
 
   rows.append(row);
 }
-
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    for (const entry of entries) {
-      if (!entry.isIntersecting) continue;
-      entry.target.classList.add('is-visible');
-      revealObserver.unobserve(entry.target);
-    }
-  },
-  { threshold: 0.12 },
-);
-
-for (const element of document.querySelectorAll('.reveal')) revealObserver.observe(element);
+}

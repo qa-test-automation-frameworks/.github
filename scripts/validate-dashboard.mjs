@@ -17,4 +17,14 @@ for (const repository of data.repositories) {
   }
 }
 
+const html = await readFile(new URL('../site/index.html', import.meta.url), 'utf8');
+for (const repository of data.repositories) {
+  if (!html.includes(repository.url) || !html.includes(repository.label)) {
+    throw new Error(`Static dashboard fallback is missing ${repository.name}`);
+  }
+}
+if (html.includes('Loading evidence') || html.includes('<tbody id="repository-rows"></tbody>')) {
+  throw new Error('Dashboard still depends on JavaScript for its initial evidence view.');
+}
+
 console.log(`Validated ${data.repositories.length} dashboard repositories.`);

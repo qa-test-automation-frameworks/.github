@@ -27,7 +27,7 @@ async function workflowMetrics(repository) {
   let workflow = null;
   if (repository.workflow) {
     const runs = await github(
-      `/repos/${owner}/${repository.name}/actions/workflows/${repository.workflow}/runs?branch=main&status=completed&per_page=10`,
+      `/repos/${owner}/${repository.name}/actions/workflows/${repository.workflow}/runs?status=completed&per_page=10`,
     );
     const completed = runs.workflow_runs ?? [];
     const latest = completed[0];
@@ -142,3 +142,85 @@ await writeFile(
   new URL('../site/data/portfolio.json', import.meta.url),
   `${JSON.stringify(output, null, 2)}\n`,
 );
+
+const escapeHtml = (value) =>
+  String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+
+const formatDuration = (seconds) => {
+  if (!Number.isFinite(seconds)) return 'Not measured';
+  const minutes = Math.floor(seconds / 60);
+  const remainder = seconds % 60;
+  return `${minutes}m ${String(remainder).padStart(2, '0')}s`;
+};
+
+const evidenceLinks = (repository) =>
+  [
+    ['Report', repository.reportUrl],
+    ['Docs', repository.docsUrl],
+    ['Screenshot', repository.screenshotUrl],
+  ]
+    .filter(([, href]) => href)
+    .map(([label, href]) => `<a href="${escapeHtml(href)}">${label}</a>`)
+    .join(' ');
+
+const repositoryByName = new Map(repositories.map((repository) => [repository.name, repository]));
+const reviewOrderHtml = output.recommendedReviewOrder
+  .map((name) => repositoryByName.get(name))
+  .filter(Boolean)
+  .map(
+    (repository) =>
+      `<li><a href="${escapeHtml(repository.url)}">${escapeHtml(repository.label)}</a>` +
+      `<span>${escapeHtml(repository.reviewMinutes)} minute review</span></li>`,
+  )
+  .join('\n');
+
+const repositoryRowsHtml = repositories
+  .map((repository) => {
+    const statusLabel = repository.status === 'work-in-progress' ? 'WIP' : 'Review ready';
+    const workflowLabel = repository.workflow?.conclusion ?? 'No CI';
+    const workflow = repository.workflow?.url
+      ? `<a href="${escapeHtml(repository.workflow.url)}">${escapeHtml(workflowLabel)}</a>`
+      : escapeHtml(workflowLabel);
+    const release = repository.release
+      ? `<a href="${escapeHtml(repository.release.url)}">${escapeHtml(repository.release.tag)}</a>`
+      : 'Unreleased';
+    const runtime = repository.workflow
+      ? `${formatDuration(repository.workflow.medianDurationSeconds)} (n=${repository.workflow.sampleSize})`
+      : 'Not measured';
+    return `<tr>
+      <td><a href="${escapeHtml(repository.url)}">${escapeHtml(repository.label)}</a></td>
+      <td class="status ${escapeHtml(repository.status)}">${statusLabel}</td>
+      <td class="status ${escapeHtml(workflowLabel)}">${workflow}</td>
+      <td>${escapeHtml(runtime)}</td>
+      <td>${release}</td>
+      <td>${repository.commitCount} commits · ${repository.pullRequestCount} PRs</td>
+      <td class="evidence-links">${evidenceLinks(repository)}</td>
+    </tr>`;
+  })
+  .join('\n');
+
+const indexUrl = new URL('../site/index.html', import.meta.url);
+const indexTemplate = await readFile(indexUrl, 'utf8');
+const renderedIndex = indexTemplate
+  .replace(
+    /(<span id="freshness-state"[^>]*>).*?(<\/span>)/,
+    `$1Scheduled evidence snapshot$2`,
+  )
+  .replace(
+    /(<span id="generated-at"[^>]*>).*?(<\/span>)/,
+    `$1${escapeHtml(new Date(output.generatedAt).toLocaleString('en-GB', { timeZone: 'UTC' }))} UTC$2`,
+  )
+  .replace(
+    /(<ol id="review-order" class="review-order">)[\s\S]*?(<\/ol>)/,
+    `$1\n${reviewOrderHtml}\n$2`,
+  )
+  .replace(
+    /(<tbody id="repository-rows">)[\s\S]*?(<\/tbody>)/,
+    `$1\n${repositoryRowsHtml}\n$2`,
+  );
+await writeFile(indexUrl, renderedIndex);

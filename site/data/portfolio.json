@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-14T14:59:28.369Z",
+  "generatedAt": "2026-06-15T03:30:55.405Z",
   "organization": "qa-test-automation-frameworks",
   "recommendedReviewOrder": [
-    "playwright-typescript-framework",
     "k6-performance-framework",
+    "playwright-typescript-framework",
     "aria-api-framework",
     "selenium-testng-java-framework"
   ],
@@ -18,7 +18,7 @@
         "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/27502508485",
         "updatedAt": "2026-06-14T14:56:22Z",
         "durationSeconds": 190,
-        "medianDurationSeconds": 190,
+        "medianDurationSeconds": 182,
         "sampleSize": 10
       },
       "reportUrl": "https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/",
@@ -49,7 +49,7 @@
         "url": "https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/runs/27501595660",
         "updatedAt": "2026-06-14T14:19:17Z",
         "durationSeconds": 115,
-        "medianDurationSeconds": 101,
+        "medianDurationSeconds": 92,
         "sampleSize": 10
       },
       "reportUrl": "https://qa-test-automation-frameworks.github.io/aria-api-framework/",
@@ -80,7 +80,7 @@
         "url": "https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/runs/27501982770",
         "updatedAt": "2026-06-14T14:37:07Z",
         "durationSeconds": 273,
-        "medianDurationSeconds": 273,
+        "medianDurationSeconds": 251,
         "sampleSize": 10
       },
       "reportUrl": "https://qa-test-automation-frameworks.github.io/selenium-testng-java-framework/",
@@ -108,15 +108,15 @@
       "status": "review-ready",
       "workflow": {
         "conclusion": "success",
-        "url": "https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/runs/27501594839",
-        "updatedAt": "2026-06-14T14:26:12Z",
-        "durationSeconds": 531,
-        "medianDurationSeconds": 527,
+        "url": "https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/runs/27501454957",
+        "updatedAt": "2026-06-14T14:12:38Z",
+        "durationSeconds": 43,
+        "medianDurationSeconds": 43,
         "sampleSize": 10
       },
       "reportUrl": "https://qa-test-automation-frameworks.github.io/k6-performance-framework/",
       "docsUrl": "https://github.com/qa-test-automation-frameworks/k6-performance-framework/tree/main/docs",
-      "screenshotUrl": "https://raw.githubusercontent.com/qa-test-automation-frameworks/k6-performance-framework/main/docs/images/performance-overview-example.svg",
+      "screenshotUrl": "https://raw.githubusercontent.com/qa-test-automation-frameworks/k6-performance-framework/main/docs/assets/grafana-endpoint-dashboard.svg",
       "reviewMinutes": 12,
       "url": "https://github.com/qa-test-automation-frameworks/k6-performance-framework",
       "description": "Production-grade k6 and TypeScript performance testing framework for the Conduit RealWorld API, featuring reusable service clients, six workload types, SLO-based thresholds, Grafana/InfluxDB observability, OpenTelemetry, automated reporting, and GitHub Actions performance gates.",
