@@ -259,6 +259,11 @@ th {
   color: var(--danger);
 }
 
+.status.warning,
+.freshness .warning {
+  color: var(--warning);
+}
+
 .status.work-in-progress,
 .status.missing {
   color: var(--warning);

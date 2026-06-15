@@ -8,69 +8,39 @@
       content="Current evidence and review order for the QA Test Automation Frameworks portfolio."
     />
     <title>QA Framework Portfolio Evidence</title>
-    <link
-      rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23080b09'/%3E%3Cpath d='M14 16h36v8H34v8h12v8H34v16h-8V24H14z' fill='%23b9f447'/%3E%3C/svg%3E"
-    />
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" type="module"></script>
   </head>
   <body>
     <header class="masthead">
-      <nav class="topline" aria-label="Primary navigation">
-        <a class="wordmark" href="https://github.com/qa-test-automation-frameworks">QATF / 04</a>
-        <div>
-          <a href="#evidence">Evidence</a>
-          <a href="#standards">Standards</a>
-          <a href="https://github.com/qa-test-automation-frameworks">GitHub</a>
-        </div>
-      </nav>
-      <div class="hero-copy">
-        <p class="eyebrow">Automation engineering portfolio</p>
-        <h1>Four frameworks.<br />One engineering standard.</h1>
-        <p class="hero-deck">
-          Browser, API, and performance automation designed as observable,
-          reproducible systems, not collections of test scripts.
-        </p>
-        <div class="hero-actions">
-          <a class="primary-action" href="#evidence">Review the evidence</a>
-          <a href="https://www.linkedin.com/in/prayag-vyas/">Contact on LinkedIn</a>
-        </div>
-      </div>
-      <div class="hero-meta">
-        <div id="portfolio-summary" class="portfolio-summary" aria-live="polite">
-          Loading portfolio signals
-        </div>
-        <div class="freshness" aria-live="polite">
-          <span id="freshness-state">Loading evidence</span>
-          <span id="generated-at"></span>
-        </div>
+      <a class="brand" href="https://github.com/qa-test-automation-frameworks">
+        QA Test Automation Frameworks
+      </a>
+      <p>Current repository evidence, reliability state, and review order.</p>
+      <div class="freshness" aria-live="polite">
+        <span id="freshness-state">Scheduled evidence snapshot</span>
+        <span id="generated-at">15/06/2026, 03:30:55 UTC</span>
       </div>
     </header>
 
     <main>
-      <section class="reveal" aria-labelledby="review-order-title">
+      <section aria-labelledby="review-order-title">
         <div class="section-heading">
-          <p class="eyebrow">A deliberate path</p>
-          <div>
-            <h2 id="review-order-title">Review the system, not just the syntax.</h2>
-            <p class="section-intro">
-              Start broad, then move through performance, API depth, and enterprise browser execution.
-            </p>
-          </div>
+          <p class="eyebrow">Start here</p>
+          <h1 id="review-order-title">Recommended review order</h1>
         </div>
-        <ol id="review-order" class="review-order"></ol>
+        <ol id="review-order" class="review-order">
+<li><a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework">k6 Performance</a><span>12 minute review</span></li>
+<li><a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework">Playwright TypeScript</a><span>12 minute review</span></li>
+<li><a href="https://github.com/qa-test-automation-frameworks/aria-api-framework">ARIA API</a><span>10 minute review</span></li>
+<li><a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework">Selenium TestNG Java</a><span>10 minute review</span></li>
+</ol>
       </section>
 
-      <section id="evidence" class="reveal" aria-labelledby="matrix-title">
+      <section aria-labelledby="matrix-title">
         <div class="section-heading">
-          <p class="eyebrow">Live repository matrix</p>
-          <div>
-            <h2 id="matrix-title">Evidence before assertion.</h2>
-            <p class="section-intro">
-              Current CI, measured runtime, releases, activity, reports, and failure evidence.
-            </p>
-          </div>
+          <p class="eyebrow">Repository matrix</p>
+          <h2 id="matrix-title">Evidence at a glance</h2>
         </div>
         <div class="table-wrap">
           <table>
@@ -85,50 +55,52 @@
                 <th>Evidence</th>
               </tr>
             </thead>
-            <tbody id="repository-rows"></tbody>
+            <tbody id="repository-rows">
+<tr>
+      <td><a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework">Playwright TypeScript</a></td>
+      <td class="status review-ready">Review ready</td>
+      <td class="status success"><a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/27502508485">success</a></td>
+      <td>3m 02s (n=10)</td>
+      <td><a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases/tag/v1.0.0">v1.0.0</a></td>
+      <td>32 commits · 21 PRs</td>
+      <td class="evidence-links"><a href="https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/playwright-typescript-framework/main/docs/assets/screenshots/debugging-failure.png">Screenshot</a></td>
+    </tr>
+<tr>
+      <td><a href="https://github.com/qa-test-automation-frameworks/aria-api-framework">ARIA API</a></td>
+      <td class="status review-ready">Review ready</td>
+      <td class="status success"><a href="https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/runs/27501595660">success</a></td>
+      <td>1m 32s (n=10)</td>
+      <td><a href="https://github.com/qa-test-automation-frameworks/aria-api-framework/releases/tag/v1.0.0">v1.0.0</a></td>
+      <td>45 commits · 29 PRs</td>
+      <td class="evidence-links"><a href="https://qa-test-automation-frameworks.github.io/aria-api-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/aria-api-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/aria-api-framework/main/docs/assets/allure/allure-diagnostic-attachment.png">Screenshot</a></td>
+    </tr>
+<tr>
+      <td><a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework">Selenium TestNG Java</a></td>
+      <td class="status review-ready">Review ready</td>
+      <td class="status success"><a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/runs/27501982770">success</a></td>
+      <td>4m 11s (n=10)</td>
+      <td><a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/releases/tag/v1.0.0">v1.0.0</a></td>
+      <td>62 commits · 21 PRs</td>
+      <td class="evidence-links"><a href="https://qa-test-automation-frameworks.github.io/selenium-testng-java-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/selenium-testng-java-framework/main/docs/images/allure-failed-screenshot-attachment-preview.png">Screenshot</a></td>
+    </tr>
+<tr>
+      <td><a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework">k6 Performance</a></td>
+      <td class="status review-ready">Review ready</td>
+      <td class="status success"><a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/runs/27501454957">success</a></td>
+      <td>0m 43s (n=10)</td>
+      <td><a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework/releases/tag/v0.4.0">v0.4.0</a></td>
+      <td>123 commits · 15 PRs</td>
+      <td class="evidence-links"><a href="https://qa-test-automation-frameworks.github.io/k6-performance-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/k6-performance-framework/main/docs/assets/grafana-endpoint-dashboard.svg">Screenshot</a></td>
+    </tr>
+</tbody>
           </table>
         </div>
       </section>
 
-      <section id="standards" class="disciplines reveal" aria-labelledby="standards-title">
-        <div class="section-heading">
-          <p class="eyebrow">Coverage with intent</p>
-          <div>
-            <h2 id="standards-title">Different tools. Shared controls.</h2>
-            <p class="section-intro">
-              Every framework exposes its trade-offs, reliability policy, runtime evidence,
-              diagnostics, and path from local execution to CI.
-            </p>
-          </div>
-        </div>
-        <div class="discipline-list">
-          <article>
-            <span>01 / Browser</span>
-            <h3>Playwright TypeScript</h3>
-            <p>Typed clients, controlled target, visual and accessibility checks, sharded execution.</p>
-          </article>
-          <article>
-            <span>02 / Performance</span>
-            <h3>k6 TypeScript</h3>
-            <p>SLO gates, six workload models, baselines, observability, and controlled-load safety.</p>
-          </article>
-          <article>
-            <span>03 / API</span>
-            <h3>ARIA Java</h3>
-            <p>Contracts, OpenAPI coverage, deterministic providers, security boundaries, redacted evidence.</p>
-          </article>
-          <article>
-            <span>04 / Enterprise UI</span>
-            <h3>Selenium TestNG</h3>
-            <p>Grid execution, parallel lifecycle, typed configuration, diagnostics, and governance.</p>
-          </article>
-        </div>
-      </section>
-
-      <section id="case-study" aria-labelledby="case-study-title" class="case-study reveal">
+      <section id="case-study" aria-labelledby="case-study-title" class="case-study">
         <div class="section-heading">
           <p class="eyebrow">Platform case study</p>
-          <h2 id="case-study-title">Scale is an operating-model problem.</h2>
+          <h2 id="case-study-title">Scaling shared automation with reliability controls</h2>
         </div>
         <div class="case-study-grid">
           <p>
@@ -144,19 +116,15 @@
         </div>
       </section>
 
-      <section class="closing reveal" aria-labelledby="closing-title">
-        <p class="eyebrow">The next conversation</p>
-        <h2 id="closing-title">Looking for engineering judgment, not test-count theatre?</h2>
-        <div>
-          <p>
-            Review the source, inspect the failures, challenge the trade-offs, and run the gates.
-            The evidence is public by design.
-          </p>
-          <a class="primary-action" href="https://github.com/qa-test-automation-frameworks">
-            Explore all repositories
-          </a>
-        </div>
-      </section>
+      <aside class="wip" aria-labelledby="evidence-title">
+        <p class="eyebrow">Evidence provenance</p>
+        <h2 id="evidence-title">Public signals, clearly separated from professional outcomes</h2>
+        <p>
+          Repository activity, releases, and workflow results are scheduled snapshots of public
+          GitHub data. The case study is anonymized professional experience and is never presented
+          as repository adoption or independently verified production usage.
+        </p>
+      </aside>
     </main>
 
     <footer>

@@ -6,7 +6,7 @@ Four review-ready reference frameworks for browser, API, accessibility,
 visual, and performance engineering. Each repository is designed to be reviewed,
 run, challenged, and adapted.
 
-[**Explore the live evidence dashboard**](https://qa-test-automation-frameworks.github.io/.github/)
+[**Explore the evidence dashboard**](https://qa-test-automation-frameworks.github.io/.github/)
 &nbsp;&nbsp;·&nbsp;&nbsp;
 [Review the repositories](#recommended-review-order)
 &nbsp;&nbsp;·&nbsp;&nbsp;
@@ -24,8 +24,8 @@ failure evidence, reliability policies, security controls, and release disciplin
 
 | Engineering surface | Repository | What to inspect first |
 | --- | --- | --- |
-| Modern browser, API, visual, accessibility | [Playwright TypeScript](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework) | Typed fixtures, controlled target, sharded CI, visual baselines, Axe, Allure |
 | Performance and reliability | [k6 Performance](https://github.com/qa-test-automation-frameworks/k6-performance-framework) | SLO gates, six workload models, regression baselines, Grafana, OpenTelemetry |
+| Modern browser, API, visual, accessibility | [Playwright TypeScript](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework) | Typed fixtures, controlled target, sharded CI, visual baselines, Axe, Allure |
 | API contracts and security boundaries | [ARIA API](https://github.com/qa-test-automation-frameworks/aria-api-framework) | Service layers, Pact, OpenAPI coverage, deterministic provider, redacted diagnostics |
 | Enterprise browser execution | [Selenium TestNG Java](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework) | Grid matrix, parallel drivers, typed configuration, failure diagnostics, governance |
 
@@ -33,9 +33,9 @@ failure evidence, reliability policies, security controls, and release disciplin
 
 | Order | Repository | Reviewer question | Time |
 | ---: | --- | --- | ---: |
-| 1 | [Live portfolio dashboard](https://qa-test-automation-frameworks.github.io/.github/) | Are the CI, runtime, releases, and evidence current? | 3 min |
-| 2 | [Playwright TypeScript](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework) | How is a broad test strategy kept deterministic and maintainable? | 12 min |
-| 3 | [k6 Performance](https://github.com/qa-test-automation-frameworks/k6-performance-framework) | How are load safety, SLOs, baselines, and observability engineered? | 12 min |
+| 1 | [Portfolio dashboard](https://qa-test-automation-frameworks.github.io/.github/) | Are the CI, runtime, releases, and evidence current? | 3 min |
+| 2 | [k6 Performance](https://github.com/qa-test-automation-frameworks/k6-performance-framework) | How are load safety, SLOs, baselines, and observability engineered? | 12 min |
+| 3 | [Playwright TypeScript](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework) | How is a broad test strategy kept deterministic and maintainable? | 12 min |
 | 4 | [ARIA API](https://github.com/qa-test-automation-frameworks/aria-api-framework) | How are contracts, schemas, security checks, and diagnostics layered? | 10 min |
 | 5 | [Selenium TestNG Java](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework) | How does the design scale across browsers, threads, and Grid capacity? | 10 min |
 
@@ -80,6 +80,6 @@ growth beyond 10,000 automated checks, CI feedback constraints, reliability
 governance, migration, and cross-team operating standards.
 
 > The fastest way to evaluate this work is to open the
-> [live dashboard](https://qa-test-automation-frameworks.github.io/.github/),
+> [evidence dashboard](https://qa-test-automation-frameworks.github.io/.github/),
 > choose a framework, inspect its latest CI and failure evidence, then run its
 > documented local quality gate.
