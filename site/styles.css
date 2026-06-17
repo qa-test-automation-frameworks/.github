@@ -23,9 +23,7 @@ html {
 body {
   margin: 0;
   color: var(--ink);
-  background:
-    radial-gradient(circle at 75% 8%, rgba(185, 244, 71, 0.09), transparent 24rem),
-    var(--ground);
+  background: var(--ground);
 }
 
 a {
@@ -34,11 +32,30 @@ a {
 }
 
 .masthead {
-  min-height: 100svh;
+  min-height: 70svh;
   padding: clamp(1.5rem, 4vw, 4rem) clamp(1.5rem, 6vw, 6rem);
   display: grid;
   grid-template-rows: auto 1fr auto;
+  align-items: start;
   border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  max-width: 12ch;
+  color: var(--accent);
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 760;
+  line-height: 0.9;
+  text-decoration: none;
+}
+
+.masthead > p {
+  align-self: center;
+  max-width: 42rem;
+  margin: 3rem 0;
+  color: var(--muted);
+  font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+  line-height: 1.45;
 }
 
 .topline,
@@ -319,6 +336,10 @@ th {
   line-height: 1.7;
 }
 
+.case-study-grid > p:last-child {
+  grid-column: 2;
+}
+
 dl {
   margin: 0;
 }
@@ -366,6 +387,26 @@ footer {
   color: var(--muted);
 }
 
+.wip {
+  max-width: 58rem;
+  margin-bottom: clamp(5rem, 10vw, 9rem);
+  padding-top: 3rem;
+  border-top: 1px solid var(--line);
+}
+
+.wip h2 {
+  max-width: 18ch;
+  margin: 1rem 0 1.5rem;
+  font-size: clamp(2rem, 4vw, 4.5rem);
+}
+
+.wip p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -379,7 +420,7 @@ footer {
 
 @media (max-width: 760px) {
   .masthead {
-    min-height: 92svh;
+    min-height: 72svh;
   }
 
   .topline > div a:not(:last-child) {
@@ -402,6 +443,10 @@ footer {
   .closing,
   .discipline-list article {
     grid-template-columns: 1fr;
+  }
+
+  .case-study-grid > p:last-child {
+    grid-column: 1;
   }
 
   .closing > div {
