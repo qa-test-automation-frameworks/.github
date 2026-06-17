@@ -74,10 +74,13 @@ flowchart LR
 
 ## Platform Case Study
 
-The [automation platform scaling case study](https://qa-test-automation-frameworks.github.io/.github/#case-study)
-connects the repository evidence to anonymized professional experience with suite
-growth beyond 10,000 automated checks, CI feedback constraints, reliability
-governance, migration, and cross-team operating standards.
+The [automation platform scaling case study](../docs/automation-platform-scaling-case-study.md)
+connects the repository evidence to anonymized professional experience with
+real before/after outcomes: suite stability improved from about 40% to about
+90%, full-suite runtime dropped from about 2 hours to about 15 minutes, UI-heavy
+coverage was rebalanced from 1,000+ checks to 40 critical E2E journeys plus API
+coverage, critical scope reached 100% automation about one month early, and
+authoring throughput improved by about 3x.
 
 > The fastest way to evaluate this work is to open the
 > [evidence dashboard](https://qa-test-automation-frameworks.github.io/.github/),
