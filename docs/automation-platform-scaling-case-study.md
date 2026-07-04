@@ -54,3 +54,13 @@ The platform was not left as a personal toolkit. Other engineers owned new check
 ## NDA-Safe Evidence Boundary
 
 The metrics above are real professional outcomes, anonymized to remove client, product, and system identifiers. They are separate from the public GitHub repository metrics shown in the portfolio dashboard.
+
+## Public Repository Links
+
+| Practice | Public implementation |
+| --- | --- |
+| Critical E2E journey ownership | `playwright-typescript-framework/tests/e2e/` |
+| API-level replacement coverage | `aria-api-framework/src/test/java/com/aria/framework/contracts/` and `playwright-typescript-framework/tests/api/` |
+| Runtime and failure diagnostics | `playwright-typescript-framework/docs/debugging-test-failures.md`, `aria-api-framework/docs/Debugging_Test_Failures.md` |
+| Performance regression comparison | `k6-performance-framework/scripts/compare-performance.cjs` and `k6-performance-framework/docs/cross-commit-regression.md` |
+| Review expectations | `playwright-typescript-framework/docs/test-strategy-matrix.md` and `aria-api-framework/docs/Portfolio_Review_Guide.md` |

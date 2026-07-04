@@ -16,7 +16,7 @@ targets, failure evidence, and CI you can audit.
 &nbsp;
 [![LinkedIn](https://img.shields.io/badge/LINKEDIN-0a66c2?style=for-the-badge)](https://www.linkedin.com/in/prayag-vyas/)
 
-[The frameworks](#the-frameworks) · [How it fits together](#how-it-fits-together) · [Review paths](#choose-your-review-depth) · [Field results](#field-results)
+[The frameworks](#the-frameworks) · [Quality model](../docs/five-framework-quality-model.md) · [Review paths](#choose-your-review-depth) · [Field results](#field-results)
 
 </div>
 
@@ -68,8 +68,10 @@ anonymized [platform scaling case study](../docs/automation-platform-scaling-cas
 including the decision record behind them: stop optimizing for raw test count,
 keep a small set of business-critical E2E journeys, and push repeatable
 validations down to API level. The fixture, data-builder, and reporting
-conventions behind those numbers are implemented publicly in the Playwright and
-ARIA repositories.
+conventions behind those numbers are implemented publicly in the
+[Playwright](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework),
+[ARIA](https://github.com/qa-test-automation-frameworks/aria-api-framework), and
+[k6](https://github.com/qa-test-automation-frameworks/k6-performance-framework) repositories.
 
 ---
 
