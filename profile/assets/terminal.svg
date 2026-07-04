@@ -1,0 +1,73 @@
+<svg width="1280" height="540" viewBox="0 0 1280 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Terminal listing the engineering standard: determinism (controlled targets, seeded data, pinned runtimes), reliability (retry budgets, quarantine with expiry, flake triage), diagnostics (traces, screenshots, structured logs, failure examples), architecture (ADRs, documented trade-offs, extension points), governance (CI gates, dependency scans, SBOMs, release notes), honesty (limitations labeled, CI fails docs that overclaim). All gates green.">
+  <defs>
+    <clipPath id="typeClip">
+      <rect x="40" y="98" width="290" height="30">
+        <animate attributeName="width" from="0" to="290" dur="1.7s" begin="0.4s" fill="freeze"/>
+      </rect>
+    </clipPath>
+    <style>
+      .mono{font-family:ui-monospace,SFMono-Regular,Consolas,Menlo,monospace}
+      .row{animation:rowIn .45s cubic-bezier(.2,.7,.3,1) both}
+      @keyframes rowIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+      .stamp{transform-box:fill-box;transform-origin:center;animation:pop .5s cubic-bezier(.34,1.56,.64,1) 5.3s both}
+      @keyframes pop{from{opacity:0;transform:scale(.6)}70%{opacity:1;transform:scale(1.05)}to{opacity:1;transform:scale(1)}}
+      .late{animation:fadeIn .3s 5.9s both}
+      @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+      .caret{animation:fadeIn .3s 5.9s both,blink 1.1s step-end 6.3s infinite}
+      @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+      @media (prefers-reduced-motion: reduce){*{animation:none !important}}
+    </style>
+  </defs>
+
+  <rect x="8" y="8" width="1264" height="524" rx="18" fill="#0b1120" stroke="#1f2b47" stroke-width="1.5"/>
+  <circle cx="40" cy="44" r="7" fill="#ff5f57"/>
+  <circle cx="64" cy="44" r="7" fill="#febc2e"/>
+  <circle cx="88" cy="44" r="7" fill="#28c840"/>
+  <text x="640" y="49" text-anchor="middle" class="mono" font-size="13" fill="#64748b">engineering-standard — bash</text>
+  <line x1="8" y1="72" x2="1272" y2="72" stroke="#16203a"/>
+
+  <g class="mono" font-size="16">
+    <g clip-path="url(#typeClip)">
+      <text x="48" y="120"><tspan fill="#34d399">$</tspan><tspan fill="#e2e8f0" dx="8">cat engineering-standard.md</tspan></text>
+    </g>
+
+    <g class="row" style="animation-delay:2.4s">
+      <text x="48" y="164" fill="#34d399">✔</text>
+      <text x="84" y="164" fill="#e2e8f0" font-weight="700">determinism</text>
+      <text x="272" y="164" fill="#8fa3c0">controlled targets · seeded data · pinned runtimes</text>
+    </g>
+    <g class="row" style="animation-delay:2.9s">
+      <text x="48" y="208" fill="#34d399">✔</text>
+      <text x="84" y="208" fill="#e2e8f0" font-weight="700">reliability</text>
+      <text x="272" y="208" fill="#8fa3c0">retry budgets · quarantine with expiry · flake triage</text>
+    </g>
+    <g class="row" style="animation-delay:3.4s">
+      <text x="48" y="252" fill="#34d399">✔</text>
+      <text x="84" y="252" fill="#e2e8f0" font-weight="700">diagnostics</text>
+      <text x="272" y="252" fill="#8fa3c0">traces · screenshots · structured logs · failure examples</text>
+    </g>
+    <g class="row" style="animation-delay:3.9s">
+      <text x="48" y="296" fill="#34d399">✔</text>
+      <text x="84" y="296" fill="#e2e8f0" font-weight="700">architecture</text>
+      <text x="272" y="296" fill="#8fa3c0">ADRs · documented trade-offs · extension points</text>
+    </g>
+    <g class="row" style="animation-delay:4.4s">
+      <text x="48" y="340" fill="#34d399">✔</text>
+      <text x="84" y="340" fill="#e2e8f0" font-weight="700">governance</text>
+      <text x="272" y="340" fill="#8fa3c0">CI gates · dependency scans · SBOMs · release notes</text>
+    </g>
+    <g class="row" style="animation-delay:4.9s">
+      <text x="48" y="384" fill="#34d399">✔</text>
+      <text x="84" y="384" fill="#e2e8f0" font-weight="700">honesty</text>
+      <text x="272" y="384" fill="#8fa3c0">limitations labeled · CI fails any doc that overclaims</text>
+    </g>
+
+    <g class="stamp" style="filter:drop-shadow(0 0 12px rgba(52,211,153,.45))">
+      <rect x="950" y="404" width="250" height="44" rx="22" fill="rgba(52,211,153,.08)" stroke="#34d399" stroke-width="1.6"/>
+      <text x="1075" y="432" text-anchor="middle" fill="#34d399" font-size="14" font-weight="700">● ALL GATES GREEN</text>
+    </g>
+
+    <text class="late" x="48" y="452" fill="#34d399">$</text>
+    <rect class="caret" x="70" y="436" width="10" height="20" fill="#34d399"/>
+  </g>
+</svg>

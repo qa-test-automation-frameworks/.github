@@ -1,9 +1,9 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="assets/banner-light.svg">
-  <img src="assets/banner-light.svg" alt="QA Test Automation Frameworks — quality engineering, made observable. Five review-ready reference frameworks covering browser UI, API contracts, performance, accessibility, and LLM evaluation." width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg">
+  <img src="assets/hero-light.svg" alt="QA Test Automation Frameworks — quality engineering, made observable. Five review-ready frameworks: browser UI, API contracts, performance, accessibility, LLM evaluation. Every claim linked to running evidence." width="100%">
 </picture>
 
 Reference frameworks for browser, API, performance, accessibility, visual, and
@@ -12,13 +12,11 @@ Senior Quality Engineer (7+ years). This is not a collection of sample tests:
 each repository is a governed system with explicit architecture, controlled
 targets, failure evidence, and CI you can audit.
 
-[**Evidence dashboard**](https://qa-test-automation-frameworks.github.io/.github/)
-&nbsp;·&nbsp;
-[The frameworks](#the-frameworks)
-&nbsp;·&nbsp;
-[Review paths](#choose-your-review-depth)
-&nbsp;·&nbsp;
-[LinkedIn](https://www.linkedin.com/in/prayag-vyas/)
+[![Evidence Dashboard](https://img.shields.io/badge/EVIDENCE%20DASHBOARD-101826?style=for-the-badge&logo=githubactions&logoColor=3fb950)](https://qa-test-automation-frameworks.github.io/.github/)
+&nbsp;
+[![LinkedIn](https://img.shields.io/badge/LINKEDIN-0a66c2?style=for-the-badge)](https://www.linkedin.com/in/prayag-vyas/)
+
+[The frameworks](#the-frameworks) · [How it fits together](#how-it-fits-together) · [Review paths](#choose-your-review-depth) · [Field results](#field-results)
 
 </div>
 
@@ -32,15 +30,9 @@ targets, failure evidence, and CI you can audit.
 | [**ARIA API**](https://github.com/qa-test-automation-frameworks/aria-api-framework)<br><sub>Java 21 · Pact · WireMock · OpenAPI</sub> | API testing above the endpoint-script level: layered clients and services, a deterministic provider, Pact consumer contracts with provider verification, JSON-schema assertions, OpenAPI endpoint coverage, and redacted diagnostics. | [![CI](https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/workflows/ci.yml)<br>[Allure report](https://qa-test-automation-frameworks.github.io/aria-api-framework/) · [v1.0.0](https://github.com/qa-test-automation-frameworks/aria-api-framework/releases/tag/v1.0.0) · [Review guide](https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/Portfolio_Review_Guide.md) |
 | [**Selenium TestNG Java**](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework)<br><sub>Java 21 · Selenium 4 · TestNG · Docker Grid</sub> | The JVM execution discipline enterprises still run on: thread-local drivers, explicit-wait-only synchronization, Docker Grid with capacity guidance, multi-browser CI, and redaction-aware Allure diagnostics. | [![UI Tests](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/workflows/ui-tests.yml/badge.svg?branch=main)](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/workflows/ui-tests.yml)<br>[Allure report](https://qa-test-automation-frameworks.github.io/selenium-testng-java-framework/) · [v1.0.0](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/releases/tag/v1.0.0) · [Review guide](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/PORTFOLIO_REVIEW_GUIDE.md) |
 
-## Choose Your Review Depth
+## How It Fits Together
 
-| Time | Path | The question it answers |
-| --- | --- | --- |
-| **3 minutes** | Open the [evidence dashboard](https://qa-test-automation-frameworks.github.io/.github/) — refreshed on a schedule from live CI metadata, validated before publish, readable without JavaScript. | Is the CI green, are the releases real, and is the evidence current? |
-| **15 minutes** | Follow the [Verity reviewer guide](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/blob/main/docs/reviewer-guide.md) and the [Playwright review guide](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/portfolio-review-guide.md). | How are LLM non-determinism and browser flakiness actually controlled? |
-| **Deep review** | Work through all five in order — Verity → Playwright → k6 → ARIA → Selenium — each with a documented, time-boxed review path. | Does the same engineering standard hold across every quality surface? |
-
-## Why Five Frameworks
+![Portfolio topology: Verity, Playwright, k6, ARIA, and Selenium all feed one shared evidence standard — determinism, diagnostics, governance — which publishes CI runs, live reports, releases, and ADRs.](assets/pipeline.svg)
 
 Each repository owns one surface of a layered quality model, and they are meant
 to be read together: Playwright proves modern browser, visual, and accessibility
@@ -50,48 +42,34 @@ teams still depend on; and Verity applies the same determinism and evidence
 standards to the newest surface — LLM evaluation. One quality strategy,
 demonstrated five ways.
 
+## Choose Your Review Depth
+
+| Time | Path | The question it answers |
+| --- | --- | --- |
+| **3 minutes** | Open the [evidence dashboard](https://qa-test-automation-frameworks.github.io/.github/) — refreshed on a schedule from live CI metadata, validated before publish, readable without JavaScript. | Is the CI green, are the releases real, and is the evidence current? |
+| **15 minutes** | Follow the [Verity reviewer guide](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/blob/main/docs/reviewer-guide.md) and the [Playwright review guide](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/portfolio-review-guide.md). | How are LLM non-determinism and browser flakiness actually controlled? |
+| **Deep review** | Work through all five in order — Verity → Playwright → k6 → ARIA → Selenium — each with a documented, time-boxed review path. | Does the same engineering standard hold across every quality surface? |
+
 ## The Engineering Standard
 
-- **Determinism** — controlled targets, seeded data, pinned runtimes, reproducible commands.
-- **Reliability** — explicit retry budgets, quarantine rules with expiry, runtime metrics, flake triage.
-- **Diagnostics** — screenshots, traces, structured logs, request evidence, documented failure examples.
-- **Architecture** — ADRs, documented trade-offs, ownership boundaries, extension points.
-- **Governance** — CI quality gates, dependency scanning, SBOMs, release notes, reviewer paths.
-- **Honesty** — limitations are labeled, and a CI job fails any document that uses unverifiable self-assessment language.
+![Terminal listing the engineering standard: determinism — controlled targets, seeded data, pinned runtimes; reliability — retry budgets, quarantine with expiry, flake triage; diagnostics — traces, screenshots, structured logs, failure examples; architecture — ADRs, documented trade-offs, extension points; governance — CI gates, dependency scans, SBOMs, release notes; honesty — limitations labeled, CI fails any doc that overclaims. All gates green.](assets/terminal.svg)
 
-## How It Fits Together
-
-```mermaid
-flowchart TB
-  subgraph Surfaces["Five frameworks · one quality model"]
-    direction LR
-    P["Playwright<br/>browser · visual · a11y"]
-    A["ARIA<br/>API contracts"]
-    K["k6<br/>performance"]
-    S["Selenium<br/>enterprise JVM UI"]
-    V["Verity<br/>LLM evaluation"]
-  end
-  Surfaces --> E["Shared evidence standard<br/>determinism · diagnostics · governance"]
-  E --> C["Published proof<br/>CI runs · live reports · releases · ADRs"]
-```
+The last line is enforced literally: a
+[CI job in this repository](https://github.com/qa-test-automation-frameworks/.github/blob/main/.github/workflows/docs.yml)
+fails any markdown in the organization that uses unverifiable self-assessment
+language.
 
 ## Field Results
 
-The patterns in these repositories come from practice. An anonymized
-[platform scaling case study](../docs/automation-platform-scaling-case-study.md)
-documents one client migration built on the same strategy — replace raw test
-count with a layered pyramid of critical journeys plus API coverage:
+![Field results from an anonymized platform migration over about one month: suite stability from about 40% to about 90%; full-suite runtime from about 2 hours to about 15 minutes; test mix from 1,000+ UI-heavy checks to 40 critical journeys plus API coverage; authoring about 3 times faster.](assets/metrics.svg)
 
-| Measure | Before | After |
-| --- | --- | --- |
-| Suite stability | ~40% reliable | ~90% reliable |
-| Full-suite runtime | ~2 hours | ~15 minutes |
-| Test mix | 1,000+ UI-heavy checks | 40 critical E2E journeys + API coverage |
-| Authoring throughput | baseline | ~3× faster |
-
-The fixture, data-builder, and reporting conventions behind those numbers are
-implemented publicly in the Playwright and ARIA repositories; the CI-tuning and
-runtime-metrics approach is visible in every workflow here.
+These numbers come from one client platform migration, documented in the
+anonymized [platform scaling case study](../docs/automation-platform-scaling-case-study.md) —
+including the decision record behind them: stop optimizing for raw test count,
+keep a small set of business-critical E2E journeys, and push repeatable
+validations down to API level. The fixture, data-builder, and reporting
+conventions behind those numbers are implemented publicly in the Playwright and
+ARIA repositories.
 
 ---
 

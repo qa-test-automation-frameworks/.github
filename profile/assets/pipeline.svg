@@ -1,0 +1,117 @@
+<svg width="1280" height="440" viewBox="0 0 1280 440" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="Portfolio topology: Verity, Playwright, k6, ARIA, and Selenium all feed one shared evidence standard — determinism, diagnostics, governance — which publishes CI runs, live reports, releases, and ADRs.">
+  <defs>
+    <linearGradient id="busGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#a78bfa"/>
+      <stop offset=".25" stop-color="#34d399"/>
+      <stop offset=".5" stop-color="#fbbf24"/>
+      <stop offset=".75" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#2dd4bf"/>
+    </linearGradient>
+    <filter id="dotGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .sans{font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif}
+      .mono{font-family:ui-monospace,SFMono-Regular,Consolas,Menlo,monospace}
+      .live{animation:pulse 2.2s ease-in-out infinite}
+      @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+      .busPulse{animation:busGlowAnim 3.6s ease-in-out infinite}
+      @keyframes busGlowAnim{0%,100%{opacity:.9}50%{opacity:.45}}
+      @media (prefers-reduced-motion: reduce){*{animation:none !important}}
+    </style>
+  </defs>
+
+  <rect x="8" y="8" width="1264" height="424" rx="18" fill="#0b1120" stroke="#1f2b47" stroke-width="1.5"/>
+  <text x="44" y="52" class="mono" font-size="13" letter-spacing="4" fill="#64748b" font-weight="600">PORTFOLIO TOPOLOGY</text>
+  <g class="mono" font-size="13">
+    <circle class="live" cx="1054" cy="47" r="4" fill="#34d399"/>
+    <text x="1068" y="52" fill="#34d399">live evidence flow</text>
+  </g>
+
+  <!-- framework nodes -->
+  <g class="sans">
+    <g transform="translate(58,84)">
+      <rect width="204" height="68" rx="12" fill="#0f1729" stroke="#223052"/>
+      <rect width="204" height="3" rx="1.5" fill="#a78bfa"/>
+      <text x="16" y="32" font-size="15" font-weight="700" fill="#e2e8f0">Verity</text>
+      <text x="16" y="52" font-size="12" fill="#7c8db0">LLM evaluation · judge calibration</text>
+    </g>
+    <g transform="translate(298,84)">
+      <rect width="204" height="68" rx="12" fill="#0f1729" stroke="#223052"/>
+      <rect width="204" height="3" rx="1.5" fill="#34d399"/>
+      <text x="16" y="32" font-size="15" font-weight="700" fill="#e2e8f0">Playwright</text>
+      <text x="16" y="52" font-size="12" fill="#7c8db0">browser · visual · accessibility</text>
+    </g>
+    <g transform="translate(538,84)">
+      <rect width="204" height="68" rx="12" fill="#0f1729" stroke="#223052"/>
+      <rect width="204" height="3" rx="1.5" fill="#fbbf24"/>
+      <text x="16" y="32" font-size="15" font-weight="700" fill="#e2e8f0">k6</text>
+      <text x="16" y="52" font-size="12" fill="#7c8db0">performance · SLO gates</text>
+    </g>
+    <g transform="translate(778,84)">
+      <rect width="204" height="68" rx="12" fill="#0f1729" stroke="#223052"/>
+      <rect width="204" height="3" rx="1.5" fill="#38bdf8"/>
+      <text x="16" y="32" font-size="15" font-weight="700" fill="#e2e8f0">ARIA</text>
+      <text x="16" y="52" font-size="12" fill="#7c8db0">API contracts · Pact · OpenAPI</text>
+    </g>
+    <g transform="translate(1018,84)">
+      <rect width="204" height="68" rx="12" fill="#0f1729" stroke="#223052"/>
+      <rect width="204" height="3" rx="1.5" fill="#2dd4bf"/>
+      <text x="16" y="32" font-size="15" font-weight="700" fill="#e2e8f0">Selenium</text>
+      <text x="16" y="52" font-size="12" fill="#7c8db0">enterprise JVM UI · Grid</text>
+    </g>
+  </g>
+
+  <!-- connectors: nodes to bus -->
+  <path id="c1" d="M160 152 C160 208 320 214 320 268" fill="none" stroke="#223052" stroke-width="1.5"/>
+  <path id="c2" d="M400 152 C400 208 480 214 480 268" fill="none" stroke="#223052" stroke-width="1.5"/>
+  <path id="c3" d="M640 152 C640 208 640 214 640 268" fill="none" stroke="#223052" stroke-width="1.5"/>
+  <path id="c4" d="M880 152 C880 208 800 214 800 268" fill="none" stroke="#223052" stroke-width="1.5"/>
+  <path id="c5" d="M1120 152 C1120 208 960 214 960 268" fill="none" stroke="#223052" stroke-width="1.5"/>
+
+  <!-- flowing evidence dots -->
+  <g filter="url(#dotGlow)">
+    <circle r="4.5" fill="#a78bfa"><animateMotion dur="2.8s" repeatCount="indefinite" begin="0s"><mpath xlink:href="#c1"/></animateMotion></circle>
+    <circle r="4.5" fill="#34d399"><animateMotion dur="2.8s" repeatCount="indefinite" begin="0.55s"><mpath xlink:href="#c2"/></animateMotion></circle>
+    <circle r="4.5" fill="#fbbf24"><animateMotion dur="2.8s" repeatCount="indefinite" begin="1.1s"><mpath xlink:href="#c3"/></animateMotion></circle>
+    <circle r="4.5" fill="#38bdf8"><animateMotion dur="2.8s" repeatCount="indefinite" begin="1.65s"><mpath xlink:href="#c4"/></animateMotion></circle>
+    <circle r="4.5" fill="#2dd4bf"><animateMotion dur="2.8s" repeatCount="indefinite" begin="2.2s"><mpath xlink:href="#c5"/></animateMotion></circle>
+  </g>
+
+  <!-- shared evidence standard bus -->
+  <rect class="busPulse" x="200" y="268" width="880" height="46" rx="23" fill="#101b33" stroke="url(#busGrad)" stroke-width="1.6"/>
+  <text x="640" y="297" text-anchor="middle" class="mono" font-size="14" font-weight="700" letter-spacing="1.5" fill="#e2e8f0">SHARED EVIDENCE STANDARD — determinism · diagnostics · governance</text>
+
+  <!-- connectors: bus to outputs -->
+  <path id="o1" d="M295 314 L295 356" fill="none" stroke="#223052" stroke-width="1.5"/>
+  <path id="o2" d="M525 314 L525 356" fill="none" stroke="#223052" stroke-width="1.5"/>
+  <path id="o3" d="M755 314 L755 356" fill="none" stroke="#223052" stroke-width="1.5"/>
+  <path id="o4" d="M985 314 L985 356" fill="none" stroke="#223052" stroke-width="1.5"/>
+  <g filter="url(#dotGlow)">
+    <circle r="3" fill="#7dd3fc"><animateMotion dur="1.6s" repeatCount="indefinite" begin="0s"><mpath xlink:href="#o1"/></animateMotion></circle>
+    <circle r="3" fill="#7dd3fc"><animateMotion dur="1.6s" repeatCount="indefinite" begin="0.4s"><mpath xlink:href="#o2"/></animateMotion></circle>
+    <circle r="3" fill="#7dd3fc"><animateMotion dur="1.6s" repeatCount="indefinite" begin="0.8s"><mpath xlink:href="#o3"/></animateMotion></circle>
+    <circle r="3" fill="#7dd3fc"><animateMotion dur="1.6s" repeatCount="indefinite" begin="1.2s"><mpath xlink:href="#o4"/></animateMotion></circle>
+  </g>
+
+  <!-- output chips -->
+  <g class="mono" font-size="13" font-weight="700">
+    <g transform="translate(200,356)">
+      <rect width="190" height="40" rx="20" fill="#0f1729" stroke="#223052"/>
+      <text x="95" y="25" text-anchor="middle" fill="#cbd5e1">CI RUNS</text>
+    </g>
+    <g transform="translate(430,356)">
+      <rect width="190" height="40" rx="20" fill="#0f1729" stroke="#223052"/>
+      <text x="95" y="25" text-anchor="middle" fill="#cbd5e1">LIVE REPORTS</text>
+    </g>
+    <g transform="translate(660,356)">
+      <rect width="190" height="40" rx="20" fill="#0f1729" stroke="#223052"/>
+      <text x="95" y="25" text-anchor="middle" fill="#cbd5e1">RELEASES</text>
+    </g>
+    <g transform="translate(890,356)">
+      <rect width="190" height="40" rx="20" fill="#0f1729" stroke="#223052"/>
+      <text x="95" y="25" text-anchor="middle" fill="#cbd5e1">ADRs &amp; GUIDES</text>
+    </g>
+  </g>
+</svg>
