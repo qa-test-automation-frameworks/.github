@@ -1,14 +1,46 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-15T03:30:55.405Z",
+  "generatedAt": "2026-07-04T00:00:00.000Z",
   "organization": "qa-test-automation-frameworks",
   "recommendedReviewOrder": [
-    "k6-performance-framework",
+    "verity-policy-coverage-eval-framework",
     "playwright-typescript-framework",
+    "k6-performance-framework",
     "aria-api-framework",
     "selenium-testng-java-framework"
   ],
   "repositories": [
+    {
+      "name": "verity-policy-coverage-eval-framework",
+      "label": "Verity Policy Coverage Eval",
+      "status": "review-ready",
+      "workflow": {
+        "conclusion": "success",
+        "url": "https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/actions/workflows/pr-gate.yml",
+        "updatedAt": "2026-07-04T00:00:00Z",
+        "durationSeconds": null,
+        "medianDurationSeconds": null,
+        "sampleSize": 0
+      },
+      "reportUrl": "https://qa-test-automation-frameworks.github.io/verity-policy-coverage-eval-framework/",
+      "docsUrl": "https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/tree/main/docs",
+      "screenshotUrl": "https://raw.githubusercontent.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/main/docs/screenshots/calibration.png",
+      "reviewMinutes": 12,
+      "url": "https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework",
+      "description": "LLM evaluation framework for insurance-policy RAG and tool-use coverage, with deterministic replay, semantic/adversarial tiers, seeded defects, judge calibration, and cost-aware CI evidence.",
+      "defaultBranch": "main",
+      "pushedAt": "2026-07-04T00:00:00Z",
+      "pullRequestCount": 0,
+      "release": {
+        "tag": "v0.1.0",
+        "name": "v0.1.0",
+        "url": "https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/releases/tag/v0.1.0",
+        "publishedAt": "2026-07-04T00:00:00Z"
+      },
+      "commitCount": 341,
+      "stars": 0,
+      "forks": 0
+    },
     {
       "name": "playwright-typescript-framework",
       "label": "Playwright TypeScript",
@@ -116,7 +148,7 @@
       },
       "reportUrl": "https://qa-test-automation-frameworks.github.io/k6-performance-framework/",
       "docsUrl": "https://github.com/qa-test-automation-frameworks/k6-performance-framework/tree/main/docs",
-      "screenshotUrl": "https://raw.githubusercontent.com/qa-test-automation-frameworks/k6-performance-framework/main/docs/assets/grafana-endpoint-dashboard.svg",
+      "screenshotUrl": "https://raw.githubusercontent.com/qa-test-automation-frameworks/k6-performance-framework/main/docs/images/performance-overview-example.svg",
       "reviewMinutes": 12,
       "url": "https://github.com/qa-test-automation-frameworks/k6-performance-framework",
       "description": "Production-grade k6 and TypeScript performance testing framework for the Conduit RealWorld API, featuring reusable service clients, six workload types, SLO-based thresholds, Grafana/InfluxDB observability, OpenTelemetry, automated reporting, and GitHub Actions performance gates.",
