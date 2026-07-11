@@ -57,10 +57,15 @@ for (const repository of data.repositories) {
   row.append(name);
 
   const status = document.createElement('td');
-  const statusLabel = repository.status === 'work-in-progress' ? 'WIP' : 'Review ready';
+  const statusLabel = repository.status === 'work-in-progress' ? 'WIP' : 'Configured';
   status.textContent = statusLabel;
   status.className = `status ${repository.status}`;
   row.append(status);
+
+  const evidenceState = document.createElement('td');
+  evidenceState.textContent = repository.evidenceState ?? 'evidence-unavailable';
+  evidenceState.className = `status ${repository.evidenceState ?? 'evidence-unavailable'}`;
+  row.append(evidenceState);
 
   const ci = document.createElement('td');
   ci.textContent = repository.workflow?.conclusion ?? 'No CI';

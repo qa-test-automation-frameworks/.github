@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "generatedAt": "2026-07-04T00:00:00.000Z",
   "organization": "qa-test-automation-frameworks",
   "recommendedReviewOrder": [
@@ -13,7 +13,12 @@
     {
       "name": "verity-policy-coverage-eval-framework",
       "label": "Verity Policy Coverage Eval",
-      "status": "review-ready",
+      "status": "configured",
+      "evidenceClass": "hermetic + credentialed",
+      "fullEvidenceWorkflow": "semantic-eval.yml",
+      "verificationUrl": "https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/blob/main/docs/evidence/latest-verification.md",
+      "limitationsUrl": "https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/blob/main/docs/known-issues.md",
+      "evidenceState": "evidence-unavailable",
       "workflow": {
         "conclusion": "success",
         "url": "https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/actions/workflows/pr-gate.yml",
@@ -44,7 +49,11 @@
     {
       "name": "playwright-typescript-framework",
       "label": "Playwright TypeScript",
-      "status": "review-ready",
+      "status": "configured",
+      "evidenceClass": "controlled",
+      "verificationUrl": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/evidence/latest-verification.md",
+      "limitationsUrl": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/known-issues.md",
+      "evidenceState": "evidence-stale",
       "workflow": {
         "conclusion": "success",
         "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/27502508485",
@@ -75,7 +84,12 @@
     {
       "name": "aria-api-framework",
       "label": "ARIA API",
-      "status": "review-ready",
+      "status": "configured",
+      "evidenceClass": "controlled + scheduled-live",
+      "fullEvidenceWorkflow": "ci.yml#live-smoke",
+      "verificationUrl": "https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/evidence/latest-verification.md",
+      "limitationsUrl": "https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/known-issues.md",
+      "evidenceState": "evidence-stale",
       "workflow": {
         "conclusion": "success",
         "url": "https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/runs/27501595660",
@@ -106,7 +120,11 @@
     {
       "name": "selenium-testng-java-framework",
       "label": "Selenium TestNG Java",
-      "status": "review-ready",
+      "status": "configured",
+      "evidenceClass": "controlled",
+      "verificationUrl": "https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/evidence/latest-verification.md",
+      "limitationsUrl": "https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/known-issues.md",
+      "evidenceState": "evidence-stale",
       "workflow": {
         "conclusion": "success",
         "url": "https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/runs/27501982770",
@@ -137,7 +155,12 @@
     {
       "name": "k6-performance-framework",
       "label": "k6 Performance",
-      "status": "review-ready",
+      "status": "configured",
+      "evidenceClass": "controlled + scheduled-load",
+      "fullEvidenceWorkflow": "main-load.yml",
+      "verificationUrl": "https://github.com/qa-test-automation-frameworks/k6-performance-framework/blob/main/docs/evidence/latest-verification.md",
+      "limitationsUrl": "https://github.com/qa-test-automation-frameworks/k6-performance-framework/blob/main/docs/known-issues.md",
+      "evidenceState": "evidence-stale",
       "workflow": {
         "conclusion": "success",
         "url": "https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/runs/27501454957",

@@ -39,6 +39,8 @@ async function workflowMetrics(repository) {
       ? {
           conclusion: latest.conclusion,
           url: latest.html_url,
+          runId: latest.id,
+          headSha: latest.head_sha,
           updatedAt: latest.updated_at,
           durationSeconds: Math.round(
             (new Date(latest.updated_at) - new Date(latest.run_started_at ?? latest.created_at)) /
@@ -53,6 +55,15 @@ async function workflowMetrics(repository) {
   }
   return workflow;
 }
+
+const FRESHNESS_HOURS = 36;
+const evidenceState = (repository, workflow, now = Date.now()) => {
+  if (!workflow?.updatedAt || workflow.conclusion !== 'success' || !repository.verificationUrl) {
+    return 'evidence-unavailable';
+  }
+  const ageHours = (now - new Date(workflow.updatedAt).getTime()) / 3_600_000;
+  return ageHours <= FRESHNESS_HOURS ? 'review-ready' : 'evidence-stale';
+};
 
 const query = `
   query Portfolio($owner: String!) {
@@ -107,6 +118,7 @@ const repositories = await Promise.all(
   definition.repositories.map(async (repository) => {
     const repo = metadata.get(repository.name);
     if (!repo) throw new Error(`Repository ${repository.name} was not returned by GitHub.`);
+    const metrics = await workflowMetrics(repository);
     return {
       ...repository,
       url: repo.url,
@@ -125,13 +137,14 @@ const repositories = await Promise.all(
       commitCount: repo.defaultBranchRef?.target?.history?.totalCount ?? 0,
       stars: repo.stargazerCount,
       forks: repo.forkCount,
-      workflow: await workflowMetrics(repository),
+      workflow: metrics,
+      evidenceState: evidenceState(repository, metrics),
     };
   }),
 );
 
 const output = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   generatedAt: new Date().toISOString(),
   organization: owner,
   recommendedReviewOrder: definition.recommendedReviewOrder,
@@ -181,7 +194,8 @@ const reviewOrderHtml = output.recommendedReviewOrder
 
 const repositoryRowsHtml = repositories
   .map((repository) => {
-    const statusLabel = repository.status === 'work-in-progress' ? 'WIP' : 'Review ready';
+    const statusLabel = repository.status === 'work-in-progress' ? 'WIP' : 'Configured';
+    const evidenceLabel = repository.evidenceState ?? 'evidence-unavailable';
     const workflowLabel = repository.workflow?.conclusion ?? 'No CI';
     const workflow = repository.workflow?.url
       ? `<a href="${escapeHtml(repository.workflow.url)}">${escapeHtml(workflowLabel)}</a>`
@@ -195,6 +209,7 @@ const repositoryRowsHtml = repositories
     return `<tr>
       <td><a href="${escapeHtml(repository.url)}">${escapeHtml(repository.label)}</a></td>
       <td class="status ${escapeHtml(repository.status)}">${statusLabel}</td>
+      <td class="status ${escapeHtml(evidenceLabel)}">${escapeHtml(evidenceLabel)}</td>
       <td class="status ${escapeHtml(workflowLabel)}">${workflow}</td>
       <td>${escapeHtml(runtime)}</td>
       <td>${release}</td>

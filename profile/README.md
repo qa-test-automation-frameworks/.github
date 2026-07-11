@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg">
-  <img src="assets/hero-light.svg" alt="QA Test Automation Frameworks — quality engineering, made observable. Five review-ready frameworks: browser UI, API contracts, performance, accessibility, LLM evaluation. Every claim linked to running evidence." width="100%">
+  <img src="assets/hero-light.svg" alt="QA Test Automation Frameworks — quality engineering, made observable. Five reference frameworks: browser UI, API contracts, performance, accessibility, LLM evaluation. Every claim linked to bounded evidence." width="100%">
 </picture>
 
 Reference frameworks for browser, API, performance, accessibility, visual, and
@@ -12,11 +12,17 @@ Senior Quality Engineer (7+ years). This is not a collection of sample tests:
 each repository is a governed system with explicit architecture, controlled
 targets, failure evidence, and CI you can audit.
 
+**Start here:** five reference frameworks demonstrate deterministic
+feedback, diagnosable failure, and governed delivery across UI, API contracts,
+performance, enterprise JVM execution, and LLM evaluation. Open the dashboard,
+choose a capability below, and verify the current evidence record before reading
+the deeper architecture.
+
 [![Evidence Dashboard](https://img.shields.io/badge/EVIDENCE%20DASHBOARD-101826?style=for-the-badge&logo=githubactions&logoColor=3fb950)](https://qa-test-automation-frameworks.github.io/.github/)
 &nbsp;
 [![LinkedIn](https://img.shields.io/badge/LINKEDIN-0a66c2?style=for-the-badge)](https://www.linkedin.com/in/prayag-vyas/)
 
-[The frameworks](#the-frameworks) · [Quality model](../docs/five-framework-quality-model.md) · [Review paths](#choose-your-review-depth) · [Field results](#field-results)
+[The frameworks](#the-frameworks) · [Choose by capability](#choose-by-capability) · [Quality model](../docs/five-framework-quality-model.md) · [Review paths](#choose-your-review-depth) · [Field results](#field-results)
 
 </div>
 
@@ -29,6 +35,16 @@ targets, failure evidence, and CI you can audit.
 | [**k6 Performance**](https://github.com/qa-test-automation-frameworks/k6-performance-framework)<br><sub>k6 · TypeScript · Grafana · OpenTelemetry</sub> | Performance testing as a governed system: six workload models, SLO-based gates, reviewed regression baselines, Grafana/InfluxDB observability, and load-safety rules that keep public targets read-only. | [![Main load](https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/workflows/main-load.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/workflows/main-load.yml)<br>[Performance reports](https://qa-test-automation-frameworks.github.io/k6-performance-framework/) · [v0.4.0](https://github.com/qa-test-automation-frameworks/k6-performance-framework/releases/tag/v0.4.0) · [Evidence guide](https://github.com/qa-test-automation-frameworks/k6-performance-framework/blob/main/docs/evidence.md) |
 | [**ARIA API**](https://github.com/qa-test-automation-frameworks/aria-api-framework)<br><sub>Java 21 · Pact · WireMock · OpenAPI</sub> | API testing above the endpoint-script level: layered clients and services, a deterministic provider, Pact consumer contracts with provider verification, JSON-schema assertions, OpenAPI endpoint coverage, and redacted diagnostics. | [![CI](https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/workflows/ci.yml)<br>[Allure report](https://qa-test-automation-frameworks.github.io/aria-api-framework/) · [v1.0.0](https://github.com/qa-test-automation-frameworks/aria-api-framework/releases/tag/v1.0.0) · [Review guide](https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/Portfolio_Review_Guide.md) |
 | [**Selenium TestNG Java**](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework)<br><sub>Java 21 · Selenium 4 · TestNG · Docker Grid</sub> | The JVM execution discipline enterprises still run on: thread-local drivers, explicit-wait-only synchronization, Docker Grid with capacity guidance, multi-browser CI, and redaction-aware Allure diagnostics. | [![UI Tests](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/workflows/ui-tests.yml/badge.svg?branch=main)](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/workflows/ui-tests.yml)<br>[Allure report](https://qa-test-automation-frameworks.github.io/selenium-testng-java-framework/) · [v1.0.0](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/releases/tag/v1.0.0) · [Review guide](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/PORTFOLIO_REVIEW_GUIDE.md) |
+
+## Choose by Capability
+
+| If you are evaluating | Start here | What to inspect first |
+| --- | --- | --- |
+| AI/LLM quality | [Verity](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework) | Calibration, replay, adversarial evidence, and explicit live limitations. |
+| Modern UI, API, accessibility, and visual testing | [Playwright](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework) | Controlled target, typed clients, cleanup, and flake governance. |
+| Performance governance | [k6](https://github.com/qa-test-automation-frameworks/k6-performance-framework) | Safety guard, SLOs, baseline provenance, and regression comparison. |
+| API and contract quality | [ARIA](https://github.com/qa-test-automation-frameworks/aria-api-framework) | Owned provider, Pact, OpenAPI, and redacted diagnostics. |
+| Enterprise JVM execution | [Selenium](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework) | Grid lifecycle, waits, parallelism, and failure diagnostics. |
 
 ## How It Fits Together
 
@@ -52,12 +68,12 @@ demonstrated five ways.
 
 ## The Engineering Standard
 
-![Terminal listing the engineering standard: determinism — controlled targets, seeded data, pinned runtimes; reliability — retry budgets, quarantine with expiry, flake triage; diagnostics — traces, screenshots, structured logs, failure examples; architecture — ADRs, documented trade-offs, extension points; governance — CI gates, dependency scans, SBOMs, release notes; honesty — limitations labeled, CI fails any doc that overclaims. All gates green.](assets/terminal.svg)
+![Terminal listing the engineering standard: determinism — controlled targets, seeded data, pinned runtimes; reliability — retry budgets, quarantine with expiry, flake triage; diagnostics — traces, screenshots, structured logs, failure examples; architecture — ADRs, documented trade-offs, extension points; governance — CI gates, dependency scans, SBOMs, release notes; honesty — limitations labeled and repository-local documentation checks.](assets/terminal.svg)
 
-The last line is enforced literally: a
-[CI job in this repository](https://github.com/qa-test-automation-frameworks/.github/blob/main/.github/workflows/docs.yml)
-fails any markdown in the organization that uses unverifiable self-assessment
-language.
+The documentation workflow in this repository checks local Markdown links and a
+small, explicit list of unsupported self-assessment terms in this repository's
+checkout. It is a repository-local guard, not semantic validation of every
+organization repository. See the [portfolio evidence standard](../docs/PORTFOLIO_EVIDENCE_STANDARD.md).
 
 ## Field Results
 
