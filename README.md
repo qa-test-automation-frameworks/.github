@@ -20,4 +20,9 @@ state, source run, commit, and verification record. It does not claim private ad
 usage, or organizational outcomes that cannot be independently verified. See the
 [Portfolio Evidence Standard](docs/PORTFOLIO_EVIDENCE_STANDARD.md).
 
+`site/data/portfolio.json` in this checkout is a committed seed snapshot for local rendering
+and testing, not the live evidence record. The scheduled workflow regenerates the deployed
+version on GitHub Pages; check `generatedAt` in the deployed file, not this one, for current
+freshness.
+
 ![Portfolio dashboard overview](site/assets/dashboard-overview.png)

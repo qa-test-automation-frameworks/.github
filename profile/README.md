@@ -12,6 +12,11 @@ Senior Quality Engineer (7+ years). This is not a collection of sample tests:
 each repository is a governed system with explicit architecture, controlled
 targets, failure evidence, and CI you can audit.
 
+This portfolio exists to support Staff SDET, Lead SDET, QA Architect, and
+Quality Engineering Lead conversations. Reach out on
+[LinkedIn](https://www.linkedin.com/in/prayag-vyas/) or through the
+[personal profile](https://github.com/prayagv).
+
 **Start here:** five reference frameworks demonstrate deterministic
 feedback, diagnosable failure, and governed delivery across UI, API contracts,
 performance, enterprise JVM execution, and LLM evaluation. Open the dashboard,
@@ -30,11 +35,11 @@ the deeper architecture.
 
 | Framework | What it demonstrates | Evidence |
 | --- | --- | --- |
-| [**ARIA API**](https://github.com/qa-test-automation-frameworks/aria-api-framework)<br><sub>Java 21 · Pact · WireMock · OpenAPI</sub> | API testing above the endpoint-script level: layered clients and services, a deterministic provider, Pact consumer contracts with provider verification, JSON-schema assertions, OpenAPI endpoint coverage, and redacted diagnostics. | [![CI](https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/workflows/ci.yml)<br>[Allure report](https://qa-test-automation-frameworks.github.io/aria-api-framework/) · [v1.0.0](https://github.com/qa-test-automation-frameworks/aria-api-framework/releases/tag/v1.0.0) · [Review guide](https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/Portfolio_Review_Guide.md) |
-| [**k6 Performance**](https://github.com/qa-test-automation-frameworks/k6-performance-framework)<br><sub>k6 · TypeScript · Grafana · OpenTelemetry</sub> | Performance testing as a governed system: six workload models, SLO-based gates, reviewed regression baselines, Grafana/InfluxDB observability, and load-safety rules that keep public targets read-only. | [![Main load](https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/workflows/main-load.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/workflows/main-load.yml)<br>[Performance reports](https://qa-test-automation-frameworks.github.io/k6-performance-framework/) · [v0.4.0](https://github.com/qa-test-automation-frameworks/k6-performance-framework/releases/tag/v0.4.0) · [Evidence guide](https://github.com/qa-test-automation-frameworks/k6-performance-framework/blob/main/docs/evidence.md) |
-| [**Selenium TestNG Java**](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework)<br><sub>Java 21 · Selenium 4 · TestNG · Docker Grid</sub> | The JVM execution discipline enterprises still run on: thread-local drivers, explicit-wait-only synchronization, Docker Grid with capacity guidance, multi-browser CI, and redaction-aware Allure diagnostics. | [![UI Tests](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/workflows/ui-tests.yml/badge.svg?branch=main)](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/workflows/ui-tests.yml)<br>[Allure report](https://qa-test-automation-frameworks.github.io/selenium-testng-java-framework/) · [v1.0.0](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/releases/tag/v1.0.0) · [Review guide](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/PORTFOLIO_REVIEW_GUIDE.md) |
 | [**Verity Policy Coverage Eval**](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework)<br><sub>Python · pytest · RAG + tool use</sub> | LLM evaluation engineered like software: a three-tier eval pyramid (deterministic gate → semantic evals → adversarial), cassette replay, seeded defects, and judge calibration with bias controls. The hermetic tier runs without provider keys. | [![PR Gate](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/actions/workflows/pr-gate.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/actions/workflows/pr-gate.yml)<br>[Eval report](https://qa-test-automation-frameworks.github.io/verity-policy-coverage-eval-framework/) · [v0.1.0](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/releases/tag/v0.1.0) · [Review guide](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/blob/main/docs/reviewer-guide.md) |
 | [**Playwright TypeScript**](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework)<br><sub>TypeScript · Playwright · Zod · Allure</sub> | Modern browser coverage against a repo-owned target: strict typing, reusable fixtures, typed API clients, visual baselines, Axe accessibility checks, sharded Linux/Windows CI, and a governed retry budget with expiring quarantine. | [![CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)<br>[Allure report](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/) · [v1.0.0](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases/tag/v1.0.0) · [Review guide](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/portfolio-review-guide.md) |
+| [**k6 Performance**](https://github.com/qa-test-automation-frameworks/k6-performance-framework)<br><sub>k6 · TypeScript · Grafana · OpenTelemetry</sub> | Performance testing as a governed system: six workload models, SLO-based gates, reviewed regression baselines, Grafana/InfluxDB observability, and load-safety rules that keep public targets read-only. | [![Main load](https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/workflows/main-load.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/workflows/main-load.yml)<br>[Performance reports](https://qa-test-automation-frameworks.github.io/k6-performance-framework/) · [v0.4.0](https://github.com/qa-test-automation-frameworks/k6-performance-framework/releases/tag/v0.4.0) · [Evidence guide](https://github.com/qa-test-automation-frameworks/k6-performance-framework/blob/main/docs/evidence.md) |
+| [**ARIA API**](https://github.com/qa-test-automation-frameworks/aria-api-framework)<br><sub>Java 21 · Pact · WireMock · OpenAPI</sub> | API testing above the endpoint-script level: layered clients and services, a deterministic provider, Pact consumer contracts with provider verification, JSON-schema assertions, OpenAPI endpoint coverage, and redacted diagnostics. | [![CI](https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/workflows/ci.yml)<br>[Allure report](https://qa-test-automation-frameworks.github.io/aria-api-framework/) · [v1.0.0](https://github.com/qa-test-automation-frameworks/aria-api-framework/releases/tag/v1.0.0) · [Review guide](https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/portfolio-review-guide.md) |
+| [**Selenium TestNG Java**](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework)<br><sub>Java 21 · Selenium 4 · TestNG · Docker Grid</sub> | The JVM execution discipline enterprises still run on: thread-local drivers, explicit-wait-only synchronization, Docker Grid with capacity guidance, multi-browser CI, and redaction-aware Allure diagnostics. | [![UI Tests](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/workflows/ui-tests.yml/badge.svg?branch=main)](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/workflows/ui-tests.yml)<br>[Allure report](https://qa-test-automation-frameworks.github.io/selenium-testng-java-framework/) · [v1.0.0](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/releases/tag/v1.0.0) · [Review guide](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/PORTFOLIO_REVIEW_GUIDE.md) |
 
 ## Choose by Capability
 
@@ -64,7 +69,7 @@ demonstrated five ways.
 | --- | --- | --- |
 | **3 minutes** | Open the [evidence dashboard](https://qa-test-automation-frameworks.github.io/.github/) — refreshed on a schedule from live CI metadata, validated before publish, readable without JavaScript. | Is the CI green, are the releases real, and is the evidence current? |
 | **15 minutes** | Follow the [Verity reviewer guide](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/blob/main/docs/reviewer-guide.md) and the [Playwright review guide](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/portfolio-review-guide.md). | How are LLM non-determinism and browser flakiness actually controlled? |
-| **Deep review** | Work through all five in order — ARIA → k6 → Selenium → Verity → Playwright — each with a documented, time-boxed review path. | Does the same engineering standard hold across every quality surface? |
+| **Deep review** | Work through all five in order — Verity → Playwright → k6 → ARIA → Selenium — each with a documented, time-boxed review path. | Does the same engineering standard hold across every quality surface? |
 
 ## The Engineering Standard
 
@@ -89,6 +94,18 @@ conventions behind those numbers are implemented publicly in the
 [Playwright](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework),
 [ARIA](https://github.com/qa-test-automation-frameworks/aria-api-framework), and
 [k6](https://github.com/qa-test-automation-frameworks/k6-performance-framework) repositories.
+
+## How This Portfolio Was Built
+
+Every repository was built over a focused, multi-week stretch, working with
+AI-assisted engineering tools rather than around them — the same practice
+this portfolio treats as a core quality-engineering skill rather than a
+shortcut. The frameworks, evidence contract, and governance patterns were
+directed and reviewed by hand: architecture decisions, contract boundaries,
+threshold placement, and the honesty rules (labeled limitations, quarantined
+gates, `NOT_REPRODUCED` as a distinct status) are engineering judgment calls,
+not generated defaults. Treat the commit history and CI runs, not the
+calendar, as the evidence of what was actually built and verified.
 
 ---
 
