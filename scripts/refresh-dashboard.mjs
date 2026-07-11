@@ -27,7 +27,7 @@ async function workflowMetrics(repository) {
   let workflow = null;
   if (repository.workflow) {
     const runs = await github(
-      `/repos/${owner}/${repository.name}/actions/workflows/${repository.workflow}/runs?status=completed&per_page=10`,
+      `/repos/${owner}/${repository.name}/actions/workflows/${repository.workflow}/runs?branch=main&status=completed&per_page=10`,
     );
     const completed = runs.workflow_runs ?? [];
     const latest = completed[0];
@@ -41,6 +41,8 @@ async function workflowMetrics(repository) {
           url: latest.html_url,
           runId: latest.id,
           headSha: latest.head_sha,
+          branch: latest.head_branch,
+          event: latest.event,
           updatedAt: latest.updated_at,
           durationSeconds: Math.round(
             (new Date(latest.updated_at) - new Date(latest.run_started_at ?? latest.created_at)) /
@@ -56,9 +58,32 @@ async function workflowMetrics(repository) {
   return workflow;
 }
 
+async function verificationManifest(repository) {
+  try {
+    const response = await github(
+      `/repos/${owner}/${repository.name}/contents/docs/evidence/latest-verification.json?ref=main`,
+    );
+    const encoded = Buffer.from(response.content, response.encoding ?? 'base64').toString('utf8');
+    return JSON.parse(encoded);
+  } catch (error) {
+    if (String(error).includes('returned 404')) return null;
+    throw error;
+  }
+}
+
 const FRESHNESS_HOURS = 36;
-const evidenceState = (repository, workflow, now = Date.now()) => {
-  if (!workflow?.updatedAt || workflow.conclusion !== 'success' || !repository.verificationUrl) {
+const evidenceState = (repository, workflow, manifest, now = Date.now()) => {
+  if (
+    !workflow?.updatedAt ||
+    workflow.conclusion !== 'success' ||
+    workflow.branch !== 'main' ||
+    !repository.verificationUrl ||
+    !manifest ||
+    manifest.verifiedSha !== workflow.headSha ||
+    manifest.workflow?.runId !== workflow.runId ||
+    manifest.workflow?.conclusion !== 'success' ||
+    manifest.evidenceState !== 'review-ready'
+  ) {
     return 'evidence-unavailable';
   }
   const ageHours = (now - new Date(workflow.updatedAt).getTime()) / 3_600_000;
@@ -118,7 +143,10 @@ const repositories = await Promise.all(
   definition.repositories.map(async (repository) => {
     const repo = metadata.get(repository.name);
     if (!repo) throw new Error(`Repository ${repository.name} was not returned by GitHub.`);
-    const metrics = await workflowMetrics(repository);
+    const [metrics, manifest] = await Promise.all([
+      workflowMetrics(repository),
+      verificationManifest(repository),
+    ]);
     return {
       ...repository,
       url: repo.url,
@@ -138,7 +166,8 @@ const repositories = await Promise.all(
       stars: repo.stargazerCount,
       forks: repo.forkCount,
       workflow: metrics,
-      evidenceState: evidenceState(repository, metrics),
+      evidenceManifest: manifest,
+      evidenceState: evidenceState(repository, metrics, manifest),
     };
   }),
 );
@@ -173,6 +202,8 @@ const formatDuration = (seconds) => {
 
 const evidenceLinks = (repository) =>
   [
+    ['Verification', repository.verificationUrl],
+    ['Limitations', repository.limitationsUrl],
     ['Report', repository.reportUrl],
     ['Docs', repository.docsUrl],
     ['Screenshot', repository.screenshotUrl],
