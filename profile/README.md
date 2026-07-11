@@ -12,6 +12,11 @@ Senior Quality Engineer (7+ years). This is not a collection of sample tests:
 each repository is a governed system with explicit architecture, controlled
 targets, failure evidence, and CI you can audit.
 
+This portfolio exists to support Staff SDET, Lead SDET, QA Architect, and
+Quality Engineering Lead conversations. Reach out on
+[LinkedIn](https://www.linkedin.com/in/prayag-vyas/) or through the
+[personal profile](https://github.com/prayagv).
+
 **Start here:** five reference frameworks demonstrate deterministic
 feedback, diagnosable failure, and governed delivery across UI, API contracts,
 performance, enterprise JVM execution, and LLM evaluation. Open the dashboard,
@@ -88,6 +93,18 @@ conventions behind those numbers are implemented publicly in the
 [Playwright](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework),
 [ARIA](https://github.com/qa-test-automation-frameworks/aria-api-framework), and
 [k6](https://github.com/qa-test-automation-frameworks/k6-performance-framework) repositories.
+
+## How This Portfolio Was Built
+
+Every repository was built over a focused, multi-week stretch, working with
+AI-assisted engineering tools rather than around them — the same practice
+this portfolio treats as a core quality-engineering skill rather than a
+shortcut. The frameworks, evidence contract, and governance patterns were
+directed and reviewed by hand: architecture decisions, contract boundaries,
+threshold placement, and the honesty rules (labeled limitations, quarantined
+gates, `NOT_REPRODUCED` as a distinct status) are engineering judgment calls,
+not generated defaults. Treat the commit history and CI runs, not the
+calendar, as the evidence of what was actually built and verified.
 
 ---
 
