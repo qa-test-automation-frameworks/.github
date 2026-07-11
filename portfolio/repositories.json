@@ -2,11 +2,11 @@
   "schemaVersion": 2,
   "organization": "qa-test-automation-frameworks",
   "recommendedReviewOrder": [
-    "verity-policy-coverage-eval-framework",
-    "playwright-typescript-framework",
-    "k6-performance-framework",
     "aria-api-framework",
-    "selenium-testng-java-framework"
+    "k6-performance-framework",
+    "selenium-testng-java-framework",
+    "verity-policy-coverage-eval-framework",
+    "playwright-typescript-framework"
   ],
   "repositories": [
     {
@@ -71,7 +71,7 @@
       "name": "k6-performance-framework",
       "label": "k6 Performance",
       "status": "configured",
-      "workflow": "pr-smoke.yml",
+      "workflow": "main-load.yml",
       "evidenceClass": "controlled + scheduled-load",
       "fullEvidenceWorkflow": "main-load.yml",
       "verificationUrl": "https://github.com/qa-test-automation-frameworks/k6-performance-framework/blob/main/docs/evidence/latest-verification.md",
