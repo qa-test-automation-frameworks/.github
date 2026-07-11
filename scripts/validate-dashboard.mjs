@@ -14,12 +14,16 @@ if (ageHours(data.generatedAt) > freshnessHours) {
   console.warn(`Dashboard snapshot is older than ${freshnessHours} hours; publication is stale until refreshed.`);
 }
 for (const repository of data.repositories) {
-  for (const field of ['name', 'label', 'status', 'url', 'docsUrl', 'verificationUrl', 'evidenceClass', 'evidenceState']) {
+  for (const field of ['name', 'label', 'status', 'url', 'docsUrl', 'verificationUrl', 'limitationsUrl', 'evidenceClass', 'evidenceState']) {
     if (!repository[field]) throw new Error(`${repository.name ?? 'unknown'} is missing ${field}`);
   }
   if (repository.evidenceState === 'review-ready') {
-    if (repository.workflow?.conclusion !== 'success' || !repository.workflow?.headSha || !repository.workflow?.url) {
+    if (repository.workflow?.branch !== 'main' || repository.workflow?.conclusion !== 'success' || !repository.workflow?.headSha || !repository.workflow?.url) {
       throw new Error(`${repository.name} is review-ready without complete workflow provenance`);
+    }
+    const manifest = repository.evidenceManifest;
+    if (!manifest || manifest.verifiedSha !== repository.workflow.headSha || manifest.workflow?.runId !== repository.workflow.runId || manifest.workflow?.conclusion !== 'success') {
+      throw new Error(`${repository.name} is review-ready without matching verification manifest`);
     }
     if (ageHours(repository.workflow.updatedAt) > freshnessHours) {
       throw new Error(`${repository.name} is review-ready with stale workflow evidence`);
