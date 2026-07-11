@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Live evidence for the QA Test Automation Frameworks portfolio: CI state, median runtimes, releases, and review order — refreshed on a schedule from public GitHub data."
+      content="Scheduled evidence for the QA Test Automation Frameworks portfolio: CI state, median runtimes, releases, provenance, and review order — refreshed from public GitHub data."
     />
     <title>Evidence Dashboard — QA Test Automation Frameworks</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230b1120'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%2334d399'/%3E%3C/svg%3E" />
@@ -34,15 +34,15 @@
 
     <header class="masthead">
       <p class="eyebrow hero-in">EVIDENCE DASHBOARD</p>
-      <h1 class="hero-in d1">The evidence, <span class="grad">live.</span></h1>
+      <h1 class="hero-in d1">Scheduled evidence, <span class="grad">auditable.</span></h1>
       <p class="deck hero-in d2">
         CI conclusions, median runtimes, releases, and repository activity for five
         reference frameworks — pulled from public GitHub data on a daily schedule,
-        validated before publish, and readable without JavaScript.
+        with explicit provenance and stale/unavailable states, readable without JavaScript.
       </p>
       <div class="freshness hero-in d3" aria-live="polite">
         <span class="pulse-dot" aria-hidden="true"></span>
-        <span id="freshness-state">Scheduled evidence snapshot</span>
+        <span id="freshness-state">Evidence snapshot is stale</span>
         <span class="sep" aria-hidden="true">·</span>
         <span id="generated-at">04/07/2026, 00:00:00 UTC</span>
       </div>
@@ -100,6 +100,7 @@
               <tr>
                 <th>Repository</th>
                 <th>Status</th>
+                <th>Evidence state</th>
                 <th>Latest CI</th>
                 <th>Median runtime</th>
                 <th>Release</th>
@@ -110,7 +111,8 @@
 <tbody id="repository-rows">
 <tr>
       <td><a href="https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework">Verity Policy Coverage Eval</a></td>
-      <td class="status review-ready">Review ready</td>
+      <td class="status configured">Configured</td>
+      <td class="status evidence-unavailable">evidence-unavailable</td>
       <td class="status success"><a href="https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/actions/workflows/pr-gate.yml">success</a></td>
       <td>Not measured (n=0)</td>
       <td><a href="https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/releases/tag/v0.1.0">v0.1.0</a></td>
@@ -119,7 +121,8 @@
     </tr>
 <tr>
       <td><a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework">Playwright TypeScript</a></td>
-      <td class="status review-ready">Review ready</td>
+      <td class="status configured">Configured</td>
+      <td class="status evidence-stale">evidence-stale</td>
       <td class="status success"><a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/27502508485">success</a></td>
       <td>3m 02s (n=10)</td>
       <td><a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases/tag/v1.0.0">v1.0.0</a></td>
@@ -128,7 +131,8 @@
     </tr>
 <tr>
       <td><a href="https://github.com/qa-test-automation-frameworks/aria-api-framework">ARIA API</a></td>
-      <td class="status review-ready">Review ready</td>
+      <td class="status configured">Configured</td>
+      <td class="status evidence-stale">evidence-stale</td>
       <td class="status success"><a href="https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/runs/27501595660">success</a></td>
       <td>1m 32s (n=10)</td>
       <td><a href="https://github.com/qa-test-automation-frameworks/aria-api-framework/releases/tag/v1.0.0">v1.0.0</a></td>
@@ -137,7 +141,8 @@
     </tr>
 <tr>
       <td><a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework">Selenium TestNG Java</a></td>
-      <td class="status review-ready">Review ready</td>
+      <td class="status configured">Configured</td>
+      <td class="status evidence-stale">evidence-stale</td>
       <td class="status success"><a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/runs/27501982770">success</a></td>
       <td>4m 11s (n=10)</td>
       <td><a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/releases/tag/v1.0.0">v1.0.0</a></td>
@@ -146,7 +151,8 @@
     </tr>
 <tr>
       <td><a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework">k6 Performance</a></td>
-      <td class="status review-ready">Review ready</td>
+      <td class="status configured">Configured</td>
+      <td class="status evidence-stale">evidence-stale</td>
       <td class="status success"><a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/runs/27501454957">success</a></td>
       <td>0m 43s (n=10)</td>
       <td><a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework/releases/tag/v0.4.0">v0.4.0</a></td>

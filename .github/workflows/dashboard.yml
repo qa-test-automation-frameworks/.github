@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: '20'
+      - name: Test dashboard contract
+        run: node --test scripts/dashboard.test.mjs
       - name: Refresh portfolio evidence
         env:
           GITHUB_TOKEN: ${{ github.token }}

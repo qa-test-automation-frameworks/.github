@@ -526,6 +526,15 @@ tbody td:first-child a:hover {
   color: var(--sky);
 }
 
+.status.configured {
+  color: var(--muted);
+}
+
+.status.evidence-stale,
+.status.evidence-unavailable {
+  color: var(--amber);
+}
+
 .status.success,
 .status.success a {
   color: var(--emerald);
