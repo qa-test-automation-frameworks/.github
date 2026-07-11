@@ -22,7 +22,7 @@ the deeper architecture.
 &nbsp;
 [![LinkedIn](https://img.shields.io/badge/LINKEDIN-0a66c2?style=for-the-badge)](https://www.linkedin.com/in/prayag-vyas/)
 
-[The frameworks](#the-frameworks) · [Choose by capability](#choose-by-capability) · [Quality model](../docs/five-framework-quality-model.md) · [Review paths](#choose-your-review-depth) · [Field results](#field-results)
+[The frameworks](#the-frameworks) · [Choose by capability](#choose-by-capability) · [Quality model](../docs/five-framework-quality-model.md) · [Operating model](../docs/quality-operating-model.md) · [Review paths](#choose-your-review-depth) · [Field results](#field-results)
 
 </div>
 
@@ -70,10 +70,11 @@ demonstrated five ways.
 
 ![Terminal listing the engineering standard: determinism — controlled targets, seeded data, pinned runtimes; reliability — retry budgets, quarantine with expiry, flake triage; diagnostics — traces, screenshots, structured logs, failure examples; architecture — ADRs, documented trade-offs, extension points; governance — CI gates, dependency scans, SBOMs, release notes; honesty — limitations labeled and repository-local documentation checks.](assets/terminal.svg)
 
-The documentation workflow in this repository checks local Markdown links and a
-small, explicit list of unsupported self-assessment terms in this repository's
-checkout. It is a repository-local guard, not semantic validation of every
-organization repository. See the [portfolio evidence standard](../docs/PORTFOLIO_EVIDENCE_STANDARD.md).
+The documentation workflow in this repository rejects a small, explicit list of
+unsupported self-assessment terms. A separate evidence contract validates each
+repository's default-branch run, SHA, verification record, and freshness. These
+are repository-local and portfolio-contract checks; they are not semantic
+validation of every organization claim. See the [portfolio evidence standard](../docs/PORTFOLIO_EVIDENCE_STANDARD.md).
 
 ## Field Results
 

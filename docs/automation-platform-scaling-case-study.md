@@ -20,6 +20,10 @@ This is an anonymized professional case study from a client delivery environment
 | Critical-scope automation | At risk for schedule | 100% automated about one month early |
 | Authoring throughput | Slower manual test translation | About 3x faster authoring |
 
+## Measurement Method
+
+These are approximate, anonymized delivery measurements from the focused migration window. Stability is the proportion of representative executions that completed without an infrastructure or product-test failure; retries are reported separately where available. Runtime is wall-clock duration for the same critical scope before and after the change. The test-mix counts are inventory counts, not a quality score. “About 3x faster authoring” means comparable critical scenarios completed per authoring period after shared fixtures and builders were adopted. The figures are directional evidence for the decision, not independently reproducible public benchmark data.
+
 ## Decision Record
 
 The important decision was to stop optimizing for raw test count. The suite had enough checks to look comprehensive, but too many of them were slow, duplicate, and fragile. I moved the strategy toward a test pyramid: keep a small number of business-critical E2E journeys, push repeatable validations down to API and service layers, and make each layer own a distinct failure signal.

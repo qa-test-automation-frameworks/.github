@@ -95,6 +95,8 @@ for (const repository of data.repositories) {
   const evidence = document.createElement('td');
   evidence.className = 'evidence-links';
   for (const [label, href] of [
+    ['Verification', repository.verificationUrl],
+    ['Limitations', repository.limitationsUrl],
     ['Report', repository.reportUrl],
     ['Docs', repository.docsUrl],
     ['Screenshot', repository.screenshotUrl],
