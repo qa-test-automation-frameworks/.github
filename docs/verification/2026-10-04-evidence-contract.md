@@ -26,3 +26,14 @@ dashboard also includes them but is disabled_inactivity in GitHub's inspected
 API state. New-revision remote execution must be checked separately; no scheduled
 refresh/deployment is claimed. Next: E02 native emitters, E03 durable publication
 and E04 dashboard ingestion/operational checks. No threshold or exception changed.
+
+## Native remote execution
+
+Exactb0a347750fa2826cdd6b681107b7f1391d8da02b
+[Documentation37206212278](https://github.com/qa-test-automation-frameworks/.github/actions/runs/37206212278)
+completed successfully. Native log records30 contract cases passed, zero failed/
+skipped under the selected Node runtime, then the local claim/link check passed.
+The two existing dashboard controls were run locally in the32-case total, not by
+this remote documentation job. Native remote metadata/log are retained separately
+from local source/fixture hashes. Dashboard schedule remains disabled; this proves
+E01 contract execution only, not E02 emitters or E03–E04 publication/ingestion.
