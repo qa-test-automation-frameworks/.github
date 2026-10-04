@@ -6,12 +6,20 @@ on:
       - '**/*.md'
       - 'portfolio/**'
       - 'site/**'
+      - 'scripts/evidence-*.mjs'
+      - 'scripts/validate-evidence.mjs'
+      - '.nvmrc'
+      - '.github/workflows/docs.yml'
   push:
     branches: [main]
     paths:
       - '**/*.md'
       - 'portfolio/**'
       - 'site/**'
+      - 'scripts/evidence-*.mjs'
+      - 'scripts/validate-evidence.mjs'
+      - '.nvmrc'
+      - '.github/workflows/docs.yml'
 
 permissions:
   contents: read
@@ -21,6 +29,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version-file: .nvmrc
+      - name: Test portable evidence contract
+        run: node --test scripts/evidence-contract.test.mjs
       - name: Reject local links and unsupported self-assessment in this repository
         shell: bash
         run: |

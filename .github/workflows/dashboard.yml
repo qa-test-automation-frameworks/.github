@@ -20,7 +20,7 @@ jobs:
         with:
           node-version-file: .nvmrc
       - name: Test dashboard contract
-        run: node --test scripts/dashboard.test.mjs
+        run: node --test scripts/dashboard.test.mjs scripts/evidence-contract.test.mjs
       - name: Refresh portfolio evidence
         env:
           GITHUB_TOKEN: ${{ github.token }}

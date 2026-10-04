@@ -1,0 +1,116 @@
+{
+  "clock": "2026-10-04T09:00:00Z",
+  "warning": "All execution examples are synthetic contract fixtures, not current framework evidence.",
+  "cases": [
+    {
+      "file": "valid-pass.json",
+      "valid": true,
+      "state": "fresh"
+    },
+    {
+      "file": "real-failure-published.json",
+      "valid": true,
+      "state": "failed"
+    },
+    {
+      "file": "credential-skip.json",
+      "valid": true,
+      "state": "skipped"
+    },
+    {
+      "file": "empty-collection-failure.json",
+      "valid": true,
+      "state": "failed"
+    },
+    {
+      "file": "empty-collection-false-pass.json",
+      "valid": false,
+      "state": null
+    },
+    {
+      "file": "missing-shard-failure.json",
+      "valid": true,
+      "state": "failed"
+    },
+    {
+      "file": "missing-shard-false-pass.json",
+      "valid": false,
+      "state": null
+    },
+    {
+      "file": "cancelled.json",
+      "valid": true,
+      "state": "cancelled"
+    },
+    {
+      "file": "in-progress.json",
+      "valid": true,
+      "state": "in_progress"
+    },
+    {
+      "file": "unavailable.json",
+      "valid": true,
+      "state": "unavailable"
+    },
+    {
+      "file": "stale.json",
+      "valid": true,
+      "state": "stale"
+    },
+    {
+      "file": "unsupported-schema.json",
+      "valid": false,
+      "state": null
+    },
+    {
+      "file": "future-completion.json",
+      "valid": true,
+      "state": "invalid"
+    },
+    {
+      "file": "invalid-calendar-time.json",
+      "valid": false,
+      "state": null
+    },
+    {
+      "file": "duplicate-shards.json",
+      "valid": false,
+      "state": null
+    },
+    {
+      "file": "unsafe-url.json",
+      "valid": false,
+      "state": null
+    },
+    {
+      "file": "passed-publication-failed.json",
+      "valid": true,
+      "state": "fresh"
+    },
+    {
+      "file": "historical-attestation.json",
+      "valid": true,
+      "state": "historical"
+    },
+    {
+      "file": "valid-selenium-testng-java-framework.json",
+      "valid": true,
+      "state": "fresh"
+    },
+    {
+      "file": "valid-aria-api-framework.json",
+      "valid": true,
+      "state": "fresh"
+    },
+    {
+      "file": "valid-verity-policy-coverage-eval-framework.json",
+      "valid": true,
+      "state": "fresh"
+    },
+    {
+      "file": "valid-k6-performance-framework.json",
+      "valid": true,
+      "state": "fresh"
+    }
+  ]
+}

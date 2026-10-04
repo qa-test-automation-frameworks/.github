@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 3,
+  "kind": "execution",
+  "repository": "qa-test-automation-frameworks/aria-api-framework",
+  "sourceSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "limitations": [
+    "Synthetic contract fixture, not executed framework evidence."
+  ],
+  "workflow": {
+    "id": "ci.yml",
+    "name": "Synthetic CI",
+    "runId": "1001",
+    "attempt": 1,
+    "url": "https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/runs/1001",
+    "trigger": "pull_request",
+    "branch": "fixture/evidence-contract"
+  },
+  "scope": {
+    "id": "api.controlled",
+    "evidenceClass": "controlled",
+    "required": true,
+    "freshnessPolicy": "daily_gate_v1"
+  },
+  "target": {
+    "identity": "fixture-target",
+    "revision": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "fixtureVersion": "fixture-v1",
+    "environment": "isolated_ci",
+    "profile": null,
+    "tools": {
+      "java": "21",
+      "junit": "5"
+    }
+  },
+  "execution": {
+    "disposition": "passed",
+    "reason": null,
+    "startedAt": "2026-10-04T08:00:00Z",
+    "completedAt": "2026-10-04T08:01:00Z",
+    "integrity": "complete",
+    "counts": {
+      "unit": "test_case",
+      "selected": 3,
+      "executed": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 1,
+      "retried": 1,
+      "semantics": "Synthetic schema fixture only; count semantics selected by this runner."
+    },
+    "measurements": [],
+    "shards": {
+      "expected": [
+        "single"
+      ],
+      "received": [
+        "single"
+      ]
+    }
+  },
+  "publication": {
+    "disposition": "pending",
+    "reason": null,
+    "publishedAt": null,
+    "reportUrl": null,
+    "artifacts": []
+  },
+  "generator": {
+    "name": "contract_fixture",
+    "version": "3.0.0"
+  }
+}

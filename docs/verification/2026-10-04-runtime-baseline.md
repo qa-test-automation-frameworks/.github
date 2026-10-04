@@ -25,3 +25,13 @@ integrations disabled. Native logs/source hashes are retained in
 pending; default-branch publication and E01–E04 evidence semantics remain separate.
 The original local main's five ahead-only commits are preserved; implementation
 starts from fetched origin/main, which had the same source tree.
+
+## Remote and scheduling limits
+
+Exact262f3cd6fc801e47af7b763205c6ea98260dbf78 Documentation37205087082
+passed its local-link/claim check. GitHub's workflow API reports the Portfolio
+dashboard workflow294348590 as disabled_inactivity. Therefore there is no remote
+Node dashboard execution, refresh, upload or deployment proof at this revision.
+The local fresh-clone/twice-repeated checks remain valid in their stated scope.
+Re-enabling and verifying scheduled operation belongs to E04/P03; a successful
+documentation job is not substituted for that workflow.

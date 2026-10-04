@@ -32,7 +32,7 @@ freshness.
 Use Node.js 24.21.0 from `.nvmrc`, then run:
 
 ```sh
-node --test scripts/dashboard.test.mjs
+node --test scripts/dashboard.test.mjs scripts/evidence-contract.test.mjs
 node scripts/validate-dashboard.mjs
 ```
 
@@ -44,3 +44,11 @@ path checks its contract and fallback, not current live evidence. Refreshing wit
 and network access. CI selects `.nvmrc`; a stable later Node24 patch/minor is
 allowed but not automatically verified. Unsupported runtimes fail before token
 or snapshot handling with a setup instruction.
+
+The version3 [evidence contract](docs/PORTFOLIO_EVIDENCE_STANDARD.md) is validated
+locally and by the documentation workflow. It separates native execution, artifact
+publication and historical attestations. Framework emitters, durable publication
+and dashboard ingestion remain subsequent E02–E04 packages; the synthetic fixtures
+are contract controls, not framework execution proof. GitHub currently reports
+the dashboard workflow disabled for inactivity, so current scheduled refresh must
+be verified before treating the dashboard as operational.
