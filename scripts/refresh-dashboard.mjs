@@ -1,3 +1,4 @@
+import './check-runtime.mjs';
 import { readFile, writeFile } from 'node:fs/promises';
 
 const owner = 'qa-test-automation-frameworks';

@@ -1,3 +1,4 @@
+import './check-runtime.mjs';
 import { readFile } from 'node:fs/promises';
 
 const data = JSON.parse(

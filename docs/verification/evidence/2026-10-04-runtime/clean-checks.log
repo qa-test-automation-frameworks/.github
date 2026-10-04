@@ -1,0 +1,27 @@
+v24.21.0
+✔ portfolio definition and snapshot use the same repository set (2.059575ms)
+✔ every repository exposes evidence metadata and an explicit state (0.396346ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 126.378796
+Dashboard snapshot is older than 36 hours; publication is stale until refreshed.
+verity-policy-coverage-eval-framework has a configured workflow but no measured completed sample.
+Validated 5 dashboard repositories.
+✔ portfolio definition and snapshot use the same repository set (3.413792ms)
+✔ every repository exposes evidence metadata and an explicit state (0.6831ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 104.303116
+Dashboard snapshot is older than 36 hours; publication is stale until refreshed.
+verity-policy-coverage-eval-framework has a configured workflow but no measured completed sample.
+Validated 5 dashboard repositories.

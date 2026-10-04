@@ -1,0 +1,12 @@
+file:///home/vyaspc/Documents/Repo/.github/scripts/check-runtime.mjs:13
+  throw new Error(`Use Node.js ${pin} from .nvmrc (or a newer stable Node24 patch/minor); detected ${process.version}. No npm installation is required for these scripts.`);
+        ^
+
+Error: Use Node.js 24.21.0 from .nvmrc (or a newer stable Node24 patch/minor); detected v18.19.1. No npm installation is required for these scripts.
+    at file:///home/vyaspc/Documents/Repo/.github/scripts/check-runtime.mjs:13:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:336:24)
+    at async loadESM (node:internal/process/esm_loader:34:7)
+    at async handleMainPromise (node:internal/modules/run_main:106:12)
+
+Node.js v18.19.1

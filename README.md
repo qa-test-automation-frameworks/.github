@@ -26,3 +26,21 @@ version on GitHub Pages; check `generatedAt` in the deployed file, not this one,
 freshness.
 
 ![Portfolio dashboard overview](site/assets/dashboard-overview.png)
+
+## Local first success
+
+Use Node.js 24.21.0 from `.nvmrc`, then run:
+
+```sh
+node --test scripts/dashboard.test.mjs
+node scripts/validate-dashboard.mjs
+```
+
+These scripts use Node's standard library; no npm install, credentials, network
+or browser is needed for this stored-snapshot check. Repeat the same commands
+after editing. The committed snapshot may correctly warn that it is stale; this
+path checks its contract and fallback, not current live evidence. Refreshing with
+`node scripts/refresh-dashboard.mjs` separately needs a read token in GITHUB_TOKEN
+and network access. CI selects `.nvmrc`; a stable later Node24 patch/minor is
+allowed but not automatically verified. Unsupported runtimes fail before token
+or snapshot handling with a setup instruction.
