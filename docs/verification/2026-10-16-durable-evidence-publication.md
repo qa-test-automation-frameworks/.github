@@ -29,10 +29,12 @@ tree at 500 MiB, retain run bundles for 365 days, and keep each scope's latest
 bundle/index pointer even when that execution has aged beyond its freshness
 policy. Expire older non-latest bundles first when either limit is reached. Keep
 GitHub Actions artifacts as short-lived diagnostic copies; the sanitized
-manifest, summaries and checksums survive their expiry. The branch publisher
-and pruning job are not implemented yet, so this is a selected policy rather
-than a verified storage bound. Do not claim public freshness until the index is
-retrieved and verified.
+manifest, summaries and checksums survive ordinary Actions artifact expiry.
+The reusable publisher prunes the checked-out evidence tree before committing;
+it rewrites the evidence branch as a single snapshot commit so expired bundles
+do not remain reachable through that branch's commit history. This bounds the
+published tree, not GitHub's internal object-store reclamation time. Do not
+claim public freshness until the index is retrieved and verified.
 
 Local package command shape:
 
@@ -59,7 +61,8 @@ trusted-run sequence for calling repositories: it verifies the source run via
 the Actions API against an exact workflow file, downloads artifacts by the
 verified run ID, discovers only schema-v3 JSON records, and writes one commit
 containing both immutable bundle and latest index on `portfolio-evidence`.
-Publisher runs are serialized per repository. The calling workflow must be a
+Publisher runs are serialized per repository, and retention pruning runs before
+the commit. The calling workflow must be a
 `workflow_run` listener on its default branch and filter to completed `main`
 push/schedule/manual runs; the reusable workflow independently verifies those
 claims before the write token is used. Framework callers must pin the reusable
@@ -67,7 +70,9 @@ workflow to a full 40-character commit SHA. Remote publication is still pending 
 has a caller workflow, exact-run CI, and a retrieved bundle whose checksums
 validate.
 
-The local controls in `scripts/publish-evidence.test.mjs` cover record identity,
-checksums, immutable paths, interrupted latest-index updates and out-of-order
-completion. They do not by themselves prove remote publication, repository
-permissions, artifact retrieval, branch retention or scheduled operation.
+The local controls in `scripts/publish-evidence.test.mjs` and
+`scripts/prune-evidence.test.mjs` cover record identity, checksums, immutable
+paths, interrupted latest-index updates, out-of-order completion, expiration,
+size-limit pruning and refusal to delete oversized latest bundles. They do not
+by themselves prove remote publication, repository permissions, artifact
+retrieval, branch retention or scheduled operation.
