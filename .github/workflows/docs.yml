@@ -7,6 +7,8 @@ on:
       - 'portfolio/**'
       - 'site/**'
       - 'scripts/evidence-*.mjs'
+      - 'scripts/publish-evidence.mjs'
+      - 'scripts/publish-evidence.test.mjs'
       - 'scripts/validate-evidence.mjs'
       - '.nvmrc'
       - '.github/workflows/docs.yml'
@@ -17,6 +19,8 @@ on:
       - 'portfolio/**'
       - 'site/**'
       - 'scripts/evidence-*.mjs'
+      - 'scripts/publish-evidence.mjs'
+      - 'scripts/publish-evidence.test.mjs'
       - 'scripts/validate-evidence.mjs'
       - '.nvmrc'
       - '.github/workflows/docs.yml'
@@ -33,7 +37,7 @@ jobs:
         with:
           node-version-file: .nvmrc
       - name: Test portable evidence contract
-        run: node --test scripts/evidence-contract.test.mjs
+        run: node --test scripts/evidence-contract.test.mjs scripts/publish-evidence.test.mjs
       - name: Reject local links and unsupported self-assessment in this repository
         shell: bash
         run: |
