@@ -14,11 +14,13 @@ and generated portfolio dashboard for
 | Dashboard assets | [Site source](site) |
 | CI | [Dashboard workflow](https://github.com/qa-test-automation-frameworks/.github/actions/workflows/dashboard.yml) |
 
-The dashboard refresh workflow reads public GitHub metadata and writes a timestamped, pre-rendered
-scheduled evidence snapshot that remains complete without JavaScript. Each card exposes its evidence
-state, source run, commit, and verification record. It does not claim private adoption, production
-usage, or organizational outcomes that cannot be independently verified. See the
-[Portfolio Evidence Standard](docs/PORTFOLIO_EVIDENCE_STANDARD.md).
+The dashboard refresh workflow reads public GitHub metadata and durable evidence records and writes a
+timestamped, pre-rendered snapshot that remains complete without JavaScript. It separates execution
+from publication, shows the latest attempt and last success, checks source compatibility and declared
+freshness, and displays known limitations. It does not claim private adoption, production usage, or
+organizational outcomes that cannot be independently verified. See the
+[Portfolio Evidence Standard](docs/PORTFOLIO_EVIDENCE_STANDARD.md) and the
+[dashboard evidence-state and refresh-health notes](docs/verification/2026-10-16-dashboard-evidence-state.md).
 
 `site/data/portfolio.json` in this checkout is a committed seed snapshot for local rendering
 and testing, not the live evidence record. The scheduled workflow regenerates the deployed
@@ -47,8 +49,8 @@ or snapshot handling with a setup instruction.
 
 The version3 [evidence contract](docs/PORTFOLIO_EVIDENCE_STANDARD.md) is validated
 locally and by the documentation workflow. It separates native execution, artifact
-publication and historical attestations. Framework emitters, durable publication
-and dashboard ingestion remain subsequent E02–E04 packages; the synthetic fixtures
-are contract controls, not framework execution proof. GitHub currently reports
-the dashboard workflow disabled for inactivity, so current scheduled refresh must
-be verified before treating the dashboard as operational.
+publication and historical attestations. Framework emitters and the central publisher
+are implemented on the roadmap branch, while end-to-end public publication remains
+unverified; synthetic fixtures are contract controls, not framework execution proof.
+GitHub currently reports the dashboard workflow disabled for inactivity, so the
+committed snapshot is intentionally unavailable until a default-branch refresh runs.

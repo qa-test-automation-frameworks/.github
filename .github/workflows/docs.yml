@@ -6,6 +6,15 @@ on:
       - '**/*.md'
       - 'portfolio/**'
       - 'site/**'
+      - 'site/render.mjs'
+      - 'scripts/dashboard-state.mjs'
+      - 'scripts/dashboard-state.test.mjs'
+      - 'scripts/dashboard-render.test.mjs'
+      - 'scripts/dashboard-refresh-health.mjs'
+      - 'scripts/dashboard-refresh-health.test.mjs'
+      - 'scripts/dashboard.test.mjs'
+      - 'scripts/refresh-dashboard.mjs'
+      - 'scripts/validate-dashboard.mjs'
       - 'scripts/evidence-*.mjs'
       - 'scripts/publish-evidence.mjs'
       - 'scripts/publish-evidence.test.mjs'
@@ -23,6 +32,15 @@ on:
       - '**/*.md'
       - 'portfolio/**'
       - 'site/**'
+      - 'site/render.mjs'
+      - 'scripts/dashboard-state.mjs'
+      - 'scripts/dashboard-state.test.mjs'
+      - 'scripts/dashboard-render.test.mjs'
+      - 'scripts/dashboard-refresh-health.mjs'
+      - 'scripts/dashboard-refresh-health.test.mjs'
+      - 'scripts/dashboard.test.mjs'
+      - 'scripts/refresh-dashboard.mjs'
+      - 'scripts/validate-dashboard.mjs'
       - 'scripts/evidence-*.mjs'
       - 'scripts/publish-evidence.mjs'
       - 'scripts/publish-evidence.test.mjs'
@@ -47,9 +65,11 @@ jobs:
         with:
           node-version-file: .nvmrc
       - name: Test portable evidence contract
-        run: node --test scripts/evidence-contract.test.mjs scripts/publish-evidence.test.mjs scripts/prune-evidence.test.mjs
+        run: node --test scripts/dashboard.test.mjs scripts/dashboard-state.test.mjs scripts/dashboard-refresh-health.test.mjs scripts/dashboard-render.test.mjs scripts/evidence-contract.test.mjs scripts/publish-evidence.test.mjs scripts/prune-evidence.test.mjs
       - name: Test trusted source-run verifier
         run: python3 scripts/test-verify-source-run.py
+      - name: Validate static dashboard snapshot
+        run: node scripts/validate-dashboard.mjs
       - name: Reject local links and unsupported self-assessment in this repository
         shell: bash
         run: |

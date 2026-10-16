@@ -34,17 +34,19 @@
 
     <header class="masthead">
       <p class="eyebrow hero-in">EVIDENCE DASHBOARD</p>
-      <h1 class="hero-in d1">Scheduled evidence, <span class="grad">auditable.</span></h1>
+      <h1 class="hero-in d1">Execution and publication, <span class="grad">auditable.</span></h1>
       <p class="deck hero-in d2">
-        CI conclusions, median runtimes, releases, and repository activity for five
-        reference frameworks — pulled from public GitHub data on a daily schedule,
-        with explicit provenance and stale/unavailable states, readable without JavaScript.
+        Latest default-branch attempts, last successes, retained evidence, freshness
+        policy and repository activity for five reference frameworks. Test execution
+        and publication remain separate, with provenance and limitations visible without JavaScript.
       </p>
       <div class="freshness hero-in d3" aria-live="polite">
         <span class="pulse-dot" aria-hidden="true"></span>
-        <span id="freshness-state">Evidence snapshot is stale</span>
+        <span id="freshness-state">Refresh unavailable; showing the last static snapshot</span>
         <span class="sep" aria-hidden="true">·</span>
-        <span id="generated-at">04/07/2026, 00:00:00 UTC</span>
+        <span id="generated-at">2026-07-04 00:00:00 UTC</span>
+        <span class="sep" aria-hidden="true">·</span>
+        <span id="refresh-schedule-state">Scheduled refresh: disabled_inactivity</span>
       </div>
       <div class="chip-row hero-in d4" aria-label="Frameworks in this portfolio">
         <a class="chip" style="--a:#a78bfa" href="#matrix"><span class="chip-dot"></span>VERITY</a>
@@ -90,8 +92,8 @@
           <p class="eyebrow">REPOSITORY MATRIX</p>
           <h2 id="matrix-title">Evidence at a glance</h2>
           <p class="section-intro">
-            Latest CI conclusion, median workflow runtime over the last ten completed
-            runs, current release, and default-branch activity — per framework.
+            Latest trusted attempt, its execution result, durable publication state,
+            last success, and each required evidence scope's freshness and limitations.
           </p>
         </div>
         <div class="table-wrap">
@@ -99,10 +101,12 @@
             <thead>
               <tr>
                 <th>Repository</th>
-                <th>Status</th>
                 <th>Evidence state</th>
-                <th>Latest CI</th>
-                <th>Median runtime</th>
+                <th>Latest attempt</th>
+                <th>Execution</th>
+                <th>Publication</th>
+                <th>Last success</th>
+                <th>Freshness and limitations</th>
                 <th>Release</th>
                 <th>Activity</th>
                 <th>Evidence</th>
@@ -111,53 +115,63 @@
 <tbody id="repository-rows">
 <tr>
       <td><a href="https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework">Verity Policy Coverage Eval</a></td>
-      <td class="status configured">Configured</td>
       <td class="status evidence-unavailable">evidence-unavailable</td>
-      <td class="status success"><a href="https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/actions/workflows/pr-gate.yml">success</a></td>
-      <td>Not measured (n=0)</td>
+      <td>No trusted default-branch run</td>
+      <td class="status unavailable">unavailable</td>
+      <td class="status unavailable">unavailable</td>
+      <td>No successful run found</td>
+      <td><details><summary>No verified published scope records</summary><p>No public durable index is available.</p></details></td>
       <td><a href="https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/releases/tag/v0.1.0">v0.1.0</a></td>
       <td>341 commits · 0 PRs</td>
-      <td class="evidence-links"><a href="https://qa-test-automation-frameworks.github.io/verity-policy-coverage-eval-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/main/docs/screenshots/calibration.png">Screenshot</a></td>
+      <td class="evidence-links"><a href="https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/blob/main/docs/evidence/latest-verification.md">Verification</a> <a href="https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/blob/main/docs/known-issues.md">Limitations</a> <a href="https://qa-test-automation-frameworks.github.io/verity-policy-coverage-eval-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/main/docs/screenshots/calibration.png">Screenshot</a></td>
     </tr>
 <tr>
       <td><a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework">Playwright TypeScript</a></td>
-      <td class="status configured">Configured</td>
-      <td class="status evidence-stale">evidence-stale</td>
-      <td class="status success"><a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/27502508485">success</a></td>
-      <td>3m 02s (n=10)</td>
+      <td class="status evidence-unavailable">evidence-unavailable</td>
+      <td>No trusted default-branch run</td>
+      <td class="status unavailable">unavailable</td>
+      <td class="status unavailable">unavailable</td>
+      <td>No successful run found</td>
+      <td><details><summary>No verified published scope records</summary><p>No public durable index is available.</p></details></td>
       <td><a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases/tag/v1.0.0">v1.0.0</a></td>
       <td>32 commits · 21 PRs</td>
-      <td class="evidence-links"><a href="https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/playwright-typescript-framework/main/docs/assets/screenshots/debugging-failure.png">Screenshot</a></td>
+      <td class="evidence-links"><a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/evidence/latest-verification.md">Verification</a> <a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/known-issues.md">Limitations</a> <a href="https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/playwright-typescript-framework/main/docs/assets/screenshots/debugging-failure.png">Screenshot</a></td>
     </tr>
 <tr>
       <td><a href="https://github.com/qa-test-automation-frameworks/aria-api-framework">ARIA API</a></td>
-      <td class="status configured">Configured</td>
-      <td class="status evidence-stale">evidence-stale</td>
-      <td class="status success"><a href="https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/runs/27501595660">success</a></td>
-      <td>1m 32s (n=10)</td>
+      <td class="status evidence-unavailable">evidence-unavailable</td>
+      <td>No trusted default-branch run</td>
+      <td class="status unavailable">unavailable</td>
+      <td class="status unavailable">unavailable</td>
+      <td>No successful run found</td>
+      <td><details><summary>No verified published scope records</summary><p>No public durable index is available.</p></details></td>
       <td><a href="https://github.com/qa-test-automation-frameworks/aria-api-framework/releases/tag/v1.0.0">v1.0.0</a></td>
       <td>45 commits · 29 PRs</td>
-      <td class="evidence-links"><a href="https://qa-test-automation-frameworks.github.io/aria-api-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/aria-api-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/aria-api-framework/main/docs/assets/allure/allure-diagnostic-attachment.png">Screenshot</a></td>
+      <td class="evidence-links"><a href="https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/evidence/latest-verification.md">Verification</a> <a href="https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/known-issues.md">Limitations</a> <a href="https://qa-test-automation-frameworks.github.io/aria-api-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/aria-api-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/aria-api-framework/main/docs/assets/allure/allure-diagnostic-attachment.png">Screenshot</a></td>
     </tr>
 <tr>
       <td><a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework">Selenium TestNG Java</a></td>
-      <td class="status configured">Configured</td>
-      <td class="status evidence-stale">evidence-stale</td>
-      <td class="status success"><a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/runs/27501982770">success</a></td>
-      <td>4m 11s (n=10)</td>
+      <td class="status evidence-unavailable">evidence-unavailable</td>
+      <td>No trusted default-branch run</td>
+      <td class="status unavailable">unavailable</td>
+      <td class="status unavailable">unavailable</td>
+      <td>No successful run found</td>
+      <td><details><summary>No verified published scope records</summary><p>No public durable index is available.</p></details></td>
       <td><a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/releases/tag/v1.0.0">v1.0.0</a></td>
       <td>62 commits · 21 PRs</td>
-      <td class="evidence-links"><a href="https://qa-test-automation-frameworks.github.io/selenium-testng-java-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/selenium-testng-java-framework/main/docs/images/allure-failed-screenshot-attachment-preview.png">Screenshot</a></td>
+      <td class="evidence-links"><a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/evidence/latest-verification.md">Verification</a> <a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/known-issues.md">Limitations</a> <a href="https://qa-test-automation-frameworks.github.io/selenium-testng-java-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/selenium-testng-java-framework/main/docs/images/allure-failed-screenshot-attachment-preview.png">Screenshot</a></td>
     </tr>
 <tr>
       <td><a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework">k6 Performance</a></td>
-      <td class="status configured">Configured</td>
-      <td class="status evidence-stale">evidence-stale</td>
-      <td class="status success"><a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/runs/27501454957">success</a></td>
-      <td>0m 43s (n=10)</td>
+      <td class="status evidence-unavailable">evidence-unavailable</td>
+      <td>No trusted default-branch run</td>
+      <td class="status unavailable">unavailable</td>
+      <td class="status unavailable">unavailable</td>
+      <td>No successful run found</td>
+      <td><details><summary>No verified published scope records</summary><p>No public durable index is available.</p></details></td>
       <td><a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework/releases/tag/v0.4.0">v0.4.0</a></td>
       <td>123 commits · 15 PRs</td>
-      <td class="evidence-links"><a href="https://qa-test-automation-frameworks.github.io/k6-performance-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/k6-performance-framework/main/docs/images/performance-overview-example.svg">Screenshot</a></td>
+      <td class="evidence-links"><a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework/blob/main/docs/evidence/latest-verification.md">Verification</a> <a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework/blob/main/docs/known-issues.md">Limitations</a> <a href="https://qa-test-automation-frameworks.github.io/k6-performance-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/k6-performance-framework/main/docs/images/performance-overview-example.svg">Screenshot</a></td>
     </tr>
 </tbody>
           </table>
