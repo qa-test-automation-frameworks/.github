@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
-import { publishEvidence } from './publish-evidence.mjs';
+import { discoverEvidence, publishEvidence } from './publish-evidence.mjs';
 
 const fixture = new URL('../portfolio/evidence/fixtures/valid-pass.json', import.meta.url);
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -92,6 +92,22 @@ test('rejects credentials and redaction sentinels in evidence text', async () =>
     record.limitations.push('SYNTHETIC_SECRET_SENTINEL');
     await writeFile(context.input, JSON.stringify(record));
     await assert.rejects(publishEvidence({ ...context, inputs: [context.input] }), /secret-like value or redaction sentinel/);
+  } finally {
+    await rm(context.root, { recursive: true, force: true });
+  }
+});
+
+test('artifact discovery selects schema-v3 records and fails closed on broken evidence JSON', async () => {
+  const context = await setup();
+  const artifactDir = join(context.root, 'artifacts');
+  try {
+    await mkdir(join(artifactDir, 'reports', 'evidence'), { recursive: true });
+    await writeFile(join(artifactDir, 'reports', 'summary.json'), '{"summary":true}');
+    await writeFile(join(artifactDir, 'reports', 'evidence', 'record.json'), await readFile(context.input));
+    const files = await discoverEvidence(artifactDir);
+    assert.deepEqual(files, [join(artifactDir, 'reports', 'evidence', 'record.json')]);
+    await writeFile(join(artifactDir, 'reports', 'evidence', 'broken.json'), '{');
+    await assert.rejects(discoverEvidence(artifactDir), /Unreadable evidence JSON/);
   } finally {
     await rm(context.root, { recursive: true, force: true });
   }

@@ -1,10 +1,10 @@
 import './check-runtime.mjs';
 import { createHash } from 'node:crypto';
-import { mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
+import { mkdir, readdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { validateEvidence } from './evidence-contract.mjs';
 
-const required = [
+const metadataOptions = [
   'repository',
   'run-id',
   'attempt',
@@ -15,7 +15,6 @@ const required = [
   'conclusion',
   'completed-at',
   'run-url',
-  'output',
 ];
 
 function argumentsFrom(argv) {
@@ -33,10 +32,37 @@ function argumentsFrom(argv) {
       throw new Error(`Unexpected argument: ${option}`);
     }
   }
+  const required = ['output'];
+  if (!values.get('metadata-file')) required.push(...metadataOptions);
   const missing = required.filter((key) => !values.get(key));
   if (missing.length) throw new Error(`Missing required options: ${missing.join(', ')}`);
-  if (!inputs.length || inputs.some((input) => !input)) throw new Error('Provide at least one --input file.');
+  if ((!inputs.length && !values.get('input-dir')) || inputs.some((input) => !input)) throw new Error('Provide --input files or --input-dir.');
   return { values, inputs };
+}
+
+export async function discoverEvidence(directory) {
+  const found = [];
+  async function walk(current) {
+    const entries = await readdir(current, { withFileTypes: true });
+    for (const entry of entries) {
+      const path = join(current, entry.name);
+      if (entry.isDirectory()) await walk(path);
+      else if (entry.isFile() && entry.name.endsWith('.json')) {
+        let record;
+        try {
+          record = JSON.parse(await readFile(path, 'utf8'));
+        } catch (error) {
+          if (path.toLowerCase().includes('evidence')) throw new Error(`Unreadable evidence JSON ${path}: ${error.message}`);
+          continue;
+        }
+        if (record?.schemaVersion === 3) found.push(path);
+      }
+      if (found.length > 1000) throw new Error('Artifact set exceeds the 1,000-record safety limit.');
+    }
+  }
+  await walk(resolve(directory));
+  if (!found.length) throw new Error(`No schema-v3 evidence records found under ${directory}.`);
+  return found;
 }
 
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -207,10 +233,14 @@ export async function publishEvidence({ metadata, inputs, output, beforeLatest =
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const { values, inputs } = argumentsFrom(process.argv.slice(2));
-  const metadata = sourceMetadata(values);
+  const metadataValues = values.get('metadata-file')
+    ? new Map(Object.entries(JSON.parse(await readFile(values.get('metadata-file'), 'utf8'))))
+    : values;
+  const metadata = sourceMetadata(metadataValues);
   const output = values.get('output');
   try {
-    const result = await publishEvidence({ metadata, inputs, output });
+    const selectedInputs = values.get('input-dir') ? await discoverEvidence(values.get('input-dir')) : inputs;
+    const result = await publishEvidence({ metadata, inputs: selectedInputs, output });
     console.log(JSON.stringify(result));
   } catch (error) {
     console.error(error.message);

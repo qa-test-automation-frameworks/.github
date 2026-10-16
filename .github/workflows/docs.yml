@@ -9,6 +9,9 @@ on:
       - 'scripts/evidence-*.mjs'
       - 'scripts/publish-evidence.mjs'
       - 'scripts/publish-evidence.test.mjs'
+      - 'scripts/verify-source-run.py'
+      - 'scripts/test-verify-source-run.py'
+      - '.github/workflows/publish-evidence.yml'
       - 'scripts/validate-evidence.mjs'
       - '.nvmrc'
       - '.github/workflows/docs.yml'
@@ -21,6 +24,9 @@ on:
       - 'scripts/evidence-*.mjs'
       - 'scripts/publish-evidence.mjs'
       - 'scripts/publish-evidence.test.mjs'
+      - 'scripts/verify-source-run.py'
+      - 'scripts/test-verify-source-run.py'
+      - '.github/workflows/publish-evidence.yml'
       - 'scripts/validate-evidence.mjs'
       - '.nvmrc'
       - '.github/workflows/docs.yml'
@@ -38,6 +44,8 @@ jobs:
           node-version-file: .nvmrc
       - name: Test portable evidence contract
         run: node --test scripts/evidence-contract.test.mjs scripts/publish-evidence.test.mjs
+      - name: Test trusted source-run verifier
+        run: python3 scripts/test-verify-source-run.py
       - name: Reject local links and unsupported self-assessment in this repository
         shell: bash
         run: |
