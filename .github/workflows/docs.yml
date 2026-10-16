@@ -2,56 +2,32 @@ name: Documentation
 
 on:
   pull_request:
-    paths:
-      - '**/*.md'
-      - 'portfolio/**'
-      - 'site/**'
-      - 'site/render.mjs'
-      - 'scripts/dashboard-state.mjs'
-      - 'scripts/dashboard-state.test.mjs'
-      - 'scripts/dashboard-render.test.mjs'
-      - 'scripts/dashboard-refresh-health.mjs'
-      - 'scripts/dashboard-refresh-health.test.mjs'
-      - 'scripts/dashboard.test.mjs'
-      - 'scripts/refresh-dashboard.mjs'
-      - 'scripts/validate-dashboard.mjs'
-      - 'scripts/evidence-*.mjs'
-      - 'scripts/publish-evidence.mjs'
-      - 'scripts/publish-evidence.test.mjs'
-      - 'scripts/prune-evidence.mjs'
-      - 'scripts/prune-evidence.test.mjs'
-      - 'scripts/verify-source-run.py'
-      - 'scripts/test-verify-source-run.py'
-      - '.github/workflows/publish-evidence.yml'
-      - 'scripts/validate-evidence.mjs'
-      - '.nvmrc'
-      - '.github/workflows/docs.yml'
   push:
     branches: [main]
     paths:
-      - '**/*.md'
-      - 'portfolio/**'
-      - 'site/**'
-      - 'site/render.mjs'
-      - 'scripts/dashboard-state.mjs'
-      - 'scripts/dashboard-state.test.mjs'
-      - 'scripts/dashboard-render.test.mjs'
-      - 'scripts/dashboard-refresh-health.mjs'
-      - 'scripts/dashboard-refresh-health.test.mjs'
-      - 'scripts/dashboard.test.mjs'
-      - 'scripts/refresh-dashboard.mjs'
-      - 'scripts/validate-dashboard.mjs'
-      - 'scripts/evidence-*.mjs'
-      - 'scripts/publish-evidence.mjs'
-      - 'scripts/publish-evidence.test.mjs'
-      - 'scripts/prune-evidence.mjs'
-      - 'scripts/prune-evidence.test.mjs'
-      - 'scripts/verify-source-run.py'
-      - 'scripts/test-verify-source-run.py'
-      - '.github/workflows/publish-evidence.yml'
-      - 'scripts/validate-evidence.mjs'
-      - '.nvmrc'
-      - '.github/workflows/docs.yml'
+      - "**/*.md"
+      - "portfolio/**"
+      - "site/**"
+      - "site/render.mjs"
+      - "scripts/dashboard-state.mjs"
+      - "scripts/dashboard-state.test.mjs"
+      - "scripts/dashboard-render.test.mjs"
+      - "scripts/dashboard-refresh-health.mjs"
+      - "scripts/dashboard-refresh-health.test.mjs"
+      - "scripts/dashboard.test.mjs"
+      - "scripts/refresh-dashboard.mjs"
+      - "scripts/validate-dashboard.mjs"
+      - "scripts/evidence-*.mjs"
+      - "scripts/publish-evidence.mjs"
+      - "scripts/publish-evidence.test.mjs"
+      - "scripts/prune-evidence.mjs"
+      - "scripts/prune-evidence.test.mjs"
+      - "scripts/verify-source-run.py"
+      - "scripts/test-verify-source-run.py"
+      - ".github/workflows/publish-evidence.yml"
+      - "scripts/validate-evidence.mjs"
+      - ".nvmrc"
+      - ".github/workflows/docs.yml"
 
 permissions:
   contents: read
