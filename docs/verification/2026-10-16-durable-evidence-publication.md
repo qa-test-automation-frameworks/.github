@@ -59,8 +59,14 @@ retention enforcement and live retrieval remain open.
 The reusable workflow `.github/workflows/publish-evidence.yml` implements that
 trusted-run sequence for calling repositories: it verifies the source run via
 the Actions API against an exact workflow file, downloads artifacts by the
-verified run ID, discovers only schema-v3 JSON records, and writes one commit
+verified run ID, discovers schema-v3 JSON records, and writes one commit
 containing both immutable bundle and latest index on `portfolio-evidence`.
+For sharded producers, a validated `execution-evidence-v3.json` envelope may
+carry the complete aggregated records. The publisher uses that envelope for
+scopes it contains and ignores duplicate leaf records for those same scopes;
+unrelated leaf scopes remain publishable. Duplicate scopes that remain after
+selection still fail closed. This lets the producer's native aggregator prove
+the expected and received shard sets before durable publication.
 Publisher runs are serialized per repository, and retention pruning runs before
 the commit. The calling workflow must be a
 `workflow_run` listener on its default branch and filter to completed `main`

@@ -34,7 +34,7 @@ jobs:
       - name: Check out shared publisher at immutable ref
         run: |
           set -euo pipefail
-          PUBLISHER_REF='135141d1f4ba0013716782a1c3ee8e05f3890541'
+          PUBLISHER_REF='251ce24ebf85f052ef6d16255d9adccf10ef8d42'
           [[ "$PUBLISHER_REF" =~ ^[0-9a-f]{40}$ ]]
           git init publisher
           git -C publisher remote add origin https://github.com/qa-test-automation-frameworks/.github.git

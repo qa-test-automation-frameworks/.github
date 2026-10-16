@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import test from 'node:test';
 import { discoverEvidence, publishEvidence } from './publish-evidence.mjs';
 
@@ -108,6 +108,57 @@ test('artifact discovery selects schema-v3 records and fails closed on broken ev
     assert.deepEqual(files, [join(artifactDir, 'reports', 'evidence', 'record.json')]);
     await writeFile(join(artifactDir, 'reports', 'evidence', 'broken.json'), '{');
     await assert.rejects(discoverEvidence(artifactDir), /Unreadable evidence JSON/);
+  } finally {
+    await rm(context.root, { recursive: true, force: true });
+  }
+});
+
+test('uses complete aggregate scopes instead of publishing duplicate shard leaves', async () => {
+  const context = await setup();
+  const artifactDir = join(context.root, 'artifacts');
+  try {
+    const record = JSON.parse(await readFile(context.input, 'utf8'));
+    const aggregate = structuredClone(record);
+    aggregate.execution.shards.expected = ['shard-1-of-2', 'shard-2-of-2'];
+    aggregate.execution.shards.received = ['shard-1-of-2', 'shard-2-of-2'];
+    const leaf1 = structuredClone(record);
+    leaf1.execution.shards.expected = ['shard-1-of-2'];
+    leaf1.execution.shards.received = ['shard-1-of-2'];
+    const leaf2 = structuredClone(record);
+    leaf2.execution.shards.expected = ['shard-2-of-2'];
+    leaf2.execution.shards.received = ['shard-2-of-2'];
+    const unrelated = structuredClone(record);
+    unrelated.scope.id = 'browser.firefox';
+    const aggregatePath = join(artifactDir, 'rendered-report', 'execution-evidence-v3.json');
+    await mkdir(join(artifactDir, 'reports-e2e-1-of-2'), { recursive: true });
+    await mkdir(join(artifactDir, 'reports-e2e-2-of-2'), { recursive: true });
+    await mkdir(join(artifactDir, 'framework-unit'), { recursive: true });
+    await mkdir(dirname(aggregatePath), { recursive: true });
+    await writeFile(join(artifactDir, 'reports-e2e-1-of-2', 'evidence-v3.json'), JSON.stringify(leaf1));
+    await writeFile(join(artifactDir, 'reports-e2e-2-of-2', 'evidence-v3.json'), JSON.stringify(leaf2));
+    await writeFile(join(artifactDir, 'framework-unit', 'evidence-v3.json'), JSON.stringify(unrelated));
+    await writeFile(aggregatePath, `${JSON.stringify({ schemaVersion: 1, records: [aggregate] }, null, 2)}\n`);
+
+    const inputs = await discoverEvidence(artifactDir);
+    assert.deepEqual(inputs, [aggregatePath, join(artifactDir, 'framework-unit', 'evidence-v3.json')]);
+    const result = await publishEvidence({ ...context, inputs });
+    const manifest = JSON.parse(await readFile(join(result.bundlePath, 'manifest.json'), 'utf8'));
+    assert.deepEqual(manifest.records.map((item) => item.scope).sort(), ['browser.chromium', 'browser.firefox']);
+    const shardRecord = JSON.parse(await readFile(join(result.bundlePath, manifest.records.find((item) => item.scope === 'browser.chromium').path), 'utf8'));
+    assert.deepEqual(shardRecord.execution.shards.received, ['shard-1-of-2', 'shard-2-of-2']);
+  } finally {
+    await rm(context.root, { recursive: true, force: true });
+  }
+});
+
+test('rejects malformed aggregate execution evidence', async () => {
+  const context = await setup();
+  const artifactDir = join(context.root, 'artifacts');
+  try {
+    const aggregatePath = join(artifactDir, 'rendered-report', 'execution-evidence-v3.json');
+    await mkdir(dirname(aggregatePath), { recursive: true });
+    await writeFile(aggregatePath, JSON.stringify({ schemaVersion: 1, records: [] }));
+    await assert.rejects(discoverEvidence(artifactDir), /Invalid aggregated execution evidence/);
   } finally {
     await rm(context.root, { recursive: true, force: true });
   }
