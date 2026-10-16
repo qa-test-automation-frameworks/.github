@@ -34,7 +34,7 @@ jobs:
       - name: Check out shared publisher at immutable ref
         run: |
           set -euo pipefail
-          PUBLISHER_REF='8fd1b67c99bb045945062aacf624565e7d0d9540'
+          PUBLISHER_REF='135141d1f4ba0013716782a1c3ee8e05f3890541'
           [[ "$PUBLISHER_REF" =~ ^[0-9a-f]{40}$ ]]
           git init publisher
           git -C publisher remote add origin https://github.com/qa-test-automation-frameworks/.github.git
@@ -61,14 +61,22 @@ jobs:
           path: source-artifacts
 
       - name: Initialize durable evidence branch
+        id: evidence_branch
         run: |
           set -euo pipefail
           git -C evidence fetch origin portfolio-evidence 2>/dev/null || true
           if git -C evidence rev-parse --verify refs/remotes/origin/portfolio-evidence >/dev/null 2>&1; then
+            echo "expected_sha=$(git -C evidence rev-parse refs/remotes/origin/portfolio-evidence)" >> "$GITHUB_OUTPUT"
             git -C evidence checkout -B portfolio-evidence refs/remotes/origin/portfolio-evidence
           else
+            echo "expected_sha=none" >> "$GITHUB_OUTPUT"
             git -C evidence checkout --orphan portfolio-evidence
             git -C evidence rm -rf --ignore-unmatch .
+          fi
+          unexpected=$(find evidence -mindepth 1 -maxdepth 1 ! -name .git ! -name repositories -print -quit)
+          if [[ -n "$unexpected" ]]; then
+            echo "::error::Unexpected top-level path on evidence branch: $unexpected"
+            exit 1
           fi
 
       - name: Select Node runtime from shared publisher policy
@@ -83,17 +91,36 @@ jobs:
             --input-dir source-artifacts \
             --output evidence
 
+      - name: Enforce evidence retention budget
+        run: node publisher/scripts/prune-evidence.mjs evidence
+
       - name: Commit bundle and latest index together
         env:
           SOURCE_RUN_ID: ${{ inputs.source-run-id }}
+          EXPECTED_SHA: ${{ steps.evidence_branch.outputs.expected_sha }}
         run: |
           set -euo pipefail
-          git -C evidence add repositories
-          if git -C evidence diff --cached --quiet; then
-            echo "Evidence bundle and index are already present."
+          git -C evidence add -A -- repositories
+          tree=$(git -C evidence write-tree)
+          if [[ "$EXPECTED_SHA" != none ]]; then
+            old_tree=$(git -C evidence rev-parse "${EXPECTED_SHA}^{tree}")
+          else
+            old_tree=''
+          fi
+          if [[ "$tree" == "$old_tree" ]]; then
+            echo "Evidence bundle, index and retention state are unchanged."
             exit 0
           fi
-          git -C evidence -c user.name='prayagv' \
-            -c user.email='76861333+prayagv@users.noreply.github.com' \
-            commit -m "Publish sanitized evidence for run ${SOURCE_RUN_ID}"
-          git -C evidence push origin portfolio-evidence
+          commit=$(printf 'Publish sanitized evidence for run %s\n' "$SOURCE_RUN_ID" | \
+            git -C evidence -c user.name='prayagv' \
+              -c user.email='76861333+prayagv@users.noreply.github.com' \
+              commit-tree "$tree")
+          git -C evidence update-ref refs/heads/portfolio-evidence "$commit"
+          if [[ "$EXPECTED_SHA" == none ]]; then
+            git -C evidence push --force-with-lease=refs/heads/portfolio-evidence: \
+              origin refs/heads/portfolio-evidence:refs/heads/portfolio-evidence
+          else
+            git -C evidence push \
+              --force-with-lease="refs/heads/portfolio-evidence:${EXPECTED_SHA}" \
+              origin refs/heads/portfolio-evidence:refs/heads/portfolio-evidence
+          fi
