@@ -21,6 +21,9 @@ freshness, and displays known limitations. It does not claim private adoption, p
 organizational outcomes that cannot be independently verified. See the
 [Portfolio Evidence Standard](docs/PORTFOLIO_EVIDENCE_STANDARD.md) and the
 [dashboard evidence-state and refresh-health notes](docs/verification/2026-10-16-dashboard-evidence-state.md).
+The proposed shared reference target is defined in
+[ADR 007](docs/adr/007-shared-reference-application.md); it is a design decision,
+not a claim that the application or integrations exist yet.
 
 `site/data/portfolio.json` in this checkout is a committed seed snapshot for local rendering
 and testing, not the live evidence record. The scheduled workflow regenerates the deployed
