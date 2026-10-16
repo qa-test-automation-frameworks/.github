@@ -1,0 +1,99 @@
+name: Publish portfolio evidence
+
+on:
+  workflow_call:
+    inputs:
+      source-run-id:
+        description: Completed trusted workflow run whose artifacts should be retained.
+        required: true
+        type: number
+      workflow-file:
+        description: Exact source workflow file, such as .github/workflows/pr-gate.yml.
+        required: true
+        type: string
+
+concurrency:
+  group: portfolio-evidence-${{ github.repository }}
+  cancel-in-progress: false
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository for evidence branch update
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          path: evidence
+
+      - name: Check out shared publisher at immutable ref
+        run: |
+          set -euo pipefail
+          PUBLISHER_REF='8fd1b67c99bb045945062aacf624565e7d0d9540'
+          [[ "$PUBLISHER_REF" =~ ^[0-9a-f]{40}$ ]]
+          git init publisher
+          git -C publisher remote add origin https://github.com/qa-test-automation-frameworks/.github.git
+          git -C publisher fetch --depth=1 origin "$PUBLISHER_REF"
+          git -C publisher checkout --detach FETCH_HEAD
+
+      - name: Verify source run identity and trusted event
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          SOURCE_RUN_ID: ${{ inputs.source-run-id }}
+          SOURCE_WORKFLOW_FILE: ${{ inputs.workflow-file }}
+        run: |
+          python3 publisher/scripts/verify-source-run.py \
+            --run-id "$SOURCE_RUN_ID" \
+            --workflow-file "$SOURCE_WORKFLOW_FILE" \
+            --output source-metadata.json
+
+      - name: Download all artifacts from the verified source run
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          run-id: ${{ inputs.source-run-id }}
+          github-token: ${{ github.token }}
+          path: source-artifacts
+
+      - name: Initialize durable evidence branch
+        run: |
+          set -euo pipefail
+          git -C evidence fetch origin portfolio-evidence 2>/dev/null || true
+          if git -C evidence rev-parse --verify refs/remotes/origin/portfolio-evidence >/dev/null 2>&1; then
+            git -C evidence checkout -B portfolio-evidence refs/remotes/origin/portfolio-evidence
+          else
+            git -C evidence checkout --orphan portfolio-evidence
+            git -C evidence rm -rf --ignore-unmatch .
+          fi
+
+      - name: Select Node runtime from shared publisher policy
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version-file: publisher/.nvmrc
+
+      - name: Prepare immutable evidence bundle and latest index
+        run: |
+          node publisher/scripts/publish-evidence.mjs \
+            --metadata-file source-metadata.json \
+            --input-dir source-artifacts \
+            --output evidence
+
+      - name: Commit bundle and latest index together
+        env:
+          SOURCE_RUN_ID: ${{ inputs.source-run-id }}
+        run: |
+          set -euo pipefail
+          git -C evidence add repositories
+          if git -C evidence diff --cached --quiet; then
+            echo "Evidence bundle and index are already present."
+            exit 0
+          fi
+          git -C evidence -c user.name='prayagv' \
+            -c user.email='76861333+prayagv@users.noreply.github.com' \
+            commit -m "Publish sanitized evidence for run ${SOURCE_RUN_ID}"
+          git -C evidence push origin portfolio-evidence
