@@ -42,6 +42,9 @@ function argumentsFrom(argv) {
 
 export async function discoverEvidence(directory) {
   const found = [];
+  const aggregated = [];
+  const direct = [];
+  let recordCount = 0;
   async function walk(current) {
     const entries = await readdir(current, { withFileTypes: true });
     for (const entry of entries) {
@@ -55,14 +58,35 @@ export async function discoverEvidence(directory) {
           if (path.toLowerCase().includes('evidence')) throw new Error(`Unreadable evidence JSON ${path}: ${error.message}`);
           continue;
         }
-        if (record?.schemaVersion === 3) found.push(path);
+        if (entry.name === 'execution-evidence-v3.json') {
+          if (record?.schemaVersion !== 1 || !Array.isArray(record.records) || !record.records.length || record.records.length > 1000 || record.records.some((item) => item?.schemaVersion !== 3)) {
+            throw new Error(`Invalid aggregated execution evidence ${path}.`);
+          }
+          recordCount += record.records.length;
+          aggregated.push({ path, scopes: record.records.map((item) => item.scope?.id).filter((id) => typeof id === 'string') });
+          found.push(path);
+        } else if (record?.schemaVersion === 3) {
+          recordCount += 1;
+          direct.push({ path, scope: record.scope?.id });
+          found.push(path);
+        }
       }
-      if (found.length > 1000) throw new Error('Artifact set exceeds the 1,000-record safety limit.');
+      if (recordCount > 1000) throw new Error('Artifact set exceeds the 1,000-record safety limit.');
     }
   }
   await walk(resolve(directory));
   if (!found.length) throw new Error(`No schema-v3 evidence records found under ${directory}.`);
-  return found;
+  const aggregatedScopes = new Set(aggregated.flatMap((item) => item.scopes));
+  return [...aggregated.map((item) => item.path), ...direct.filter((item) => !aggregatedScopes.has(item.scope)).map((item) => item.path)];
+}
+
+function recordsFromInput(input, bytes) {
+  const value = JSON.parse(bytes.toString('utf8'));
+  if (input.split(/[\\/]/).at(-1) !== 'execution-evidence-v3.json') return [{ record: value, bytes }];
+  if (value?.schemaVersion !== 1 || !Array.isArray(value.records) || !value.records.length || value.records.length > 1000 || value.records.some((record) => record?.schemaVersion !== 3)) {
+    throw new Error(`${input}: invalid aggregated execution evidence.`);
+  }
+  return value.records.map((record) => ({ record, bytes: Buffer.from(`${JSON.stringify(record, null, 2)}\n`) }));
 }
 
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -130,22 +154,24 @@ export async function publishEvidence({ metadata, inputs, output, beforeLatest =
   const scopes = new Set();
   for (const input of inputs) {
     const bytes = await readFile(input);
-    const record = JSON.parse(bytes.toString('utf8'));
-    const errors = validateEvidence(record);
-    if (errors.length) throw new Error(`${input}: invalid evidence record\n${errors.join('\n')}`);
-    rejectSensitiveText(record, input);
-    if (record.kind !== 'execution') throw new Error(`${input}: historical attestations cannot be published as current execution.`);
-    if (
-      record.repository !== metadata.repository ||
-      record.workflow.runId !== metadata.runId ||
-      record.workflow.attempt !== metadata.attempt ||
-      record.sourceSha.toLowerCase() !== metadata.sourceSha ||
-      record.workflow.trigger !== metadata.event ||
-      record.workflow.branch !== metadata.branch
-    ) throw new Error(`${input}: evidence identity does not match the trusted source run.`);
-    if (scopes.has(record.scope.id)) throw new Error(`Duplicate scope ID in source run: ${record.scope.id}`);
-    scopes.add(record.scope.id);
-    records.push({ input, bytes, record, digest: sha256(bytes) });
+    for (const item of recordsFromInput(input, bytes)) {
+      const { record, bytes: recordBytes } = item;
+      const errors = validateEvidence(record);
+      if (errors.length) throw new Error(`${input}: invalid evidence record\n${errors.join('\n')}`);
+      rejectSensitiveText(record, input);
+      if (record.kind !== 'execution') throw new Error(`${input}: historical attestations cannot be published as current execution.`);
+      if (
+        record.repository !== metadata.repository ||
+        record.workflow.runId !== metadata.runId ||
+        record.workflow.attempt !== metadata.attempt ||
+        record.sourceSha.toLowerCase() !== metadata.sourceSha ||
+        record.workflow.trigger !== metadata.event ||
+        record.workflow.branch !== metadata.branch
+      ) throw new Error(`${input}: evidence identity does not match the trusted source run.`);
+      if (scopes.has(record.scope.id)) throw new Error(`Duplicate scope ID in source run: ${record.scope.id}`);
+      scopes.add(record.scope.id);
+      records.push({ input, bytes: recordBytes, record, digest: sha256(recordBytes) });
+    }
   }
 
   const outputRoot = resolve(output);
