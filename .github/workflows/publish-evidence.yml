@@ -1,0 +1,126 @@
+name: Publish portfolio evidence
+
+on:
+  workflow_call:
+    inputs:
+      source-run-id:
+        description: Completed trusted workflow run whose artifacts should be retained.
+        required: true
+        type: number
+      workflow-file:
+        description: Exact source workflow file, such as .github/workflows/pr-gate.yml.
+        required: true
+        type: string
+
+concurrency:
+  group: portfolio-evidence-${{ github.repository }}
+  cancel-in-progress: false
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository for evidence branch update
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          path: evidence
+
+      - name: Check out shared publisher at immutable ref
+        run: |
+          set -euo pipefail
+          PUBLISHER_REF='135141d1f4ba0013716782a1c3ee8e05f3890541'
+          [[ "$PUBLISHER_REF" =~ ^[0-9a-f]{40}$ ]]
+          git init publisher
+          git -C publisher remote add origin https://github.com/qa-test-automation-frameworks/.github.git
+          git -C publisher fetch --depth=1 origin "$PUBLISHER_REF"
+          git -C publisher checkout --detach FETCH_HEAD
+
+      - name: Verify source run identity and trusted event
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          SOURCE_RUN_ID: ${{ inputs.source-run-id }}
+          SOURCE_WORKFLOW_FILE: ${{ inputs.workflow-file }}
+        run: |
+          python3 publisher/scripts/verify-source-run.py \
+            --run-id "$SOURCE_RUN_ID" \
+            --workflow-file "$SOURCE_WORKFLOW_FILE" \
+            --output source-metadata.json
+
+      - name: Download all artifacts from the verified source run
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          run-id: ${{ inputs.source-run-id }}
+          github-token: ${{ github.token }}
+          path: source-artifacts
+
+      - name: Initialize durable evidence branch
+        id: evidence_branch
+        run: |
+          set -euo pipefail
+          git -C evidence fetch origin portfolio-evidence 2>/dev/null || true
+          if git -C evidence rev-parse --verify refs/remotes/origin/portfolio-evidence >/dev/null 2>&1; then
+            echo "expected_sha=$(git -C evidence rev-parse refs/remotes/origin/portfolio-evidence)" >> "$GITHUB_OUTPUT"
+            git -C evidence checkout -B portfolio-evidence refs/remotes/origin/portfolio-evidence
+          else
+            echo "expected_sha=none" >> "$GITHUB_OUTPUT"
+            git -C evidence checkout --orphan portfolio-evidence
+            git -C evidence rm -rf --ignore-unmatch .
+          fi
+          unexpected=$(find evidence -mindepth 1 -maxdepth 1 ! -name .git ! -name repositories -print -quit)
+          if [[ -n "$unexpected" ]]; then
+            echo "::error::Unexpected top-level path on evidence branch: $unexpected"
+            exit 1
+          fi
+
+      - name: Select Node runtime from shared publisher policy
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version-file: publisher/.nvmrc
+
+      - name: Prepare immutable evidence bundle and latest index
+        run: |
+          node publisher/scripts/publish-evidence.mjs \
+            --metadata-file source-metadata.json \
+            --input-dir source-artifacts \
+            --output evidence
+
+      - name: Enforce evidence retention budget
+        run: node publisher/scripts/prune-evidence.mjs evidence
+
+      - name: Commit bundle and latest index together
+        env:
+          SOURCE_RUN_ID: ${{ inputs.source-run-id }}
+          EXPECTED_SHA: ${{ steps.evidence_branch.outputs.expected_sha }}
+        run: |
+          set -euo pipefail
+          git -C evidence add -A -- repositories
+          tree=$(git -C evidence write-tree)
+          if [[ "$EXPECTED_SHA" != none ]]; then
+            old_tree=$(git -C evidence rev-parse "${EXPECTED_SHA}^{tree}")
+          else
+            old_tree=''
+          fi
+          if [[ "$tree" == "$old_tree" ]]; then
+            echo "Evidence bundle, index and retention state are unchanged."
+            exit 0
+          fi
+          commit=$(printf 'Publish sanitized evidence for run %s\n' "$SOURCE_RUN_ID" | \
+            git -C evidence -c user.name='prayagv' \
+              -c user.email='76861333+prayagv@users.noreply.github.com' \
+              commit-tree "$tree")
+          git -C evidence update-ref refs/heads/portfolio-evidence "$commit"
+          if [[ "$EXPECTED_SHA" == none ]]; then
+            git -C evidence push --force-with-lease=refs/heads/portfolio-evidence: \
+              origin refs/heads/portfolio-evidence:refs/heads/portfolio-evidence
+          else
+            git -C evidence push \
+              --force-with-lease="refs/heads/portfolio-evidence:${EXPECTED_SHA}" \
+              origin refs/heads/portfolio-evidence:refs/heads/portfolio-evidence
+          fi

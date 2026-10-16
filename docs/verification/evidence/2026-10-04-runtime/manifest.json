@@ -1,0 +1,43 @@
+{
+  "node": "24.21.0",
+  "sourceFiles": [
+    {
+      "path": ".nvmrc",
+      "sha256": "73fb1b615e2043a933be1c0895cde4358036acc28d785692509b822aa53c761f"
+    },
+    {
+      "path": ".github/workflows/dashboard.yml",
+      "sha256": "fabfea639a2b5449835fd9e8a50438dedd1dafbc677de9d8174984b5998fd389"
+    },
+    {
+      "path": "scripts/check-runtime.mjs",
+      "sha256": "2399c90404e897d70e0e2a88ee784bf83b381f14a200c5aeb63f061fd4f816e5"
+    },
+    {
+      "path": "scripts/dashboard.test.mjs",
+      "sha256": "bafa41b34019cc1397ca5ea2a1ad427a9a1d3d9aade672b84e510980addd8cf7"
+    },
+    {
+      "path": "scripts/refresh-dashboard.mjs",
+      "sha256": "60d39f71cc01c8b08cfd9f3cf2dddb04fabe67616367415779ea430ccc514107"
+    },
+    {
+      "path": "scripts/validate-dashboard.mjs",
+      "sha256": "c61602c24699d36d96f13f97da0a036d1c51b25fb45e6e3d914cfbf8abebbb34"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "clean-checks.log",
+      "sha256": "2658bc6e5ead4a24c9137af3a7775403340d356d31fa856364ce918eda3f0af8"
+    },
+    {
+      "path": "old-major-negative.log",
+      "sha256": "10c5f739e843507e043782b2105cbe6aac61f5879784c9e35187efdcd2840dd6"
+    },
+    {
+      "path": "old-patch-negative.log",
+      "sha256": "64ab14b8e45fdf276948cf6f1e5e2e50ef085044abdd2e35e8f14b3de82b6827"
+    }
+  ]
+}

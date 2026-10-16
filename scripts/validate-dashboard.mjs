@@ -1,36 +1,68 @@
+import './check-runtime.mjs';
 import { readFile } from 'node:fs/promises';
 
-const data = JSON.parse(
-  await readFile(new URL('../site/data/portfolio.json', import.meta.url), 'utf8'),
-);
+const data = JSON.parse(await readFile(new URL('../site/data/portfolio.json', import.meta.url), 'utf8'));
+const allowedEvidenceStates = new Set([
+  'review-ready',
+  'evidence-stale',
+  'evidence-unavailable',
+  'code-mismatch',
+  'failed',
+  'cancelled',
+  'historical',
+]);
+const trustedEvents = new Set(['push', 'schedule', 'workflow_dispatch']);
 
-if (data.schemaVersion !== 2 || !data.generatedAt || !Array.isArray(data.repositories)) {
-  throw new Error('Dashboard snapshot does not match schema version 2.');
+if (data.schemaVersion !== 3 || !data.generatedAt || !Array.isArray(data.repositories)) {
+  throw new Error('Dashboard snapshot does not match schema version 3.');
+}
+if (!Number.isFinite(Date.parse(data.generatedAt))) throw new Error('Dashboard snapshot has an invalid generatedAt timestamp.');
+if (!data.refresh || !['available', 'unavailable'].includes(data.refresh.status)) {
+  throw new Error('Dashboard must expose the status of its last refresh.');
+}
+if (!data.refresh.schedule || typeof data.refresh.schedule.status !== 'string') {
+  throw new Error('Dashboard must expose the scheduled refresh health state.');
 }
 
-const freshnessHours = 36;
-const ageHours = (timestamp) => (Date.now() - new Date(timestamp).getTime()) / 3_600_000;
-if (ageHours(data.generatedAt) > freshnessHours) {
-  console.warn(`Dashboard snapshot is older than ${freshnessHours} hours; publication is stale until refreshed.`);
-}
 for (const repository of data.repositories) {
-  for (const field of ['name', 'label', 'status', 'url', 'docsUrl', 'verificationUrl', 'limitationsUrl', 'evidenceClass', 'evidenceState']) {
+  for (const field of ['name', 'label', 'status', 'url', 'docsUrl', 'verificationUrl', 'limitationsUrl', 'evidenceClass', 'evidenceState', 'publication', 'evidenceSummary']) {
     if (!repository[field]) throw new Error(`${repository.name ?? 'unknown'} is missing ${field}`);
   }
-  if (repository.evidenceState === 'review-ready') {
-    if (repository.workflow?.branch !== 'main' || repository.workflow?.conclusion !== 'success' || !repository.workflow?.headSha || !repository.workflow?.url) {
-      throw new Error(`${repository.name} is review-ready without complete workflow provenance`);
+  if (!allowedEvidenceStates.has(repository.evidenceState)) throw new Error(`${repository.name} has unsupported evidence state ${repository.evidenceState}`);
+  if (!['available', 'unavailable', 'not-published'].includes(repository.publication.indexStatus)) {
+    throw new Error(`${repository.name} has unsupported publication index status.`);
+  }
+
+  const latest = repository.workflow?.latestAttempt;
+  if (repository.workflow?.status === 'available') {
+    if (!latest || latest.branch !== repository.defaultBranch || !trustedEvents.has(latest.event) || !/^\d+$/.test(latest.runId)) {
+      throw new Error(`${repository.name} has a latest workflow attempt without trusted provenance.`);
     }
-    const manifest = repository.evidenceManifest;
-    if (!manifest || manifest.verifiedSha !== repository.workflow.headSha || manifest.workflow?.runId !== repository.workflow.runId || manifest.workflow?.conclusion !== 'success') {
-      throw new Error(`${repository.name} is review-ready without matching verification manifest`);
-    }
-    if (ageHours(repository.workflow.updatedAt) > freshnessHours) {
-      throw new Error(`${repository.name} is review-ready with stale workflow evidence`);
+    const url = new URL(latest.url);
+    if (url.hostname !== 'github.com' || url.pathname !== `/${data.organization}/${repository.name}/actions/runs/${latest.runId}`) {
+      throw new Error(`${repository.name} has an unsafe workflow URL.`);
     }
   }
-  if (repository.evidenceState === 'evidence-unavailable' && repository.workflow?.conclusion === 'success' && repository.workflow?.sampleSize === 0) {
-    console.warn(`${repository.name} has a configured workflow but no measured completed sample.`);
+  if (repository.workflow?.status === 'unavailable' && repository.evidenceState === 'review-ready') {
+    throw new Error(`${repository.name} cannot appear review-ready while current workflow data is unavailable.`);
+  }
+  if (repository.evidenceState === 'review-ready') {
+    if (!repository.currentSha || repository.evidenceSummary.requiredCount === 0 || repository.evidenceSummary.freshRequiredCount !== repository.evidenceSummary.requiredCount) {
+      throw new Error(`${repository.name} is review-ready without current, fresh required evidence.`);
+    }
+    if (repository.workflow?.status !== 'available') throw new Error(`${repository.name} is review-ready without an available workflow query.`);
+  }
+  if (repository.publication.status === 'published' && (repository.publication.indexStatus !== 'available' || repository.publication.scopeCount < 1)) {
+    throw new Error(`${repository.name} claims publication without verified records.`);
+  }
+  for (const scope of repository.evidenceRecords ?? []) {
+    if (!scope.id || !scope.state || !scope.evidenceClass || !scope.freshnessPolicy || !Array.isArray(scope.reasons)) {
+      throw new Error(`${repository.name} contains an incomplete evidence-scope state.`);
+    }
+    if (scope.workflowUrl) {
+      const url = new URL(scope.workflowUrl);
+      if (url.hostname !== 'github.com') throw new Error(`${repository.name} has an unsafe scope workflow URL.`);
+    }
   }
 }
 
@@ -43,5 +75,8 @@ for (const repository of data.repositories) {
 if (html.includes('Loading evidence') || html.includes('<tbody id="repository-rows"></tbody>')) {
   throw new Error('Dashboard still depends on JavaScript for its initial evidence view.');
 }
+if (!html.includes('id="generated-at"') || !html.includes('id="freshness-state"') || !html.includes('id="refresh-schedule-state"')) {
+  throw new Error('Static dashboard is missing refresh freshness or scheduler state.');
+}
 
-console.log(`Validated ${data.repositories.length} dashboard repositories.`);
+console.log(`Validated ${data.repositories.length} dashboard repositories at schema v3.`);

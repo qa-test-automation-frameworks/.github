@@ -1,0 +1,40 @@
+✔ portfolio definition and snapshot use the same repository set (1.534463ms)
+✔ every repository exposes evidence metadata and an explicit state (0.256923ms)
+✔ evidence contract: valid-pass.json (3.758305ms)
+✔ evidence contract: real-failure-published.json (1.869793ms)
+✔ evidence contract: credential-skip.json (0.562168ms)
+✔ evidence contract: empty-collection-failure.json (0.640705ms)
+✔ evidence contract: empty-collection-false-pass.json (0.542638ms)
+✔ evidence contract: missing-shard-failure.json (0.563552ms)
+✔ evidence contract: missing-shard-false-pass.json (3.655538ms)
+✔ evidence contract: cancelled.json (0.797199ms)
+✔ evidence contract: in-progress.json (0.552131ms)
+✔ evidence contract: unavailable.json (0.545447ms)
+✔ evidence contract: stale.json (0.518381ms)
+✔ evidence contract: unsupported-schema.json (0.382555ms)
+✔ evidence contract: future-completion.json (0.930804ms)
+✔ evidence contract: invalid-calendar-time.json (0.312973ms)
+✔ evidence contract: duplicate-shards.json (0.30456ms)
+✔ evidence contract: unsafe-url.json (0.320325ms)
+✔ evidence contract: passed-publication-failed.json (0.385297ms)
+✔ evidence contract: historical-attestation.json (0.192812ms)
+✔ evidence contract: valid-selenium-testng-java-framework.json (0.379828ms)
+✔ evidence contract: valid-aria-api-framework.json (0.525354ms)
+✔ evidence contract: valid-verity-policy-coverage-eval-framework.json (0.579451ms)
+✔ evidence contract: valid-k6-performance-framework.json (0.550667ms)
+✔ publication success cannot convert native test failure into pass (0.376502ms)
+✔ refresh time cannot renew stale execution and policy boundary is exact (0.6554ms)
+✔ historical attestation remains separate when a new run fails (0.829489ms)
+✔ case counts cannot double-count retries or hide failed final outcomes (0.894633ms)
+✔ zero metric values require actual samples and never become invented test counts (1.204185ms)
+✔ missing checksum, unknown count and unsupported policy are distinct (0.65353ms)
+✔ non-execution cannot smuggle positive final outcomes through unknown execution count (0.266706ms)
+✔ workflow reference must bind the repository and immutable run identity (0.31569ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 109.89311

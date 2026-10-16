@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 3,
+  "kind": "historical_attestation",
+  "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+  "sourceSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "limitations": [
+    "Synthetic historical fixture; no current run claim."
+  ],
+  "reviewedAt": "2026-09-01T08:02:00Z",
+  "reviewer": "fixture-reviewer (synthetic)",
+  "sourceUrl": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/evidence/latest-verification.md",
+  "summary": "A reviewed historical baseline, separate from attempted/latest successful execution."
+}

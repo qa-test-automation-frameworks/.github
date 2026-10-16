@@ -1,4 +1,10 @@
+import './check-runtime.mjs';
+import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
+import { publicationState, summarizeEvidence } from './dashboard-state.mjs';
+import { validateEvidence } from './evidence-contract.mjs';
+import { classifyRefreshHealth } from './dashboard-refresh-health.mjs';
+import { renderDashboard } from '../site/render.mjs';
 
 const owner = 'qa-test-automation-frameworks';
 const token = process.env.GITHUB_TOKEN;
@@ -23,72 +29,122 @@ async function github(path) {
   return response.json();
 }
 
-async function workflowMetrics(repository) {
-  let workflow = null;
-  if (repository.workflow) {
-    const runs = await github(
-      `/repos/${owner}/${repository.name}/actions/workflows/${repository.workflow}/runs?branch=main&status=completed&per_page=10`,
-    );
-    const completed = runs.workflow_runs ?? [];
-    const latest = completed[0];
-    const durations = completed
-      .map((run) => new Date(run.updated_at) - new Date(run.run_started_at ?? run.created_at))
-      .filter((duration) => Number.isFinite(duration) && duration >= 0);
-    durations.sort((a, b) => a - b);
-    workflow = latest
-      ? {
-          conclusion: latest.conclusion,
-          url: latest.html_url,
-          runId: latest.id,
-          headSha: latest.head_sha,
-          branch: latest.head_branch,
-          event: latest.event,
-          updatedAt: latest.updated_at,
-          durationSeconds: Math.round(
-            (new Date(latest.updated_at) - new Date(latest.run_started_at ?? latest.created_at)) /
-              1000,
-          ),
-          medianDurationSeconds: durations.length
-            ? Math.round(durations[Math.floor(durations.length / 2)] / 1000)
-            : null,
-          sampleSize: durations.length,
-        }
-      : null;
-  }
-  return workflow;
-}
+const trustedEvents = new Set(['push', 'schedule', 'workflow_dispatch']);
+const freshnessPolicies = JSON.parse(
+  await readFile(new URL('../portfolio/evidence/freshness-policies.json', import.meta.url), 'utf8'),
+).policies;
+const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
-async function verificationManifest(repository) {
+async function workflowMetrics(repository, defaultBranch, currentSha) {
+  if (!repository.workflow) return { status: 'not-configured', latestAttempt: null, lastSuccess: null };
   try {
-    const response = await github(
-      `/repos/${owner}/${repository.name}/contents/docs/evidence/latest-verification.json?ref=main`,
+    const encodedWorkflow = encodeURIComponent(repository.workflow);
+    const base = `/repos/${owner}/${repository.name}/actions/workflows/${encodedWorkflow}/runs?branch=${encodeURIComponent(defaultBranch)}&per_page=20`;
+    const [recent, completed] = await Promise.all([
+      github(base),
+      github(`${base}&status=completed`),
+    ]);
+    const trusted = (recent.workflow_runs ?? []).filter(
+      (run) => run.head_branch === defaultBranch && trustedEvents.has(run.event),
     );
-    const encoded = Buffer.from(response.content, response.encoding ?? 'base64').toString('utf8');
-    return JSON.parse(encoded);
+    trusted.sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at) || b.run_attempt - a.run_attempt);
+    const completedTrusted = (completed.workflow_runs ?? []).filter(
+      (run) => run.head_branch === defaultBranch && trustedEvents.has(run.event) && run.status === 'completed',
+    );
+    const latest = trusted[0];
+    const successes = completedTrusted
+      .filter((run) => run.conclusion === 'success')
+      .sort((a, b) => Date.parse(b.completed_at ?? b.updated_at) - Date.parse(a.completed_at ?? a.updated_at));
+    const durations = completedTrusted
+      .map((run) => Date.parse(run.completed_at ?? run.updated_at) - Date.parse(run.run_started_at ?? run.created_at))
+      .filter((duration) => Number.isFinite(duration) && duration >= 0)
+      .sort((a, b) => a - b);
+    const runSummary = (run) => run ? {
+      runId: String(run.id),
+      attempt: run.run_attempt,
+      status: run.status,
+      conclusion: run.conclusion,
+      event: run.event,
+      branch: run.head_branch,
+      headSha: run.head_sha,
+      createdAt: run.created_at,
+      startedAt: run.run_started_at,
+      completedAt: run.completed_at,
+      updatedAt: run.updated_at,
+      url: run.html_url,
+    } : null;
+    return {
+      status: latest ? 'available' : 'no-run',
+      latestAttempt: runSummary(latest),
+      lastSuccess: runSummary(successes[0]),
+      conclusion: latest?.conclusion ?? null,
+      url: latest?.html_url ?? null,
+      runId: latest ? String(latest.id) : null,
+      attempt: latest?.run_attempt ?? null,
+      headSha: latest?.head_sha ?? null,
+      branch: latest?.head_branch ?? defaultBranch,
+      event: latest?.event ?? null,
+      state: latest?.status ?? 'unavailable',
+      updatedAt: latest?.updated_at ?? null,
+      currentCodeCompatibility: latest ? latest.head_sha === currentSha : false,
+      medianDurationSeconds: durations.length ? Math.round(durations[Math.floor(durations.length / 2)] / 1000) : null,
+      sampleSize: durations.length,
+    };
   } catch (error) {
-    if (String(error).includes('returned 404')) return null;
-    throw error;
+    return { status: 'unavailable', reason: error.message.match(/returned (\d+)/)?.[1] ? `GitHub API returned ${error.message.match(/returned (\d+)/)[1]}` : 'GitHub API request failed', latestAttempt: null, lastSuccess: null };
   }
 }
 
-const FRESHNESS_HOURS = 36;
-const evidenceState = (repository, workflow, manifest, now = Date.now()) => {
-  if (
-    !workflow?.updatedAt ||
-    workflow.conclusion !== 'success' ||
-    workflow.branch !== 'main' ||
-    !repository.verificationUrl ||
-    !manifest ||
-    manifest.verifiedSha !== workflow.headSha ||
-    manifest.workflow?.runId !== workflow.runId ||
-    manifest.workflow?.conclusion !== 'success' ||
-    manifest.evidenceState !== 'review-ready'
-  ) {
-    return 'evidence-unavailable';
+async function rawBytes(url) {
+  const response = await fetch(url, { cache: 'no-store' });
+  if (response.status === 404) return null;
+  if (!response.ok) throw new Error(`Public evidence source returned ${response.status}`);
+  const bytes = Buffer.from(await response.arrayBuffer());
+  if (bytes.length > 5 * 1024 * 1024) throw new Error('Public evidence object exceeds the 5 MiB safety limit');
+  return bytes;
+}
+
+async function durableEvidence(repository) {
+  const repositoryPath = `${owner}/${repository.name}`;
+  const rawRoot = `https://raw.githubusercontent.com/${repositoryPath}/portfolio-evidence/`;
+  const latestPath = `repositories/${repositoryPath}/latest.json`;
+  try {
+    const latestBytes = await rawBytes(`${rawRoot}${latestPath}`);
+    if (!latestBytes) return { indexStatus: 'not-published', index: null, records: [], reason: 'No public portfolio-evidence branch index exists.' };
+    const index = JSON.parse(latestBytes.toString('utf8'));
+    if (index.schemaVersion !== 1 || index.repository !== repositoryPath || !index.scopes || typeof index.scopes !== 'object') {
+      throw new Error('Latest evidence index has an unsupported or mismatched contract.');
+    }
+    const entries = Object.entries(index.scopes);
+    if (entries.length > 500) throw new Error('Latest index exceeds the 500-scope safety limit.');
+    const records = await Promise.all(entries.map(async ([scopeId, pointer]) => {
+      const expectedPrefix = `repositories/${repositoryPath}/runs/`;
+      if (typeof pointer.bundle !== 'string' || !pointer.bundle.startsWith(expectedPrefix) || pointer.bundle.includes('..')) {
+        throw new Error(`Unsafe bundle path for ${scopeId}.`);
+      }
+      const manifestBytes = await rawBytes(`${rawRoot}${pointer.bundle}/manifest.json`);
+      if (!manifestBytes || sha256(manifestBytes) !== pointer.manifestSha256) throw new Error(`Bundle manifest checksum failed for ${scopeId}.`);
+      const manifest = JSON.parse(manifestBytes.toString('utf8'));
+      if (manifest.schemaVersion !== 1 || manifest.repository !== repositoryPath || String(manifest.run?.id) !== String(pointer.runId) || manifest.run?.attempt !== pointer.attempt || manifest.run?.sourceSha !== pointer.sourceSha) {
+        throw new Error(`Bundle source identity failed for ${scopeId}.`);
+      }
+      const entry = manifest.records?.find((item) => item.scope === scopeId);
+      if (!entry || !/^records\/[a-f0-9]{24}\.json$/.test(entry.path)) throw new Error(`Bundle record path is missing or unsafe for ${scopeId}.`);
+      const recordBytes = await rawBytes(`${rawRoot}${pointer.bundle}/${entry.path}`);
+      if (!recordBytes || sha256(recordBytes) !== entry.sha256) throw new Error(`Evidence checksum failed for ${scopeId}.`);
+      const record = JSON.parse(recordBytes.toString('utf8'));
+      const errors = validateEvidence(record);
+      if (errors.length) throw new Error(`Evidence record is invalid for ${scopeId}: ${errors.join('; ')}`);
+      if (record.repository !== repositoryPath || record.scope.id !== scopeId || record.workflow.runId !== String(pointer.runId) || record.workflow.attempt !== pointer.attempt || record.sourceSha !== pointer.sourceSha || record.workflow.branch !== 'main' || !trustedEvents.has(record.workflow.trigger)) {
+        throw new Error(`Evidence record does not match the latest index for ${scopeId}.`);
+      }
+      return record;
+    }));
+    return { indexStatus: 'available', index, records, reason: null };
+  } catch (error) {
+    return { indexStatus: 'unavailable', index: null, records: [], reason: error.message };
   }
-  const ageHours = (now - new Date(workflow.updatedAt).getTime()) / 3_600_000;
-  return ageHours <= FRESHNESS_HOURS ? 'review-ready' : 'evidence-stale';
-};
+}
 
 const query = `
   query Portfolio($owner: String!) {
@@ -112,6 +168,7 @@ const query = `
             name
             target {
               ... on Commit {
+                oid
                 history { totalCount }
               }
             }
@@ -138,20 +195,40 @@ async function repositoryMetadata() {
   return new Map(payload.data.organization.repositories.nodes.map((repo) => [repo.name, repo]));
 }
 
-const metadata = await repositoryMetadata();
+async function dashboardScheduleHealth() {
+  try {
+    const workflow = await github(`/repos/${owner}/.github/actions/workflows/dashboard.yml`);
+    const runs = await github(`/repos/${owner}/.github/actions/workflows/dashboard.yml/runs?event=schedule&status=completed&per_page=5`);
+    return classifyRefreshHealth({ status: 'available', state: workflow.state }, runs.workflow_runs ?? []);
+  } catch (error) {
+    return { status: 'unavailable', reason: error.message.match(/returned (\d+)/)?.[1] ? `GitHub API returned ${error.message.match(/returned (\d+)/)[1]}` : 'GitHub API request failed' };
+  }
+}
+
+const [metadata, scheduleHealth] = await Promise.all([repositoryMetadata(), dashboardScheduleHealth()]);
 const repositories = await Promise.all(
   definition.repositories.map(async (repository) => {
     const repo = metadata.get(repository.name);
     if (!repo) throw new Error(`Repository ${repository.name} was not returned by GitHub.`);
-    const [metrics, manifest] = await Promise.all([
-      workflowMetrics(repository),
-      verificationManifest(repository),
+    const defaultBranch = repo.defaultBranchRef?.name ?? 'main';
+    const currentSha = repo.defaultBranchRef?.target?.oid ?? null;
+    const [metrics, durable] = await Promise.all([
+      workflowMetrics(repository, defaultBranch, currentSha),
+      durableEvidence(repository),
     ]);
+    const evidence = summarizeEvidence(durable.records, {
+      repository: `${owner}/${repository.name}`,
+      currentSha,
+      now: Date.now(),
+      policies: freshnessPolicies,
+    });
+    const evidenceState = metrics.status === 'available' ? evidence.state : 'evidence-unavailable';
     return {
       ...repository,
       url: repo.url,
       description: repo.description,
-      defaultBranch: repo.defaultBranchRef?.name ?? 'main',
+      defaultBranch,
+      currentSha,
       pushedAt: repo.pushedAt,
       pullRequestCount: repo.pullRequests.totalCount,
       release: repo.latestRelease
@@ -166,16 +243,31 @@ const repositories = await Promise.all(
       stars: repo.stargazerCount,
       forks: repo.forkCount,
       workflow: metrics,
-      evidenceManifest: manifest,
-      evidenceState: evidenceState(repository, metrics, manifest),
+      evidenceState,
+      evidenceSummary: { ...evidence, state: evidenceState },
+      evidenceRecords: evidence.scopes,
+      publication: {
+        status: publicationState(durable.index, durable.indexStatus, metrics.latestAttempt),
+        indexStatus: durable.indexStatus,
+        reason: durable.reason,
+        scopeCount: durable.records.length,
+        latestAttemptRunId: metrics.latestAttempt?.runId ?? null,
+        latestAttemptAttempt: metrics.latestAttempt?.attempt ?? null,
+      },
     };
   }),
 );
 
 const output = {
-  schemaVersion: 2,
+  schemaVersion: 3,
   generatedAt: new Date().toISOString(),
   organization: owner,
+  refresh: {
+    status: repositories.some((repository) => repository.workflow?.status === 'unavailable' || repository.publication.indexStatus === 'unavailable') ? 'unavailable' : 'available',
+    source: 'GitHub API and checksummed public portfolio-evidence branches',
+    unavailableRepositories: repositories.filter((repository) => repository.workflow?.status === 'unavailable' || repository.publication.indexStatus === 'unavailable').map(({ name }) => name),
+    schedule: scheduleHealth,
+  },
   recommendedReviewOrder: definition.recommendedReviewOrder,
   repositories,
 };
@@ -193,80 +285,6 @@ const escapeHtml = (value) =>
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
 
-const formatDuration = (seconds) => {
-  if (!Number.isFinite(seconds)) return 'Not measured';
-  const minutes = Math.floor(seconds / 60);
-  const remainder = seconds % 60;
-  return `${minutes}m ${String(remainder).padStart(2, '0')}s`;
-};
-
-const evidenceLinks = (repository) =>
-  [
-    ['Verification', repository.verificationUrl],
-    ['Limitations', repository.limitationsUrl],
-    ['Report', repository.reportUrl],
-    ['Docs', repository.docsUrl],
-    ['Screenshot', repository.screenshotUrl],
-  ]
-    .filter(([, href]) => href)
-    .map(([label, href]) => `<a href="${escapeHtml(href)}">${label}</a>`)
-    .join(' ');
-
-const repositoryByName = new Map(repositories.map((repository) => [repository.name, repository]));
-const reviewOrderHtml = output.recommendedReviewOrder
-  .map((name) => repositoryByName.get(name))
-  .filter(Boolean)
-  .map(
-    (repository) =>
-      `<li><a href="${escapeHtml(repository.url)}">${escapeHtml(repository.label)}</a>` +
-      `<span>${escapeHtml(repository.reviewMinutes)} minute review</span></li>`,
-  )
-  .join('\n');
-
-const repositoryRowsHtml = repositories
-  .map((repository) => {
-    const statusLabel = repository.status === 'work-in-progress' ? 'WIP' : 'Configured';
-    const evidenceLabel = repository.evidenceState ?? 'evidence-unavailable';
-    const workflowLabel = repository.workflow?.conclusion ?? 'No CI';
-    const workflow = repository.workflow?.url
-      ? `<a href="${escapeHtml(repository.workflow.url)}">${escapeHtml(workflowLabel)}</a>`
-      : escapeHtml(workflowLabel);
-    const release = repository.release
-      ? `<a href="${escapeHtml(repository.release.url)}">${escapeHtml(repository.release.tag)}</a>`
-      : 'Unreleased';
-    const runtime = repository.workflow
-      ? `${formatDuration(repository.workflow.medianDurationSeconds)} (n=${repository.workflow.sampleSize})`
-      : 'Not measured';
-    return `<tr>
-      <td><a href="${escapeHtml(repository.url)}">${escapeHtml(repository.label)}</a></td>
-      <td class="status ${escapeHtml(repository.status)}">${statusLabel}</td>
-      <td class="status ${escapeHtml(evidenceLabel)}">${escapeHtml(evidenceLabel)}</td>
-      <td class="status ${escapeHtml(workflowLabel)}">${workflow}</td>
-      <td>${escapeHtml(runtime)}</td>
-      <td>${release}</td>
-      <td>${repository.commitCount} commits · ${repository.pullRequestCount} PRs</td>
-      <td class="evidence-links">${evidenceLinks(repository)}</td>
-    </tr>`;
-  })
-  .join('\n');
-
 const indexUrl = new URL('../site/index.html', import.meta.url);
 const indexTemplate = await readFile(indexUrl, 'utf8');
-const renderedIndex = indexTemplate
-  .replace(
-    /(<span id="freshness-state"[^>]*>).*?(<\/span>)/,
-    `$1Scheduled evidence snapshot$2`,
-  )
-  .replace(
-    /(<span id="generated-at"[^>]*>).*?(<\/span>)/,
-    `$1${escapeHtml(new Date(output.generatedAt).toLocaleString('en-GB', { timeZone: 'UTC' }))} UTC$2`,
-  )
-  .replace(
-    /(<ol id="review-order" class="review-order">)[\s\S]*?(<\/ol>)/,
-    `$1\n${reviewOrderHtml}\n$2`,
-  )
-  .replace(
-    /(<tbody id="repository-rows">)[\s\S]*?(<\/tbody>)/,
-    `$1\n${repositoryRowsHtml}\n$2`,
-  );
-await writeFile(indexUrl, renderedIndex);
+await writeFile(indexUrl, renderDashboard(indexTemplate, output));

@@ -1,0 +1,3 @@
+.github/portfolio/evidence/fixtures/empty-collection-false-pass.json: invalid
+semantic: pass requires complete evidence and all expected shards
+semantic: pass requires substantive native execution

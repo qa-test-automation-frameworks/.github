@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 3,
+  "kind": "execution",
+  "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+  "sourceSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "limitations": [
+    "Synthetic contract fixture, not executed framework evidence."
+  ],
+  "workflow": {
+    "id": "ci.yml",
+    "name": "Synthetic CI",
+    "runId": "1001",
+    "attempt": 1,
+    "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/1001",
+    "trigger": "pull_request",
+    "branch": "fixture/evidence-contract"
+  },
+  "scope": {
+    "id": "browser.chromium",
+    "evidenceClass": "controlled",
+    "required": true,
+    "freshnessPolicy": "daily_gate_v1"
+  },
+  "target": {
+    "identity": "fixture-target",
+    "revision": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "fixtureVersion": "fixture-v1",
+    "environment": "isolated_ci",
+    "profile": null,
+    "tools": {
+      "node": "24.21.0",
+      "playwright": "1.60.0"
+    }
+  },
+  "execution": {
+    "disposition": "passed",
+    "reason": null,
+    "startedAt": "2026-09-01T08:00:00Z",
+    "completedAt": "2026-09-01T08:01:00Z",
+    "integrity": "complete",
+    "counts": {
+      "unit": "parameter_case",
+      "selected": 3,
+      "executed": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 1,
+      "retried": 1,
+      "semantics": "Unique project/parameter cases; retried is cases retried, not attempts. Raw retry attempts belong to linked native summaries."
+    },
+    "measurements": [],
+    "shards": {
+      "expected": [
+        "chromium/1of2",
+        "chromium/2of2"
+      ],
+      "received": [
+        "chromium/1of2",
+        "chromium/2of2"
+      ]
+    }
+  },
+  "publication": {
+    "disposition": "published",
+    "reason": null,
+    "publishedAt": "2026-10-04T08:02:00Z",
+    "reportUrl": "https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/runs/1001/1/",
+    "artifacts": [
+      {
+        "name": "native-results",
+        "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/artifacts/999",
+        "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "retention": {
+          "class": "ephemeral",
+          "expiresAt": "2026-11-03T08:02:00Z",
+          "policy": "actions_30_days"
+        }
+      }
+    ]
+  },
+  "generator": {
+    "name": "contract_fixture",
+    "version": "3.0.0"
+  }
+}

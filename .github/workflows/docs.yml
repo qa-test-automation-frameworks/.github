@@ -2,16 +2,32 @@ name: Documentation
 
 on:
   pull_request:
-    paths:
-      - '**/*.md'
-      - 'portfolio/**'
-      - 'site/**'
   push:
     branches: [main]
     paths:
-      - '**/*.md'
-      - 'portfolio/**'
-      - 'site/**'
+      - "**/*.md"
+      - "portfolio/**"
+      - "site/**"
+      - "site/render.mjs"
+      - "scripts/dashboard-state.mjs"
+      - "scripts/dashboard-state.test.mjs"
+      - "scripts/dashboard-render.test.mjs"
+      - "scripts/dashboard-refresh-health.mjs"
+      - "scripts/dashboard-refresh-health.test.mjs"
+      - "scripts/dashboard.test.mjs"
+      - "scripts/refresh-dashboard.mjs"
+      - "scripts/validate-dashboard.mjs"
+      - "scripts/evidence-*.mjs"
+      - "scripts/publish-evidence.mjs"
+      - "scripts/publish-evidence.test.mjs"
+      - "scripts/prune-evidence.mjs"
+      - "scripts/prune-evidence.test.mjs"
+      - "scripts/verify-source-run.py"
+      - "scripts/test-verify-source-run.py"
+      - ".github/workflows/publish-evidence.yml"
+      - "scripts/validate-evidence.mjs"
+      - ".nvmrc"
+      - ".github/workflows/docs.yml"
 
 permissions:
   contents: read
@@ -21,6 +37,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version-file: .nvmrc
+      - name: Test portable evidence contract
+        run: node --test scripts/dashboard.test.mjs scripts/dashboard-state.test.mjs scripts/dashboard-refresh-health.test.mjs scripts/dashboard-render.test.mjs scripts/evidence-contract.test.mjs scripts/publish-evidence.test.mjs scripts/prune-evidence.test.mjs
+      - name: Test trusted source-run verifier
+        run: python3 scripts/test-verify-source-run.py
+      - name: Validate static dashboard snapshot
+        run: node scripts/validate-dashboard.mjs
       - name: Reject local links and unsupported self-assessment in this repository
         shell: bash
         run: |
