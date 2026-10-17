@@ -90,13 +90,40 @@ checksums matched, and records passed the official schema-v3 validator:
 Verity remains unverified for durable publication. Its required dependency and
 image security checks fail on unresolved upstream findings, so its caller has
 not been merged and must not be treated as a clean default-branch publication.
-The new `scripts/test-evidence-git-push-atomicity.sh` control uses a local bare
+The `scripts/test-evidence-git-push-atomicity.sh` control uses a local bare
 Git remote to reject a receive, then verifies the branch ref and previous index
 remain unchanged; it also verifies a successful single-commit bundle/index
-update and rejection of a stale `--force-with-lease`. This exercises Git's
-ref-update boundary, but is not an interruption test against GitHub itself.
-Actual GitHub ref-write interruption remains unproven. Dashboard ingestion and
-freshness are tracked separately in the dashboard evidence-state note.
+update and rejection of a stale `--force-with-lease`.
+
+A separate GitHub-hosted stale-lease probe was run on the disposable branch
+`portfolio/e03-github-ref-probe-2026-10-17`. The branch began at
+`7646e5c38b382e6901ffe653d8170c0722e145f7` with a test-only index pointing to
+run 1001. An attempted run-1002 update with an intentionally incorrect
+all-zero `--force-with-lease` was rejected by GitHub as `(stale info)`. A
+subsequent fetch confirmed the remote ref and run-1001 index were unchanged;
+the rejected candidate never became the remote tip. The disposable branch was
+deleted after verification, without touching production or `portfolio-evidence`.
+The captured report is in the ignored
+`work/roadmap-evidence/e03-github-ref-probe-2026-10-17/RESULT.md` directory.
+
+A separate controlled mid-upload interruption was then run against another
+disposable GitHub branch, `portfolio/e03-mid-upload-probe-2026-10-17`. The known
+good remote tip was `ca71be6238b108e01b0c5278cab6e852be2d5a79`, whose test-only
+`latest.json` pointed to run 1001 (SHA-256
+`e642716b94b1cc1e7d26a03ff20fe7c5c7e92fd4d60b55cba969a594bb5bcb44`). Candidate
+`f168a4f52c06fcdb6e4b3cabd2d6ab9e614b44f8` changed the index to run 1002 and
+included an 8 MiB test payload. A local HTTPS CONNECT tunnel deliberately
+closed after forwarding 131,072 client bytes. Git reported a GnuTLS receive
+error and unexpected disconnect; a fresh fetch showed the remote ref still at
+the run-1001 commit and the index unchanged. The disposable branch and worktree
+were deleted after verification. The report and sanitized logs are under the
+ignored `work/roadmap-evidence/e03-github-interruption-2026-10-17/` directory.
+
+This exercises GitHub's ref-update boundary with an interrupted test upload; it
+does not prove the trusted publisher's artifact permissions or long-term
+retention. The test used a synthetic bundle and did not touch production or
+`portfolio-evidence`. Dashboard ingestion and freshness are tracked separately
+in the dashboard evidence-state note.
 
 The local Node tests in `scripts/publish-evidence.test.mjs` and
 `scripts/prune-evidence.test.mjs` cover record identity, checksums, immutable
@@ -107,3 +134,40 @@ themselves prove production repository permissions, source artifact retrieval,
 branch retention or scheduled operation. The four retrieved bundles above are
 point-in-time proofs; continued retention and scheduled operation still
 require observation over time.
+
+## Post-merge verification (2026-10-17)
+
+The K6 and Selenium publisher-pin changes are merged on their default branches.
+I re-fetched each public `latest.json` from `portfolio-evidence`; the bytes
+match the captured copies and their SHA-256 digests are respectively
+`7b5064facea6a27db507fc4972c409dda6c9bf8149ecbf322c9b12f79bfa72ac` and
+`b31944a9ddf0548cf50a99b97ffaa65e2c17dd9c2a0531a3105d7b31e6af2186`. All
+listed manifest and record hashes in both captured `SHA256SUMS` files verify.
+
+| Framework | Default-main execution | Trusted publisher | Published index |
+|---|---|---|---|
+| K6 | [Main load `39023381931`](https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/runs/39023381931), source `0070aee6dc0ad10334fea8c9e2b07094aa526d01`; `k6.articles-load` and `k6.authenticated-journey` passed. | [Publisher `39023939359`](https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/runs/39023939359) succeeded. | [Public latest index](https://github.com/qa-test-automation-frameworks/k6-performance-framework/blob/portfolio-evidence/repositories/qa-test-automation-frameworks/k6-performance-framework/latest.json), manifest digest `0422fd30737083d9568f9252b11bcf625e489dc4b51b6bbe80612f3fd45a0ac7`. |
+| Selenium | [UI Tests `39023393488`](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/runs/39023393488), source `2301fd730988b0885e561d6a1a7eee690d0d399a`; framework quality and Chrome, Edge and Firefox passed. The deliberate evidence negative control remains a failed record. | [Publisher `39023692520`](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/runs/39023692520) succeeded. | [Public latest index](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/portfolio-evidence/repositories/qa-test-automation-frameworks/selenium-testng-java-framework/latest.json), manifest digest `d24a6ef4b101cb17d6a17b856e1689e9b7e17d1ccf22d7c001c754dc67e81e5a`. |
+
+The [portfolio dashboard deployment `39024016581`](https://github.com/qa-test-automation-frameworks/.github/actions/runs/39024016581)
+passed. Its [public data](https://qa-test-automation-frameworks.github.io/.github/data/portfolio.json)
+was generated at `2026-10-17T10:12:39.589Z`, reports refresh available, and
+contains no unavailable repositories. The dashboard consumes the newly
+published K6 and Selenium source SHAs and run IDs.
+
+On this `.github` source revision (`8ad9eab`), Node.js `24.21.0` passed all
+three local publisher, retention and evidence-contract test files (0 failures).
+The bare-Git atomicity control also passed its rejected-receive, successful
+single-commit update and stale-lease cases. These controls verify the local
+publisher and Git ref-update behavior, not an injected interruption against
+GitHub's hosting service. Captured local output is in the ignored
+`work/roadmap-evidence/e03-local-tests-2026-10-17/` directory.
+
+These checks demonstrate end-to-end current-main publication and retrieval for
+K6 and Selenium; they do not close E03. Verity still has no default-main bundle
+because its required security checks remain unresolved (see the [R02 security
+review](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/pull/30)).
+The point-in-time checks do not establish continuing retention or scheduled
+operation. The latest genuine
+dashboard schedule is still the September 9 run `34332182917`; manual and push
+deployments do not reset that schedule observation.
