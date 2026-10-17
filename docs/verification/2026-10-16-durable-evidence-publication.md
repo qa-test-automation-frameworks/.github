@@ -90,12 +90,25 @@ checksums matched, and records passed the official schema-v3 validator:
 Verity remains unverified for durable publication. Its required dependency and
 image security checks fail on unresolved upstream findings, so its caller has
 not been merged and must not be treated as a clean default-branch publication.
-The new `scripts/test-evidence-git-push-atomicity.sh` control uses a local bare
+The `scripts/test-evidence-git-push-atomicity.sh` control uses a local bare
 Git remote to reject a receive, then verifies the branch ref and previous index
 remain unchanged; it also verifies a successful single-commit bundle/index
-update and rejection of a stale `--force-with-lease`. This exercises Git's
-ref-update boundary, but is not an interruption test against GitHub itself.
-Actual GitHub ref-write interruption remains unproven. Dashboard ingestion and
+update and rejection of a stale `--force-with-lease`.
+
+A separate GitHub-hosted stale-lease probe was run on the disposable branch
+`portfolio/e03-github-ref-probe-2026-10-17`. The branch began at
+`7646e5c38b382e6901ffe653d8170c0722e145f7` with a test-only index pointing to
+run 1001. An attempted run-1002 update with an intentionally incorrect
+all-zero `--force-with-lease` was rejected by GitHub as `(stale info)`. A
+subsequent fetch confirmed the remote ref and run-1001 index were unchanged;
+the rejected candidate never became the remote tip. The disposable branch was
+deleted after verification, without touching production or `portfolio-evidence`.
+The captured report is in the ignored
+`work/roadmap-evidence/e03-github-ref-probe-2026-10-17/RESULT.md` directory.
+
+This proves GitHub rejects a stale ref update while preserving the old index;
+it does not inject a dropped connection during an active GitHub upload. A true
+mid-upload network interruption remains untested. Dashboard ingestion and
 freshness are tracked separately in the dashboard evidence-state note.
 
 The local Node tests in `scripts/publish-evidence.test.mjs` and
