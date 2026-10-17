@@ -107,3 +107,33 @@ themselves prove production repository permissions, source artifact retrieval,
 branch retention or scheduled operation. The four retrieved bundles above are
 point-in-time proofs; continued retention and scheduled operation still
 require observation over time.
+
+## Post-merge verification (2026-10-17)
+
+The K6 and Selenium publisher-pin changes are merged on their default branches.
+I re-fetched each public `latest.json` from `portfolio-evidence`; the bytes
+match the captured copies and their SHA-256 digests are respectively
+`7b5064facea6a27db507fc4972c409dda6c9bf8149ecbf322c9b12f79bfa72ac` and
+`b31944a9ddf0548cf50a99b97ffaa65e2c17dd9c2a0531a3105d7b31e6af2186`. All
+listed manifest and record hashes in both captured `SHA256SUMS` files verify.
+
+| Framework | Default-main execution | Trusted publisher | Published index |
+|---|---|---|---|
+| K6 | [Main load `39023381931`](https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/runs/39023381931), source `0070aee6dc0ad10334fea8c9e2b07094aa526d01`; `k6.articles-load` and `k6.authenticated-journey` passed. | [Publisher `39023939359`](https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/runs/39023939359) succeeded. | [Public latest index](https://github.com/qa-test-automation-frameworks/k6-performance-framework/blob/portfolio-evidence/repositories/qa-test-automation-frameworks/k6-performance-framework/latest.json), manifest digest `0422fd30737083d9568f9252b11bcf625e489dc4b51b6bbe80612f3fd45a0ac7`. |
+| Selenium | [UI Tests `39023393488`](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/runs/39023393488), source `2301fd730988b0885e561d6a1a7eee690d0d399a`; framework quality and Chrome, Edge and Firefox passed. The deliberate evidence negative control remains a failed record. | [Publisher `39023692520`](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/runs/39023692520) succeeded. | [Public latest index](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/portfolio-evidence/repositories/qa-test-automation-frameworks/selenium-testng-java-framework/latest.json), manifest digest `d24a6ef4b101cb17d6a17b856e1689e9b7e17d1ccf22d7c001c754dc67e81e5a`. |
+
+The [portfolio dashboard deployment `39024016581`](https://github.com/qa-test-automation-frameworks/.github/actions/runs/39024016581)
+passed. Its [public data](https://qa-test-automation-frameworks.github.io/.github/data/portfolio.json)
+was generated at `2026-10-17T10:12:39.589Z`, reports refresh available, and
+contains no unavailable repositories. The dashboard consumes the newly
+published K6 and Selenium source SHAs and run IDs.
+
+These checks demonstrate end-to-end current-main publication and retrieval for
+K6 and Selenium; they do not close E03. Verity still has no default-main bundle
+because its required security checks remain unresolved (see the [R02 security
+review](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/pull/30)).
+The bare-Git receive-rejection test is a local ref-update control, not an
+injected interruption against GitHub itself. This point-in-time check also does
+not establish continuing retention or scheduled operation. The latest genuine
+dashboard schedule is still the September 9 run `34332182917`; manual and push
+deployments do not reset that schedule observation.
