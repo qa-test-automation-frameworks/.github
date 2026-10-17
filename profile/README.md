@@ -79,7 +79,7 @@ demonstrated five ways.
 
 | Time | Path | The question it answers |
 | --- | --- | --- |
-| **3 minutes** | Open the [evidence dashboard](https://qa-test-automation-frameworks.github.io/.github/), check its `generatedAt` first, then inspect the source-run links. The dashboard validates live CI metadata before publish and remains readable without JavaScript; the currently deployed snapshot is stale. | Which framework runs have durable evidence, and which dashboard data is stale or unavailable? |
+| **3 minutes** | Open the [evidence dashboard](https://qa-test-automation-frameworks.github.io/.github/), check its `generatedAt` first, then inspect the source-run links. The snapshot is current as of 2026-10-17; its scheduled-refresh health remains stale, and the page remains readable without JavaScript. | Which framework runs have durable evidence, and which dashboard data is stale or unavailable? |
 | **15 minutes** | Follow the [Verity reviewer guide](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/blob/main/docs/reviewer-guide.md) and the [Playwright review guide](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/portfolio-review-guide.md). | How are LLM non-determinism and browser flakiness actually controlled? |
 | **Deep review** | Work through all five in order — Verity → Playwright → k6 → ARIA → Selenium — each with a documented, time-boxed review path. | Does the same engineering standard hold across every quality surface? |
 
