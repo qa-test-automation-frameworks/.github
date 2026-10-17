@@ -24,6 +24,21 @@ implementation and local static checks are validated, while live refresh and
 deployment freshness remain unverified and the public snapshot is stale. Recheck
 the queued runs and inspect the deployed timestamp before claiming E04 complete.
 
+## Follow-up — 2026-10-17
+
+After `.github` PR #13 merged as `b379b893412502fc9cd8e25b2a26abbb4fc60301`,
+main run [`38997504290`](https://github.com/qa-test-automation-frameworks/.github/actions/runs/38997504290)
+completed the evidence refresh and Pages deployment successfully. The public
+`https://qa-test-automation-frameworks.github.io/.github/` page returned HTTP
+200 with `Last-Modified: Sat, 17 Oct 2026 03:06:57 GMT`. Its
+`data/portfolio.json` reports `generatedAt` `2026-10-17T03:06:38.031Z`, refresh
+status `available`, and no unavailable repositories. The same payload still
+reports the scheduled workflow as `stale`, last checked at
+`2026-09-09T09:00:22Z` (906.1 hours old at generation). Thus live ingestion and
+deployment are now proven; daily schedule operation remains a separately visible
+blocker and needs continued monitoring before claiming the operational part of
+E04 complete.
+
 ## Verification
 
 Local validation under pinned Node.js 24.21.0 passed five dashboard/evidence

@@ -23,12 +23,15 @@ performance, enterprise JVM execution, and LLM evaluation. Open the dashboard,
 choose a capability below, and verify the current evidence record before reading
 the deeper architecture.
 
-**Evidence status (2026-10-16):** durable public bundles are verified for ARIA,
+**Evidence status (2026-10-17):** durable public bundles are verified for ARIA,
 k6, Playwright, and Selenium. Verity remains unpublished because required
-security checks are failing on unresolved findings. The dashboard implementation
-is active, but the deployed snapshot is stale: its `generatedAt` is
-`2026-09-09T08:59:57.006Z`. Check that timestamp before relying on the dashboard;
-follow its source-run links for current execution results. See the
+security checks are failing on unresolved findings. The dashboard refreshed and
+deployed from main run
+[`38997504290`](https://github.com/qa-test-automation-frameworks/.github/actions/runs/38997504290);
+its public snapshot was generated at `2026-10-17T03:06:38Z` and reports no
+unavailable repositories. Its scheduled-refresh health is still stale, so this
+successful push-triggered refresh does not prove the daily schedule is operating.
+Follow the dashboard's source-run links for current execution results. See the
 [publication evidence](../docs/verification/2026-10-16-durable-evidence-publication.md)
 and [dashboard status](../docs/verification/2026-10-16-dashboard-evidence-state.md).
 
