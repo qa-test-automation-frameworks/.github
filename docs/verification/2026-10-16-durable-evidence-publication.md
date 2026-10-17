@@ -128,12 +128,19 @@ was generated at `2026-10-17T10:12:39.589Z`, reports refresh available, and
 contains no unavailable repositories. The dashboard consumes the newly
 published K6 and Selenium source SHAs and run IDs.
 
+On this `.github` source revision (`8ad9eab`), Node.js `24.21.0` passed all
+three local publisher, retention and evidence-contract test files (0 failures).
+The bare-Git atomicity control also passed its rejected-receive, successful
+single-commit update and stale-lease cases. These controls verify the local
+publisher and Git ref-update behavior, not an injected interruption against
+GitHub's hosting service. Captured local output is in the ignored
+`work/roadmap-evidence/e03-local-tests-2026-10-17/` directory.
+
 These checks demonstrate end-to-end current-main publication and retrieval for
 K6 and Selenium; they do not close E03. Verity still has no default-main bundle
 because its required security checks remain unresolved (see the [R02 security
 review](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/pull/30)).
-The bare-Git receive-rejection test is a local ref-update control, not an
-injected interruption against GitHub itself. This point-in-time check also does
-not establish continuing retention or scheduled operation. The latest genuine
+The point-in-time checks do not establish continuing retention or scheduled
+operation. The latest genuine
 dashboard schedule is still the September 9 run `34332182917`; manual and push
 deployments do not reset that schedule observation.
