@@ -163,6 +163,35 @@ publisher and Git ref-update behavior, not an injected interruption against
 GitHub's hosting service. Captured local output is in the ignored
 `work/roadmap-evidence/e03-local-tests-2026-10-17/` directory.
 
+### Expanded local validation — 2026-10-17
+
+I reran the full central E03 test set on the merged source at `.github` commit
+`bed1da6e90df4ee4418fad248303254ea59ba7a2`, using official Node.js `24.21.0`
+Linux x64. The runtime archive SHA-256 was checked against Node.js's published
+`SHASUMS256.txt`: `fd8e59d5a511510f6a298afb548f18c7d2b1be404d8b4a27d94fbe49f56cb2d6`.
+The binary was installed under `/tmp` and is not part of the repository.
+
+```text
+node --test scripts/dashboard.test.mjs scripts/dashboard-state.test.mjs \
+  scripts/dashboard-refresh-health.test.mjs scripts/dashboard-render.test.mjs \
+  scripts/evidence-contract.test.mjs scripts/publish-evidence.test.mjs \
+  scripts/prune-evidence.test.mjs
+54 passed, 0 failed, 0 skipped
+
+bash scripts/test-evidence-git-push-atomicity.sh
+rejected receive, accepted atomic ref/index commit, and stale lease: passed
+
+node scripts/validate-dashboard.mjs
+5 dashboard repositories validated at schema v3
+```
+
+Logs are retained in the ignored
+`work/roadmap-evidence/e03-local-verification-2026-10-17/` directory. These
+results strengthen local publisher/retention and dashboard-contract evidence;
+they do not establish continuing retention or scheduled operation. The
+current scheduled dashboard run remains stale, and Verity's required security
+scans still block its trusted main-branch publication.
+
 These checks demonstrate end-to-end current-main publication and retrieval for
 K6 and Selenium; they do not close E03. Verity still has no default-main bundle
 because its required security checks remain unresolved (see the [R02 security
