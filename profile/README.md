@@ -19,16 +19,19 @@ Quality Engineering Lead conversations. Reach out on
 
 **Start here:** five reference frameworks demonstrate deterministic
 feedback, diagnosable failure, and governed delivery across UI, API contracts,
-performance, enterprise JVM execution, and LLM evaluation. Open the dashboard,
+performance, JVM browser execution, and LLM evaluation. Open the dashboard,
 choose a capability below, and verify the current evidence record before reading
 the deeper architecture.
 
-**Evidence status (2026-10-16):** durable public bundles are verified for ARIA,
+**Evidence status (2026-10-17):** durable public bundles are verified for ARIA,
 k6, Playwright, and Selenium. Verity remains unpublished because required
-security checks are failing on unresolved findings. The dashboard implementation
-is active, but the deployed snapshot is stale: its `generatedAt` is
-`2026-09-09T08:59:57.006Z`. Check that timestamp before relying on the dashboard;
-follow its source-run links for current execution results. See the
+security checks are failing on unresolved findings. The dashboard refreshed and
+deployed after the source runs completed in run
+[`38998264283`](https://github.com/qa-test-automation-frameworks/.github/actions/runs/38998264283);
+its public snapshot was generated at `2026-10-17T03:18:31Z` and reports no
+unavailable repositories. Its scheduled-refresh health is still stale, so this
+manual refresh does not prove the daily schedule is operating. Follow the
+dashboard's source-run links for current execution results. See the
 [publication evidence](../docs/verification/2026-10-16-durable-evidence-publication.md)
 and [dashboard status](../docs/verification/2026-10-16-dashboard-evidence-state.md).
 
@@ -48,7 +51,7 @@ and [dashboard status](../docs/verification/2026-10-16-dashboard-evidence-state.
 | [**Playwright TypeScript**](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework)<br><sub>TypeScript · Playwright · Zod · Allure</sub> | Modern browser coverage against a repo-owned target: strict typing, reusable fixtures, typed API clients, visual baselines, Axe accessibility checks, sharded Linux/Windows CI, and a governed retry budget with expiring quarantine. | [![CI](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/workflows/ci.yml)<br>[Allure report](https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/) · [v1.0.0](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases/tag/v1.0.0) · [Review guide](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/portfolio-review-guide.md) |
 | [**k6 Performance**](https://github.com/qa-test-automation-frameworks/k6-performance-framework)<br><sub>k6 · TypeScript · Grafana · OpenTelemetry</sub> | Performance testing as a governed system: six workload models, SLO-based gates, reviewed regression baselines, Grafana/InfluxDB observability, and load-safety rules that keep public targets read-only. | [![Main load](https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/workflows/main-load.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/workflows/main-load.yml)<br>[Performance reports](https://qa-test-automation-frameworks.github.io/k6-performance-framework/) · [v0.4.0](https://github.com/qa-test-automation-frameworks/k6-performance-framework/releases/tag/v0.4.0) · [Evidence guide](https://github.com/qa-test-automation-frameworks/k6-performance-framework/blob/main/docs/evidence.md) |
 | [**ARIA API**](https://github.com/qa-test-automation-frameworks/aria-api-framework)<br><sub>Java 21 · Pact · WireMock · OpenAPI</sub> | API testing above the endpoint-script level: layered clients and services, a deterministic provider, Pact consumer contracts with provider verification, JSON-schema assertions, OpenAPI endpoint coverage, and redacted diagnostics. | [![CI](https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/workflows/ci.yml)<br>[Allure report](https://qa-test-automation-frameworks.github.io/aria-api-framework/) · [v1.0.0](https://github.com/qa-test-automation-frameworks/aria-api-framework/releases/tag/v1.0.0) · [Review guide](https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/portfolio-review-guide.md) |
-| [**Selenium TestNG Java**](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework)<br><sub>Java 21 · Selenium 4 · TestNG · Docker Grid</sub> | The JVM execution discipline enterprises still run on: thread-local drivers, explicit-wait-only synchronization, Docker Grid with capacity guidance, multi-browser CI, and redaction-aware Allure diagnostics. | [![UI Tests](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/workflows/ui-tests.yml/badge.svg?branch=main)](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/workflows/ui-tests.yml)<br>[Allure report](https://qa-test-automation-frameworks.github.io/selenium-testng-java-framework/) · [v1.0.0](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/releases/tag/v1.0.0) · [Review guide](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/PORTFOLIO_REVIEW_GUIDE.md) |
+| [**Selenium TestNG Java**](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework)<br><sub>Java 21 · Selenium 4 · TestNG · Docker Grid</sub> | JVM browser-execution patterns: thread-local drivers, explicit-wait-only synchronization, Docker Grid with capacity guidance, multi-browser CI, and redaction-aware Allure diagnostics. | [![UI Tests](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/workflows/ui-tests.yml/badge.svg?branch=main)](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/workflows/ui-tests.yml)<br>[Allure report](https://qa-test-automation-frameworks.github.io/selenium-testng-java-framework/) · [v1.0.0](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/releases/tag/v1.0.0) · [Review guide](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/PORTFOLIO_REVIEW_GUIDE.md) |
 
 ## Choose by Capability
 
@@ -58,7 +61,7 @@ and [dashboard status](../docs/verification/2026-10-16-dashboard-evidence-state.
 | Modern UI, API, accessibility, and visual testing | [Playwright](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework) | Controlled target, typed clients, cleanup, and flake governance. |
 | Performance governance | [k6](https://github.com/qa-test-automation-frameworks/k6-performance-framework) | Safety guard, SLOs, baseline provenance, and regression comparison. |
 | API and contract quality | [ARIA](https://github.com/qa-test-automation-frameworks/aria-api-framework) | Owned provider, Pact, OpenAPI, and redacted diagnostics. |
-| Enterprise JVM execution | [Selenium](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework) | Grid lifecycle, waits, parallelism, and failure diagnostics. |
+| JVM browser execution | [Selenium](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework) | Grid lifecycle, waits, parallelism, and failure diagnostics. |
 
 ## How It Fits Together
 
@@ -76,7 +79,7 @@ demonstrated five ways.
 
 | Time | Path | The question it answers |
 | --- | --- | --- |
-| **3 minutes** | Open the [evidence dashboard](https://qa-test-automation-frameworks.github.io/.github/), check its `generatedAt` first, then inspect the source-run links. The dashboard validates live CI metadata before publish and remains readable without JavaScript; the currently deployed snapshot is stale. | Which framework runs have durable evidence, and which dashboard data is stale or unavailable? |
+| **3 minutes** | Open the [evidence dashboard](https://qa-test-automation-frameworks.github.io/.github/), check its `generatedAt` first, then inspect the source-run links. The snapshot is current as of 2026-10-17; its scheduled-refresh health remains stale, and the page remains readable without JavaScript. | Which framework runs have durable evidence, and which dashboard data is stale or unavailable? |
 | **15 minutes** | Follow the [Verity reviewer guide](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/blob/main/docs/reviewer-guide.md) and the [Playwright review guide](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/portfolio-review-guide.md). | How are LLM non-determinism and browser flakiness actually controlled? |
 | **Deep review** | Work through all five in order — Verity → Playwright → k6 → ARIA → Selenium — each with a documented, time-boxed review path. | Does the same engineering standard hold across every quality surface? |
 
