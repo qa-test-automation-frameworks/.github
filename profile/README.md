@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg">
-  <img src="assets/hero-light.svg" alt="QA Test Automation Frameworks — quality engineering, made observable. Five reference frameworks: browser UI, API contracts, performance, accessibility, LLM evaluation. Every claim linked to bounded evidence." width="100%">
+  <img src="assets/hero-light.svg" alt="QA Test Automation Frameworks — quality engineering, made observable. Five frameworks cover browser UI, API contracts, performance, accessibility, and LLM evaluation." width="100%">
 </picture>
 
 Reference frameworks for browser, API, performance, accessibility, visual, and
@@ -22,6 +22,15 @@ feedback, diagnosable failure, and governed delivery across UI, API contracts,
 performance, enterprise JVM execution, and LLM evaluation. Open the dashboard,
 choose a capability below, and verify the current evidence record before reading
 the deeper architecture.
+
+**Evidence status (2026-10-16):** durable public bundles are verified for ARIA,
+k6, Playwright, and Selenium. Verity remains unpublished because required
+security checks are failing on unresolved findings. The dashboard implementation
+is active, but the deployed snapshot is stale: its `generatedAt` is
+`2026-09-09T08:59:57.006Z`. Check that timestamp before relying on the dashboard;
+follow its source-run links for current execution results. See the
+[publication evidence](../docs/verification/2026-10-16-durable-evidence-publication.md)
+and [dashboard status](../docs/verification/2026-10-16-dashboard-evidence-state.md).
 
 [![Evidence Dashboard](https://img.shields.io/badge/EVIDENCE%20DASHBOARD-101826?style=for-the-badge&logo=githubactions&logoColor=3fb950)](https://qa-test-automation-frameworks.github.io/.github/)
 &nbsp;
@@ -67,7 +76,7 @@ demonstrated five ways.
 
 | Time | Path | The question it answers |
 | --- | --- | --- |
-| **3 minutes** | Open the [evidence dashboard](https://qa-test-automation-frameworks.github.io/.github/) — refreshed on a schedule from live CI metadata, validated before publish, readable without JavaScript. | Is the CI green, are the releases real, and is the evidence current? |
+| **3 minutes** | Open the [evidence dashboard](https://qa-test-automation-frameworks.github.io/.github/), check its `generatedAt` first, then inspect the source-run links. The dashboard validates live CI metadata before publish and remains readable without JavaScript; the currently deployed snapshot is stale. | Which framework runs have durable evidence, and which dashboard data is stale or unavailable? |
 | **15 minutes** | Follow the [Verity reviewer guide](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/blob/main/docs/reviewer-guide.md) and the [Playwright review guide](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/portfolio-review-guide.md). | How are LLM non-determinism and browser flakiness actually controlled? |
 | **Deep review** | Work through all five in order — Verity → Playwright → k6 → ARIA → Selenium — each with a documented, time-boxed review path. | Does the same engineering standard hold across every quality surface? |
 

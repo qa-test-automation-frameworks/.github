@@ -24,6 +24,7 @@ on:
       - "scripts/prune-evidence.test.mjs"
       - "scripts/verify-source-run.py"
       - "scripts/test-verify-source-run.py"
+      - "scripts/test-evidence-git-push-atomicity.sh"
       - ".github/workflows/publish-evidence.yml"
       - "scripts/validate-evidence.mjs"
       - ".nvmrc"
@@ -44,6 +45,8 @@ jobs:
         run: node --test scripts/dashboard.test.mjs scripts/dashboard-state.test.mjs scripts/dashboard-refresh-health.test.mjs scripts/dashboard-render.test.mjs scripts/evidence-contract.test.mjs scripts/publish-evidence.test.mjs scripts/prune-evidence.test.mjs
       - name: Test trusted source-run verifier
         run: python3 scripts/test-verify-source-run.py
+      - name: Test durable evidence ref-update atomicity
+        run: bash scripts/test-evidence-git-push-atomicity.sh
       - name: Validate static dashboard snapshot
         run: node scripts/validate-dashboard.mjs
       - name: Reject local links and unsupported self-assessment in this repository

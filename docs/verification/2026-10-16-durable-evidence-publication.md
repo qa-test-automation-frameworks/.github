@@ -72,13 +72,38 @@ the commit. The calling workflow must be a
 `workflow_run` listener on its default branch and filter to completed `main`
 push/schedule/manual runs; the reusable workflow independently verifies those
 claims before the write token is used. Framework callers must pin the reusable
-workflow to a full 40-character commit SHA. Remote publication is still pending until each framework
-has a caller workflow, exact-run CI, and a retrieved bundle whose checksums
-validate.
+workflow to a full 40-character commit SHA.
 
-The local controls in `scripts/publish-evidence.test.mjs` and
+## Verified default-branch publication (2026-10-16)
+
+The following source runs completed on their merged default-branch revisions;
+the trusted publisher ran, the public `portfolio-evidence` bundle was retrieved,
+checksums matched, and records passed the official schema-v3 validator:
+
+| Framework | Source run | Publication evidence |
+|---|---:|---|
+| ARIA | `38938727842` | Exact merged source SHA; five scopes plus the deliberate failure-control and skipped-live scopes validated. |
+| K6 | `38938737816` | Publisher run `38939892944`; two records, manifest and record hashes validated. |
+| Playwright | `38941588895` | Publisher run `38942315074`; eight scopes validated, including the expected failed negative control. |
+| Selenium | `38938759562` | Publisher run `38939493848`; five records and manifest validated. |
+
+Verity remains unverified for durable publication. Its required dependency and
+image security checks fail on unresolved upstream findings, so its caller has
+not been merged and must not be treated as a clean default-branch publication.
+The new `scripts/test-evidence-git-push-atomicity.sh` control uses a local bare
+Git remote to reject a receive, then verifies the branch ref and previous index
+remain unchanged; it also verifies a successful single-commit bundle/index
+update and rejection of a stale `--force-with-lease`. This exercises Git's
+ref-update boundary, but is not an interruption test against GitHub itself.
+Actual GitHub ref-write interruption remains unproven. Dashboard ingestion and
+freshness are tracked separately in the dashboard evidence-state note.
+
+The local Node tests in `scripts/publish-evidence.test.mjs` and
 `scripts/prune-evidence.test.mjs` cover record identity, checksums, immutable
 paths, interrupted latest-index updates, out-of-order completion, expiration,
-size-limit pruning and refusal to delete oversized latest bundles. They do not
-by themselves prove remote publication, repository permissions, artifact
-retrieval, branch retention or scheduled operation.
+size-limit pruning and refusal to delete oversized latest bundles. The Git
+receive test's scope is described above. These local controls do not by
+themselves prove production repository permissions, source artifact retrieval,
+branch retention or scheduled operation. The four retrieved bundles above are
+point-in-time proofs; continued retention and scheduled operation still
+require observation over time.
