@@ -59,10 +59,11 @@ locally and by the documentation workflow. It separates native execution, artifa
 publication and historical attestations. As of 2026-10-17, default-branch durable
 publication and retrieved, checksummed bundles are verified for ARIA, K6, Playwright
 and Selenium; Verity remains unpublished because required security checks still fail.
-Authorized dashboard dispatch `38998264283` deployed a snapshot generated at
-`2026-10-17T03:18:31Z`; the dashboard reports the Verity publication gap and current
-source-run states. The scheduled-refresh health remains stale, last checked
-`2026-09-09T09:00:22Z`, so the manual deployment does not prove the schedule works.
+Dashboard run `39003146926` deployed the current inspected snapshot, generated at
+`2026-10-17T04:35:46Z`. It reports the Verity publication gap and preserves the
+Selenium Firefox failure alongside current source-run states. The scheduled-refresh
+health remains stale, last checked `2026-09-09T09:00:22Z`, so the manual deployment
+does not prove the schedule works.
 `site/data/portfolio.json` here is a seed snapshot for local rendering, not the live
 record; check the deployed timestamp before relying on live cards. Synthetic fixtures
 remain contract controls, not framework execution proof.
