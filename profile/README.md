@@ -19,19 +19,22 @@ Quality Engineering Lead conversations. Reach out on
 
 **Start here:** five reference frameworks demonstrate deterministic
 feedback, diagnosable failure, and governed delivery across UI, API contracts,
-performance, JVM browser execution, and LLM evaluation. Open the dashboard,
+performance, JVM browser execution, and LLM evaluation. A separate shared
+product target lets those frameworks exercise the same persisted policy-and-claims
+domain without turning the app into a sixth framework. Open the dashboard,
 choose a capability below, and verify the current evidence record before reading
 the deeper architecture.
 
-**Evidence status (2026-10-17):** durable public bundles are verified for ARIA,
-k6, Playwright, and Selenium. Verity remains unpublished because required
-security checks are failing on unresolved findings. The dashboard refreshed and
-deployed after the source runs completed in run
-[`38998264283`](https://github.com/qa-test-automation-frameworks/.github/actions/runs/38998264283);
-its public snapshot was generated at `2026-10-17T03:18:31Z` and reports no
-unavailable repositories. Its scheduled-refresh health is still stale, so this
-manual refresh does not prove the daily schedule is operating. Follow the
-dashboard's source-run links for current execution results. See the
+**Evidence status (2026-10-17):** the deployed dashboard snapshot was generated
+at `2026-10-17T04:35:46Z` by run
+[`39003146926`](https://github.com/qa-test-automation-frameworks/.github/actions/runs/39003146926).
+ARIA, Playwright, and k6 are review-ready with published evidence. Selenium's
+published evidence preserves a failed Firefox logout run; Verity has no durable
+bundle because required security checks still fail. The refresh API was available
+with no unavailable repositories, but the scheduled-refresh health is stale
+(last checked `2026-09-09T09:00:22Z`). A manual refresh does not prove the daily
+schedule is operating. Follow the dashboard's source-run links for current
+execution results. See the
 [publication evidence](../docs/verification/2026-10-16-durable-evidence-publication.md)
 and [dashboard status](../docs/verification/2026-10-16-dashboard-evidence-state.md).
 
@@ -52,6 +55,12 @@ and [dashboard status](../docs/verification/2026-10-16-dashboard-evidence-state.
 | [**k6 Performance**](https://github.com/qa-test-automation-frameworks/k6-performance-framework)<br><sub>k6 · TypeScript · Grafana · OpenTelemetry</sub> | Performance testing as a governed system: six workload models, SLO-based gates, reviewed regression baselines, Grafana/InfluxDB observability, and load-safety rules that keep public targets read-only. | [![Main load](https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/workflows/main-load.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/k6-performance-framework/actions/workflows/main-load.yml)<br>[Performance reports](https://qa-test-automation-frameworks.github.io/k6-performance-framework/) · [v0.4.0](https://github.com/qa-test-automation-frameworks/k6-performance-framework/releases/tag/v0.4.0) · [Evidence guide](https://github.com/qa-test-automation-frameworks/k6-performance-framework/blob/main/docs/evidence.md) |
 | [**ARIA API**](https://github.com/qa-test-automation-frameworks/aria-api-framework)<br><sub>Java 21 · Pact · WireMock · OpenAPI</sub> | API testing above the endpoint-script level: layered clients and services, a deterministic provider, Pact consumer contracts with provider verification, JSON-schema assertions, OpenAPI endpoint coverage, and redacted diagnostics. | [![CI](https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/workflows/ci.yml)<br>[Allure report](https://qa-test-automation-frameworks.github.io/aria-api-framework/) · [v1.0.0](https://github.com/qa-test-automation-frameworks/aria-api-framework/releases/tag/v1.0.0) · [Review guide](https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/portfolio-review-guide.md) |
 | [**Selenium TestNG Java**](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework)<br><sub>Java 21 · Selenium 4 · TestNG · Docker Grid</sub> | JVM browser-execution patterns: thread-local drivers, explicit-wait-only synchronization, Docker Grid with capacity guidance, multi-browser CI, and redaction-aware Allure diagnostics. | [![UI Tests](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/workflows/ui-tests.yml/badge.svg?branch=main)](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/actions/workflows/ui-tests.yml)<br>[Allure report](https://qa-test-automation-frameworks.github.io/selenium-testng-java-framework/) · [v1.0.0](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/releases/tag/v1.0.0) · [Review guide](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/PORTFOLIO_REVIEW_GUIDE.md) |
+
+## Shared Reference Application
+
+[**Quality Reference Application**](https://github.com/qa-test-automation-frameworks/quality-reference-application) is a separate, fictional policy-and-claims product under test. Its current `main` source is `e9f438e`; it persists synthetic policy and claim state, enforces member ownership and reviewer transitions, and exposes a versioned API plus accessible browser UI. It is a reference target, not an insurance platform or a production-scale claim system.
+
+The shared-target pilots have passing hosted integration evidence but remain open draft review branches: [ARIA API #75](https://github.com/qa-test-automation-frameworks/aria-api-framework/pull/75), [Playwright #55](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/pull/55), [k6 #41](https://github.com/qa-test-automation-frameworks/k6-performance-framework/pull/41), and [Selenium #46](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/pull/46). [Verity #31](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/pull/31) passed its real-app API-v2 integration path, while its broader required dependency/security checks remain unresolved. [Compatibility work](https://github.com/qa-test-automation-frameworks/quality-reference-application/pull/1) remains a draft; its v2 change is not part of the default app source.
 
 ## Choose by Capability
 
