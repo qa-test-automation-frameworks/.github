@@ -90,17 +90,20 @@ checksums matched, and records passed the official schema-v3 validator:
 Verity remains unverified for durable publication. Its required dependency and
 image security checks fail on unresolved upstream findings, so its caller has
 not been merged and must not be treated as a clean default-branch publication.
-The local interrupted-write tests prove packager behavior, but do not simulate a
-real interruption during a remote Git ref update. Remote branch publication is
-one atomic commit; an end-to-end remote interruption/failure-atomicity control
-remains outstanding. Dashboard ingestion and freshness are tracked separately
-in the dashboard evidence-state note.
+The new `scripts/test-evidence-git-push-atomicity.sh` control uses a local bare
+Git remote to reject a receive, then verifies the branch ref and previous index
+remain unchanged; it also verifies a successful single-commit bundle/index
+update and rejection of a stale `--force-with-lease`. This exercises Git's
+ref-update boundary, but is not an interruption test against GitHub itself.
+Actual GitHub ref-write interruption remains unproven. Dashboard ingestion and
+freshness are tracked separately in the dashboard evidence-state note.
 
-The local controls in `scripts/publish-evidence.test.mjs` and
+The local Node tests in `scripts/publish-evidence.test.mjs` and
 `scripts/prune-evidence.test.mjs` cover record identity, checksums, immutable
 paths, interrupted latest-index updates, out-of-order completion, expiration,
-size-limit pruning and refusal to delete oversized latest bundles. They do not
-by themselves prove remote publication, repository permissions, artifact
-retrieval, branch retention or scheduled operation. The four retrieved bundles
-above are point-in-time proofs; continued retention and scheduled operation
-still require observation over time.
+size-limit pruning and refusal to delete oversized latest bundles. The Git
+receive test's scope is described above. These local controls do not by
+themselves prove production repository permissions, source artifact retrieval,
+branch retention or scheduled operation. The four retrieved bundles above are
+point-in-time proofs; continued retention and scheduled operation still
+require observation over time.
