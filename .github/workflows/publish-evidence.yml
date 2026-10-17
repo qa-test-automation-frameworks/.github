@@ -67,10 +67,14 @@ jobs:
           git -C evidence fetch origin portfolio-evidence 2>/dev/null || true
           if git -C evidence rev-parse --verify refs/remotes/origin/portfolio-evidence >/dev/null 2>&1; then
             echo "expected_sha=$(git -C evidence rev-parse refs/remotes/origin/portfolio-evidence)" >> "$GITHUB_OUTPUT"
-            git -C evidence checkout -B portfolio-evidence refs/remotes/origin/portfolio-evidence
+            # The source checkout may contain tracked files that do not exist on the
+            # evidence branch (for example, ARIA's CRLF-normalized gradlew.bat).
+            # This checkout is a disposable clone; publication data comes only from
+            # source-artifacts, so discard source-tree worktree differences here.
+            git -C evidence checkout --force -B portfolio-evidence refs/remotes/origin/portfolio-evidence
           else
             echo "expected_sha=none" >> "$GITHUB_OUTPUT"
-            git -C evidence checkout --orphan portfolio-evidence
+            git -C evidence checkout --force --orphan portfolio-evidence
             git -C evidence rm -rf --ignore-unmatch .
           fi
           unexpected=$(find evidence -mindepth 1 -maxdepth 1 ! -name .git ! -name repositories -print -quit)
