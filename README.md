@@ -56,10 +56,13 @@ or snapshot handling with a setup instruction.
 
 The version3 [evidence contract](docs/PORTFOLIO_EVIDENCE_STANDARD.md) is validated
 locally and by the documentation workflow. It separates native execution, artifact
-publication and historical attestations. As of 2026-10-16, default-branch durable
+publication and historical attestations. As of 2026-10-17, default-branch durable
 publication and retrieved, checksummed bundles are verified for ARIA, K6, Playwright
-and Selenium; Verity remains pending because its required security checks are failing.
-The dashboard workflow is active, but its two authorized refresh dispatches have
-remained queued without jobs. The public snapshot still reports `generatedAt`
-2026-09-09T08:59:57.006Z; check the deployed timestamp before relying on its cards.
-Synthetic fixtures remain contract controls, not framework execution proof.
+and Selenium; Verity remains unpublished because required security checks still fail.
+Authorized dashboard dispatch `38998264283` deployed a snapshot generated at
+`2026-10-17T03:18:31Z`; the dashboard reports the Verity publication gap and current
+source-run states. The scheduled-refresh health remains stale, last checked
+`2026-09-09T09:00:22Z`, so the manual deployment does not prove the schedule works.
+`site/data/portfolio.json` here is a seed snapshot for local rendering, not the live
+record; check the deployed timestamp before relying on live cards. Synthetic fixtures
+remain contract controls, not framework execution proof.
