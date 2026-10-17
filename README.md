@@ -14,6 +14,8 @@ and generated portfolio dashboard for
 | Dashboard assets | [Site source](site) |
 | CI | [Dashboard workflow](https://github.com/qa-test-automation-frameworks/.github/actions/workflows/dashboard.yml) |
 
+For a bounded, fresh-clone exercise with an expected negative control and feedback form, see the [independent review packet](docs/PORTFOLIO_INDEPENDENT_REVIEW_PACKET.md). Preparing the packet does not count as an independent review.
+
 The dashboard refresh workflow reads public GitHub metadata and durable evidence records and writes a
 timestamped, pre-rendered snapshot that remains complete without JavaScript. It separates execution
 from publication, shows the latest attempt and last success, checks source compatibility and declared
