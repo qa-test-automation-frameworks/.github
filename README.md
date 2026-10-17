@@ -19,8 +19,10 @@ timestamped, pre-rendered snapshot that remains complete without JavaScript. It 
 from publication, shows the latest attempt and last success, checks source compatibility and declared
 freshness, and displays known limitations. It does not claim private adoption, production usage, or
 organizational outcomes that cannot be independently verified. See the
-[Portfolio Evidence Standard](docs/PORTFOLIO_EVIDENCE_STANDARD.md) and the
-[dashboard evidence-state and refresh-health notes](docs/verification/2026-10-16-dashboard-evidence-state.md).
+[Portfolio Evidence Standard](docs/PORTFOLIO_EVIDENCE_STANDARD.md), the
+[runtime policy](docs/runtime-policy.md), the
+[durable-publication status](docs/verification/2026-10-16-durable-evidence-publication.md),
+and the [dashboard evidence-state and refresh-health notes](docs/verification/2026-10-16-dashboard-evidence-state.md).
 The proposed shared reference target is defined in
 [ADR 007](docs/adr/007-shared-reference-application.md); it is a design decision,
 not a claim that the application or integrations exist yet.
@@ -34,7 +36,7 @@ freshness.
 
 ## Local first success
 
-Use Node.js 24.21.0 from `.nvmrc`, then run:
+Use Node.js 24.21.0 from `.nvmrc` (see the [supported runtime policy](docs/runtime-policy.md)), then run:
 
 ```sh
 node --test scripts/dashboard.test.mjs scripts/evidence-contract.test.mjs
@@ -52,8 +54,10 @@ or snapshot handling with a setup instruction.
 
 The version3 [evidence contract](docs/PORTFOLIO_EVIDENCE_STANDARD.md) is validated
 locally and by the documentation workflow. It separates native execution, artifact
-publication and historical attestations. Framework emitters and the central publisher
-are implemented on the roadmap branch, while end-to-end public publication remains
-unverified; synthetic fixtures are contract controls, not framework execution proof.
-GitHub currently reports the dashboard workflow disabled for inactivity, so the
-committed snapshot is intentionally unavailable until a default-branch refresh runs.
+publication and historical attestations. As of 2026-10-16, default-branch durable
+publication and retrieved, checksummed bundles are verified for ARIA, K6, Playwright
+and Selenium; Verity remains pending because its required security checks are failing.
+The dashboard workflow is active, but its two authorized refresh dispatches have
+remained queued without jobs. The public snapshot still reports `generatedAt`
+2026-09-09T08:59:57.006Z; check the deployed timestamp before relying on its cards.
+Synthetic fixtures remain contract controls, not framework execution proof.

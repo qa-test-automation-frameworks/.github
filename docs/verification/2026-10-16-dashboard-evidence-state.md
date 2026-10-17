@@ -14,8 +14,20 @@ The HTML page contains the same repository and evidence view as the enhanced Jav
 
 The refresh job checks that the dashboard workflow is enabled and that its latest scheduled completed run succeeded within 36 hours. It reports disabled, never-run, failed, stale, invalid-time, or unavailable states explicitly. The regular refresh runs daily at 04:17 UTC and on the default-branch push; pull requests validate and render without deploying Pages.
 
-As observed from GitHub on 2026-10-16, `dashboard.yml` was `disabled_inactivity`; its latest completed scheduled run was `34332182917`, successful on 2026-09-09. Therefore the repository's committed static copy is intentionally marked refresh-unavailable, evidence-unavailable, and stale. This local implementation does not prove that the public Pages deployment is current or that any E03 evidence has been published. Those claims require the refresh workflow to run on the default branch and the resulting public snapshot to be inspected.
+As observed from GitHub on 2026-10-16, `dashboard.yml` is active. Two authorized
+manual refresh runs (`38939452031` and `38941194532`) remained queued with no
+jobs assigned and no updated timestamps. The public Pages page and
+`site/data/portfolio.json` returned HTTP 200, but both retained a
+`Last-Modified` timestamp of 2026-09-09; the snapshot's `generatedAt` was
+`2026-09-09T08:59:57.006Z` and contained no latest runs/evidence. Thus the
+implementation and local static checks are validated, while live refresh and
+deployment freshness remain unverified and the public snapshot is stale. Recheck
+the queued runs and inspect the deployed timestamp before claiming E04 complete.
 
 ## Verification
 
-Local Node suites cover contract validation, evidence aggregation, cadence classification, static/dynamic rendering, publisher integrity, and retention. `scripts/validate-dashboard.mjs` rejects unsupported states, untrusted workflow URLs, review-ready entries without all required fresh scopes, publication claims without verified records, and static pages that depend on JavaScript for their initial status. The exact pinned Node 24.21.0 environment is used in CI; local tests were run in a temporary copy with Node 24.19.0 because that is the bundled runtime available in the workspace.
+Local validation under pinned Node.js 24.21.0 passed five dashboard/evidence
+test files, and `scripts/validate-dashboard.mjs` validated all five repository
+cards. Python trusted-source verifier tests passed 3/3. This verifies local
+aggregation, rendering and contract behavior; it does not make the stale public
+snapshot current.
