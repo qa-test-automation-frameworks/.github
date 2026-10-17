@@ -106,10 +106,24 @@ deleted after verification, without touching production or `portfolio-evidence`.
 The captured report is in the ignored
 `work/roadmap-evidence/e03-github-ref-probe-2026-10-17/RESULT.md` directory.
 
-This proves GitHub rejects a stale ref update while preserving the old index;
-it does not inject a dropped connection during an active GitHub upload. A true
-mid-upload network interruption remains untested. Dashboard ingestion and
-freshness are tracked separately in the dashboard evidence-state note.
+A separate controlled mid-upload interruption was then run against another
+disposable GitHub branch, `portfolio/e03-mid-upload-probe-2026-10-17`. The known
+good remote tip was `ca71be6238b108e01b0c5278cab6e852be2d5a79`, whose test-only
+`latest.json` pointed to run 1001 (SHA-256
+`e642716b94b1cc1e7d26a03ff20fe7c5c7e92fd4d60b55cba969a594bb5bcb44`). Candidate
+`f168a4f52c06fcdb6e4b3cabd2d6ab9e614b44f8` changed the index to run 1002 and
+included an 8 MiB test payload. A local HTTPS CONNECT tunnel deliberately
+closed after forwarding 131,072 client bytes. Git reported a GnuTLS receive
+error and unexpected disconnect; a fresh fetch showed the remote ref still at
+the run-1001 commit and the index unchanged. The disposable branch and worktree
+were deleted after verification. The report and sanitized logs are under the
+ignored `work/roadmap-evidence/e03-github-interruption-2026-10-17/` directory.
+
+This exercises GitHub's ref-update boundary with an interrupted test upload; it
+does not prove the trusted publisher's artifact permissions or long-term
+retention. The test used a synthetic bundle and did not touch production or
+`portfolio-evidence`. Dashboard ingestion and freshness are tracked separately
+in the dashboard evidence-state note.
 
 The local Node tests in `scripts/publish-evidence.test.mjs` and
 `scripts/prune-evidence.test.mjs` cover record identity, checksums, immutable
