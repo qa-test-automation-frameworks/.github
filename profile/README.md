@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg">
-  <img src="assets/hero-light.svg" alt="QA Test Automation Frameworks — quality engineering, made observable. Five reference frameworks: browser UI, API contracts, performance, accessibility, LLM evaluation. Every claim linked to bounded evidence." width="100%">
+  <img src="assets/hero-light.svg" alt="QA Test Automation Frameworks — quality engineering, made observable. Five frameworks cover browser UI, API contracts, performance, accessibility, and LLM evaluation." width="100%">
 </picture>
 
 Reference frameworks for browser, API, performance, accessibility, visual, and
