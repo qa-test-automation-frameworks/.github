@@ -26,12 +26,12 @@ the deeper architecture.
 **Evidence status (2026-10-17):** durable public bundles are verified for ARIA,
 k6, Playwright, and Selenium. Verity remains unpublished because required
 security checks are failing on unresolved findings. The dashboard refreshed and
-deployed from main run
-[`38997504290`](https://github.com/qa-test-automation-frameworks/.github/actions/runs/38997504290);
-its public snapshot was generated at `2026-10-17T03:06:38Z` and reports no
+deployed after the source runs completed in run
+[`38998264283`](https://github.com/qa-test-automation-frameworks/.github/actions/runs/38998264283);
+its public snapshot was generated at `2026-10-17T03:18:31Z` and reports no
 unavailable repositories. Its scheduled-refresh health is still stale, so this
-successful push-triggered refresh does not prove the daily schedule is operating.
-Follow the dashboard's source-run links for current execution results. See the
+manual refresh does not prove the daily schedule is operating. Follow the
+dashboard's source-run links for current execution results. See the
 [publication evidence](../docs/verification/2026-10-16-durable-evidence-publication.md)
 and [dashboard status](../docs/verification/2026-10-16-dashboard-evidence-state.md).
 

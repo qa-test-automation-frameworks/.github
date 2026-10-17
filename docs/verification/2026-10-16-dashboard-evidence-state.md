@@ -34,15 +34,25 @@ completed the evidence refresh and Pages deployment successfully. The public
 `data/portfolio.json` reports `generatedAt` `2026-10-17T03:06:38.031Z`, refresh
 status `available`, and no unavailable repositories. The same payload still
 reports the scheduled workflow as `stale`, last checked at
-`2026-09-09T09:00:22Z` (906.1 hours old at generation). Thus live ingestion and
-deployment are now proven; daily schedule operation remains a separately visible
-blocker and needs continued monitoring before claiming the operational part of
-E04 complete.
+`2026-09-09T09:00:22Z` (906.1 hours old at generation).
+
+The first deployment preceded completion of the Playwright merge run and its
+trusted evidence publication. After both completed successfully, manual refresh
+run [`38998264283`](https://github.com/qa-test-automation-frameworks/.github/actions/runs/38998264283)
+again passed refresh, validation, upload, and Pages deployment. Public data was
+generated at `2026-10-17T03:18:31.045Z`, returned HTTP 200, and showed all five
+framework cards with no unavailable repositories. Playwright now displays main
+run `38997501017` and current evidence; Verity correctly remains evidence
+unavailable/not published because it has no public bundle index. ARIA and
+Selenium retain visible failed-evidence dispositions for their deliberately
+failing required failure-control records; their main CI runs themselves passed.
+Schedule health remains `stale` at `2026-09-09T09:00:22Z`. The dashboard
+distinguishes execution, evidence publication, and schedule health, while the
+stale scheduled-refresh signal is an explicitly reported operational blocker.
 
 ## Verification
 
 Local validation under pinned Node.js 24.21.0 passed five dashboard/evidence
 test files, and `scripts/validate-dashboard.mjs` validated all five repository
-cards. Python trusted-source verifier tests passed 3/3. This verifies local
-aggregation, rendering and contract behavior; it does not make the stale public
-snapshot current.
+cards. Python trusted-source verifier tests passed 3/3. The live follow-up above
+confirms the deployed snapshot, and the scheduled-refresh health remains stale.
