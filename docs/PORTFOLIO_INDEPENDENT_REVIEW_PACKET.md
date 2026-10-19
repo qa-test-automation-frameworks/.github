@@ -38,6 +38,11 @@ npx playwright test --config=playwright.evidence-control.config.ts
 
 This command is expected to exit nonzero because one assertion is deliberately false. The failure should name `E02_EXPECTED_FAILURE_CONTROL`, and the JSON report should be written to `test-results/evidence-control/results.json`. A different error, missing report, zero failures, or more than one failed case is a problem to report. Do not treat this expected red command as a product or CI failure. The negative control is browser-free and makes no target calls.
 
+`npm ci` runs the repository's `prepare` script, which installs the Husky hook
+shim and sets `core.hooksPath` in the disposable clone's local Git config. This
+does not modify tracked files; the reviewer observed only ignored install and
+test-output directories in addition to that local config change.
+
 ## What to inspect
 
 1. Does the organization profile make it clear what the portfolio contains and where to begin?
@@ -76,4 +81,4 @@ Additional comments:
 
 ## Adoption status
 
-This document prepares an independent review; by itself it is not evidence that one occurred. The owner-approved AI-assisted review and its material findings are recorded in [the review record](verification/2026-10-19-independent-review.md). The review gate closes only after the documented command and portfolio-status defects are corrected and checked. Do not report the AI-assisted review as human adoption, endorsement, or a portfolio score.
+This packet records the completed owner-approved AI-assisted fresh-clone review in [the review record](verification/2026-10-19-independent-review.md). Its install, reviewer-path, volatile-status, and target-ownership findings were corrected in merged changes and checked; the reported Husky local-config side effect is explained above. This closes the portfolio's P02 gate under the owner's accepted review policy. It is not evidence of human adoption, endorsement, or a portfolio score.

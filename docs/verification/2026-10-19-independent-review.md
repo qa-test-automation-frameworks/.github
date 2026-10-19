@@ -74,5 +74,27 @@ evidence wording now separates the controlled Grid from its vendor-operated
 Sauce Demo target. The current two exceptions remain explicitly dated through
 2026-11-17.
 
-See the related repository changes and verification results before treating
-these corrections as published or complete.
+## P02 closeout
+
+The reviewer also observed that Playwright's `prepare` script sets
+`core.hooksPath` in the disposable clone's local Git config. The packet now
+explains this harmless, untracked clone-local side effect; it does not modify
+the repository's tracked files.
+
+The material P02 corrections are available on the default branches. `.github`
+PRs [#34](https://github.com/qa-test-automation-frameworks/.github/pull/34)
+and [#35](https://github.com/qa-test-automation-frameworks/.github/pull/35)
+passed documentation and dashboard validation. Playwright
+[#61](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/pull/61)
+passed required CI, including fresh-clone checks on Linux and Windows and the
+negative-control job. Selenium
+[#48](https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/pull/48)
+passed its required browser, bootstrap, security, and documentation checks.
+Reference-app [#7](https://github.com/qa-test-automation-frameworks/quality-reference-application/pull/7),
+`.github` #31–33, and Verity #38/#39 were also merged with their required checks
+passing. This satisfies the owner's accepted P02 exit criterion. The external
+AI execution remains reviewer-supplied evidence; it is not represented as a
+human review or adoption.
+
+The linked PRs and verification records are the publication evidence for these
+corrections; the review findings retain their original attribution and scope.
