@@ -56,3 +56,30 @@ Local validation under pinned Node.js 24.21.0 passed five dashboard/evidence
 test files, and `scripts/validate-dashboard.mjs` validated all five repository
 cards. Python trusted-source verifier tests passed 3/3. The live follow-up above
 confirms the deployed snapshot, and the scheduled-refresh health remains stale.
+
+## Follow-up — 2026-10-19
+
+After the `.github` evidence-publication documentation change merged as
+`50f4fac`, manual dashboard run
+[`39231475894`](https://github.com/qa-test-automation-frameworks/.github/actions/runs/39231475894)
+completed successfully on `main` at `50f4fac6da7b64c32b9d6727dc1a709dc67d0ac5`.
+The public JSON snapshot at
+[`data/portfolio.json`](https://qa-test-automation-frameworks.github.io/.github/data/portfolio.json)
+was generated at `2026-10-19T09:37:46.614Z`; it reports refresh `available`,
+zero unavailable repositories, and schedule health `healthy` using natural
+scheduled run `39116244009`. This manual deployment is not another scheduled
+observation and does not advance the P03 28-day period.
+
+The snapshot identifies Playwright main run
+[`39230687804`](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39230687804)
+at `caebfb104223c2ef285c451c0ab75532655d0d44` as successful and current, with
+8/8 required scopes fresh and published. ARIA is 5/5 and Selenium is 4/4 fresh.
+K6 remains stale at 0/2 required scopes; its latest main run is
+`39023381931`. Verity main run
+[`39225809834`](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/actions/runs/39225809834)
+at `b5c9420373719e3510df1b248db7f8f5ddc1f371` succeeded. Both deterministic
+Python scopes are fresh and published, but the required deliberate
+failure-control scope is recorded as failed, leaving the aggregate correctly
+`failed` at 2/3 required scopes. Its optional semantic evaluation was skipped
+without a provider key. These states are visible outcomes, not dashboard
+validation errors.
