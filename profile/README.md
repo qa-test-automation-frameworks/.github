@@ -25,18 +25,12 @@ domain without turning the app into a sixth framework. Open the dashboard,
 choose a capability below, and verify the current evidence record before reading
 the deeper architecture.
 
-**Evidence status (2026-10-17):** the deployed dashboard snapshot was generated
-at `2026-10-17T04:35:46Z` by run
-[`39003146926`](https://github.com/qa-test-automation-frameworks/.github/actions/runs/39003146926).
-ARIA, Playwright, and k6 are review-ready with published evidence. Selenium's
-published evidence preserves a failed Firefox logout run; Verity has no durable
-bundle because required security checks still fail. The refresh API was available
-with no unavailable repositories, but the scheduled-refresh health is stale
-(last checked `2026-09-09T09:00:22Z`). A manual refresh does not prove the daily
-schedule is operating. Follow the dashboard's source-run links for current
-execution results. See the
-[publication evidence](../docs/verification/2026-10-16-durable-evidence-publication.md)
-and [dashboard status](../docs/verification/2026-10-16-dashboard-evidence-state.md).
+**Live evidence status:** use the [deployed dashboard](https://qa-test-automation-frameworks.github.io/.github/)
+as the source of truth. Check its `generatedAt`, schedule health, per-repository
+freshness, execution result, and publication state, then follow the linked
+source runs. This profile intentionally does not copy volatile status claims
+from a dated dashboard snapshot. A successful publication does not turn a
+failed test scope into a pass.
 
 [![Evidence Dashboard](https://img.shields.io/badge/EVIDENCE%20DASHBOARD-101826?style=for-the-badge&logo=githubactions&logoColor=3fb950)](https://qa-test-automation-frameworks.github.io/.github/)
 &nbsp;
@@ -88,8 +82,8 @@ demonstrated five ways.
 
 | Time | Path | The question it answers |
 | --- | --- | --- |
-| **3 minutes** | Open the [evidence dashboard](https://qa-test-automation-frameworks.github.io/.github/), check its `generatedAt` first, then inspect the source-run links. The snapshot is current as of 2026-10-17; its scheduled-refresh health remains stale, and the page remains readable without JavaScript. | Which framework runs have durable evidence, and which dashboard data is stale or unavailable? |
-| **15 minutes** | Follow the [Verity reviewer guide](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/blob/main/docs/reviewer-guide.md) and the [Playwright review guide](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/portfolio-review-guide.md). | How are LLM non-determinism and browser flakiness actually controlled? |
+| **3 minutes** | Open the [evidence dashboard](https://qa-test-automation-frameworks.github.io/.github/), check its `generatedAt`, then inspect source-run links. | Which runs are current, stale, failed, skipped, or published? |
+| **12 minutes** | Follow the [independent portfolio review packet](../docs/PORTFOLIO_INDEPENDENT_REVIEW_PACKET.md), then inspect the [Verity reviewer guide](https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/blob/main/docs/reviewer-guide.md) and [Playwright review guide](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/portfolio-review-guide.md). | Can a reviewer reproduce a safe success and an intentional failure, and understand the limits? |
 | **Deep review** | Work through all five in order — Verity → Playwright → k6 → ARIA → Selenium — each with a documented, time-boxed review path. | Does the same engineering standard hold across every quality surface? |
 
 ## The Engineering Standard
