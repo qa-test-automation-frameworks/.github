@@ -58,7 +58,7 @@
       "label": "Selenium TestNG Java",
       "status": "configured",
       "workflow": "ui-tests.yml",
-      "evidenceClass": "controlled",
+      "evidenceClass": "controlled Grid + vendor-operated target",
       "verificationUrl": "https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/evidence/latest-verification.md",
       "verificationManifestUrl": "https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/evidence/latest-verification.json",
       "limitationsUrl": "https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/known-issues.md",

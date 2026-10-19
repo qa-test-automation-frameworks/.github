@@ -28,6 +28,15 @@ test('every repository exposes evidence metadata and an explicit state', () => {
   }
 });
 
+test('Selenium evidence distinguishes the controlled Grid from its vendor-operated target', async () => {
+  const selenium = snapshot.repositories.find(({ name }) => name === 'selenium-testng-java-framework');
+  assert.ok(selenium);
+  assert.match(selenium.evidenceClass, /controlled Grid \+ vendor-operated target/);
+  assert.match(selenium.description, /vendor-operated Sauce Demo service, not a controlled application/);
+  const html = await readFile(new URL('../site/index.html', import.meta.url), 'utf8');
+  assert.match(html, /Evidence class describes the test execution environment/);
+});
+
 test('static fallback reports its old snapshot and does not preserve stale green claims', async () => {
   assert.equal(snapshot.refresh.status, 'unavailable');
   assert.ok(snapshot.repositories.every((repository) => repository.evidenceState === 'evidence-unavailable'));

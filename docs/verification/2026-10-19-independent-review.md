@@ -66,8 +66,13 @@ and the reported reviewed run. New Playwright execution records no longer
 carry a stale "publication pending" limitation; the publication field remains
 the source of truth. Verity's exception record and validator now state and enforce
 per-ID review metadata and a maximum 30-day window, a daily expiry workflow is
-added, and the runtime image omits optional semantic dependencies. The current
-two exceptions remain explicitly dated through 2026-11-17.
+added, and the runtime image omits optional semantic dependencies. A new lockfile
+scope check now fails if an ignored advisory's package disappears or moves
+outside the reviewed affected range. The runtime build also reinstalls and
+asserts the patched msgpack, setuptools, and urllib3 versions. Selenium's
+evidence wording now separates the controlled Grid from its vendor-operated
+Sauce Demo target. The current two exceptions remain explicitly dated through
+2026-11-17.
 
 See the related repository changes and verification results before treating
 these corrections as published or complete.
