@@ -1,6 +1,6 @@
 # Independent portfolio review packet
 
-This packet is for one reviewer who has not contributed to the repositories. It is designed to take about 30 minutes, including a fresh checkout and a deliberately failing control. The goal is to assess whether the portfolio is understandable and reproducible from public instructions, not to certify enterprise-scale quality.
+This packet is for a reviewer who has not contributed to the repositories. The owner has accepted an independent, non-contributing AI-assisted execution plus owner review for this portfolio gate. That decision is recorded in [the review record](verification/2026-10-19-independent-review.md); it must not be described as human adoption, endorsement, or human review. The exercise takes about 12 minutes, including a fresh checkout and a deliberately failing control. It assesses whether the portfolio is understandable and reproducible from public instructions, not enterprise-scale quality.
 
 ## Scope and limits
 
@@ -24,7 +24,7 @@ From a disposable parent directory:
 ```sh
 git clone https://github.com/qa-test-automation-frameworks/playwright-typescript-framework.git
 cd playwright-typescript-framework
-npm ci
+npx --yes npm@10.9.4 ci
 npm run test:unit
 ```
 
@@ -76,4 +76,4 @@ Additional comments:
 
 ## Adoption status
 
-This document prepares an independent review; it is not evidence that one occurred. The roadmap item remains open until a real independent reviewer completes a fresh-clone attempt, returns inspectable feedback, and material blockers are fixed or explicitly explained. Do not report this packet as external adoption, endorsement, or a portfolio score.
+This document prepares an independent review; by itself it is not evidence that one occurred. The owner-approved AI-assisted review and its material findings are recorded in [the review record](verification/2026-10-19-independent-review.md). The review gate closes only after the documented command and portfolio-status defects are corrected and checked. Do not report the AI-assisted review as human adoption, endorsement, or a portfolio score.
