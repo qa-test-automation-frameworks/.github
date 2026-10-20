@@ -8,6 +8,19 @@ The precise cause is not established. GitHub documents that scheduled runs can b
 
 ## Change and verification boundary
 
-This branch moves the existing daily schedule from `04:37 UTC` to `05:17 UTC` and thereby re-registers it at a different time. It creates no additional workflow or recurring job. This is a diagnostic reliability change, not proof that the schedule problem is fixed. A successful genuine `schedule` event on the default branch is still required before the dashboard can report a fresh scheduled run or the P03 28-day history can begin. Push, pull-request, and manual-dispatch runs do not substitute for that event.
+This branch moved the existing schedule from `04:37 UTC` to `05:17 UTC` and thereby re-registered it at a different time. It created no additional workflow. That was a diagnostic reliability change, not proof that the schedule problem was fixed.
 
-After merge, inspect the next natural event and the public dashboard's generated timestamp/refresh disposition. If no scheduled event occurs, preserve the failure as an operational blocker; do not repeatedly alter the cron or manually dispatch to make the 28-day criterion appear satisfied.
+After that merge, inspect the next natural event and the public dashboard's generated timestamp/refresh disposition. If no scheduled event occurs, preserve the failure as an operational blocker; do not substitute push or manual-dispatch runs for scheduled evidence.
+
+## Revised P03 acceptance — 2026-10-20
+
+The portfolio owner replaced the former 28-calendar-day target with a bounded seven-day accelerated observation. This cadence change is intended to evaluate the dashboard's natural schedule, refresh, validation, and Pages publication reliability. The workflow refreshes the central dashboard; it does not rerun all five frameworks' test suites, and the result must not be described as seven-day framework or product stability.
+
+- Schedule: `17 */4 * * *` (6 expected natural scheduled runs per UTC day, at minute 17 every four hours).
+- Start the clock at the first successful natural `schedule` run on the default branch after this cadence change is merged. Record its exact event, run ID, start/completion times, commit, validation result, and deployment result. Changes made in a pull request, push-triggered runs, and manual dispatches do not count.
+- Observe at least 168 elapsed hours and all 42 expected four-hour schedule slots. Allow runs triggered within the interval to complete before closeout.
+- Pass threshold: at least 40/42 scheduled slots (≥95%) must complete both dashboard validation and Pages deployment successfully; every UTC day in the seven-day interval must contain at least one fully successful natural run; there must be no two consecutive failed/missing slots; and every failure or miss must have a documented cause and disposition.
+- At closeout, independently verify the schedule event history and the public dashboard snapshot. A workflow run alone is insufficient if its validation or deployment failed. Keep the dashboard's existing schedule-health semantics explicit and do not count a manually refreshed snapshot as a scheduled observation.
+- If GitHub delays or drops scheduled runs, those slots count as missed. GitHub documents this limitation; the observed success rate therefore measures the end-to-end schedule and publishing path under the repository's actual hosted conditions.
+
+The former 28-day threshold is superseded by this dated decision. The seven-day result supports only a bounded claim about central dashboard operations across one weekly cycle; it does not establish month-long continuity, independent failure-domain coverage, or stability of the five framework test suites.

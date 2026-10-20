@@ -12,7 +12,7 @@ The HTML page contains the same repository and evidence view as the enhanced Jav
 
 ## Refresh health and operations
 
-The refresh job checks that the dashboard workflow is enabled and that its latest scheduled completed run succeeded within 36 hours. It reports disabled, never-run, failed, stale, invalid-time, or unavailable states explicitly. The regular refresh runs daily at 04:17 UTC and on the default-branch push; pull requests validate and render without deploying Pages.
+The refresh job checks that the dashboard workflow is enabled and that its latest scheduled completed run succeeded within 36 hours. It reports disabled, never-run, failed, stale, invalid-time, or unavailable states explicitly. At this document's original 2026-10-16 snapshot, the regular refresh ran daily at 04:17 UTC and on the default-branch push; pull requests validate and render without deploying Pages. The owner later selected a seven-day accelerated observation with a schedule every four hours, documented below.
 
 As observed from GitHub on 2026-10-16, `dashboard.yml` is active. Two authorized
 manual refresh runs (`38939452031` and `38941194532`) remained queued with no
@@ -68,7 +68,9 @@ The public JSON snapshot at
 was generated at `2026-10-19T09:37:46.614Z`; it reports refresh `available`,
 zero unavailable repositories, and schedule health `healthy` using natural
 scheduled run `39116244009`. This manual deployment is not another scheduled
-observation and does not advance the P03 28-day period.
+observation and did not advance the P03 operating window in effect at that time.
+
+The portfolio owner revised P03 on 2026-10-20 from 28 calendar days to a seven-day accelerated schedule observation. See [the revised schedule reliability acceptance](2026-10-18-dashboard-schedule-reliability.md#revised-p03-acceptance--2026-10-20) for the cadence, counting rules, and pass threshold. This decision does not retroactively convert push/manual runs into scheduled observations.
 
 The snapshot identifies Playwright main run
 [`39230687804`](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39230687804)
