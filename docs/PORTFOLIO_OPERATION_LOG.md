@@ -34,3 +34,17 @@ The portfolio owner replaced the 28-calendar-day observation with a seven-day ac
 - Runs triggered by push, pull request, or manual dispatch do not count. Wait for all expected runs in the seven-day interval to finish before closeout.
 - The dashboard refresh reads published evidence; it does not execute the five framework test suites. Report this only as dashboard scheduling/refresh/deployment reliability, not as framework-test stability or month-long operation.
 - Verify run event types, exact timestamps, conclusions, deployment results, and the public dashboard snapshot independently at closeout.
+
+
+## Seven-day P03 natural-run checkpoint — 2026-10-21 09:47 UTC
+
+The following are verified natural schedule events on main. Each run's validate and deploy jobs succeeded; all used commit `77e6bfdf0c406bf33d05a8d90a0ec914255ee9c7`.
+
+- [Run #214](https://github.com/qa-test-automation-frameworks/.github/actions/runs/39431553881) started at 2026-10-20T13:34:20Z and completed in 36 seconds. `portfolio-dashboard`: `sha256:ae891bba2a20cb2f2afe18ae9d1ff612875ce069d8f9ac1407ea8d2cf9b6af28`; `github-pages`: `sha256:9c3d3ac97178debbc46862c261f9fc6cdd5c764b98846430675762bb246294c1`.
+- [Run #215](https://github.com/qa-test-automation-frameworks/.github/actions/runs/39488253190) started at 2026-10-20T20:00:18Z and completed in 37 seconds. `portfolio-dashboard`: `sha256:2e2d9c8fecf35abe5aad29282259970e8a8dbca73ef6e3723a77f79bb135e6e0`; `github-pages`: `sha256:40ceb1a3d4e50405f17a38f29cb549f95dcb178841432c9897c559abaa2239f9`.
+- [Run #216](https://github.com/qa-test-automation-frameworks/.github/actions/runs/39513302333) started at 2026-10-20T23:11:02Z and completed in 32 seconds. `portfolio-dashboard`: `sha256:a6ab37c231c281d6be12e151bb188d6eacbc0ddc0444e10ef13d5b82b77719b5`; `github-pages`: `sha256:ec07804407631532d1175e14c4138e71ae63353df98ffd2990589d1c7d9bb2f5`.
+- [Run #217](https://github.com/qa-test-automation-frameworks/.github/actions/runs/39546200133) started at 2026-10-21T04:50:10Z and completed in 40 seconds. `portfolio-dashboard`: `sha256:bb3f11324b6077adb07c3225dcef824e71b9f4fd28393d9149cef054b7ae6ed`; `github-pages`: `sha256:8c9fd10cf6681ea19f5cf89e687d08364251673fec692bd8753873402fbdf1a6`.
+
+These are four observed successful schedule events, not proof that every nominal four-hour slot has run. The immutable `portfolio-dashboard` artifacts are the source for the per-repository cards; for runs #214–#216, their card contents and exact `generatedAt` values are not transcribed in this checkpoint. The latest public [dashboard snapshot](https://qa-test-automation-frameworks.github.io/.github/) was generated at 2026-10-21T04:50:23Z and reported scheduled refresh `healthy`. Its cards showed Verity attempt 39545922581 successful and published with 2/3 required scopes fresh; Playwright 8/8, ARIA 5/5, Selenium 4/4, and k6 2/2 required scopes fresh and published. Dashboard refreshes read published evidence and do not trigger the framework suites.
+
+As of this checkpoint, no later schedule run was visible after #217. The nominal 2026-10-21T08:17Z event was not yet listed at 09:47Z; treat it as unresolved (delayed or missed), not as a success or confirmed failure, until the next check. Do not assign observed runs to nominal slots without supporting schedule evidence.
