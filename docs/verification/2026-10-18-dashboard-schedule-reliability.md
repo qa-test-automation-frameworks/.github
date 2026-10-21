@@ -24,3 +24,7 @@ The portfolio owner replaced the former 28-calendar-day target with a bounded se
 - If GitHub delays or drops scheduled runs, those slots count as missed. GitHub documents this limitation; the observed success rate therefore measures the end-to-end schedule and publishing path under the repository's actual hosted conditions.
 
 The former 28-day threshold is superseded by this dated decision. The seven-day result supports only a bounded claim about central dashboard operations across one weekly cycle; it does not establish month-long continuity, independent failure-domain coverage, or stability of the five framework test suites.
+
+## Live observation checkpoint — 2026-10-21 11:45 UTC
+
+The seven-day window began with natural run [#214](https://github.com/qa-test-automation-frameworks/.github/actions/runs/39431553881) at `2026-10-20T13:34:20Z`; the earliest closeout remains `2026-10-27T13:34:20Z`. Four natural successes (#214–#217) are confirmed. The latest is [#217](https://github.com/qa-test-automation-frameworks/.github/actions/runs/39546200133), started at `2026-10-21T04:50:10Z`. At this check, the nominal `08:17Z` slot is unresolved and is not counted; `12:17Z` is the next nominal slot. A push-triggered dashboard refresh does not add a schedule sample. See the [append-only operating log](../PORTFOLIO_OPERATION_LOG.md) for the run-level record and acceptance criteria.
