@@ -8,7 +8,7 @@
     {
       "repository": "qa-test-automation-frameworks/aria-api-framework",
       "ref": "refs/heads/main",
-      "sourceSha": "6e0d13d05a563ec191b03e8dc8dd7483c6d4f940"
+      "sourceSha": "64e709d5e3a9bc5c963dcc589452caaeb5e940de"
     },
     {
       "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
