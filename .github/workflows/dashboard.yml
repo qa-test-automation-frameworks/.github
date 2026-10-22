@@ -37,6 +37,29 @@ jobs:
         run: node scripts/refresh-dashboard.mjs
       - name: Validate dashboard data
         run: node scripts/validate-dashboard.mjs
+      - name: Build the retained release assurance review
+        if: github.event_name == 'pull_request' && hashFiles('portfolio/release-assurance/packet-input-2026-10-22.json') != ''
+        env:
+          RELEASE_ASSURANCE_OUTPUT: ${{ runner.temp }}/release-assurance
+        run: |
+          mkdir -p "$RELEASE_ASSURANCE_OUTPUT"
+          node scripts/build-assurance-packet.mjs \
+            --risk-map portfolio/risk-map.json \
+            --input portfolio/release-assurance/packet-input-2026-10-22.json \
+            --output "$RELEASE_ASSURANCE_OUTPUT/packet.json"
+          node scripts/render-assurance-packet.mjs \
+            --input "$RELEASE_ASSURANCE_OUTPUT/packet.json" \
+            --output "$RELEASE_ASSURANCE_OUTPUT/review.html"
+          node -e 'const packet = require(process.argv[1]); if (packet.verdict !== "ready-for-review") { console.error(`Release assurance packet is ${packet.verdict}.`); process.exit(1); } console.log(`Release assurance packet is ${packet.verdict} (${packet.risks.length} risks).`);' \
+            "$RELEASE_ASSURANCE_OUTPUT/packet.json"
+      - name: Upload the retained release assurance review
+        if: github.event_name == 'pull_request' && hashFiles('portfolio/release-assurance/packet-input-2026-10-22.json') != ''
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: new-org-01-release-assurance-review
+          path: ${{ runner.temp }}/release-assurance
+          if-no-files-found: error
+          retention-days: 30
       - name: Upload dashboard
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
