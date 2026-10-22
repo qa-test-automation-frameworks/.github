@@ -76,6 +76,71 @@
     },
     {
       "sourcePath": "profile/README.md",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/.github/blob/main/docs/release-proof-draft-2026-10-22.md",
+      "label": "Release proof and notes draft"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/releases/tag/v0.1.0",
+      "label": "Verity historical release"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/commit/2de24e67d5d2f06b1085243f66765fbbd4cca6cc",
+      "label": "Verity current proof"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases/tag/v1.0.0",
+      "label": "Playwright historical release"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/commit/bef9f91d179ff46aba934b307561a11fd2f660b9",
+      "label": "Playwright current proof"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/k6-performance-framework/releases/tag/v0.4.0",
+      "label": "k6 historical release"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/k6-performance-framework/commit/38bef5b2182a4a73259d943acf79e9df56997bd5",
+      "label": "k6 current proof"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/aria-api-framework/releases/tag/v1.0.0",
+      "label": "ARIA historical release"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/aria-api-framework/commit/103b4f020676e3cb249a0c2c625a63e342654ec4",
+      "label": "ARIA current proof"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/releases/tag/v1.0.0",
+      "label": "Selenium historical release"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/commit/ab6fe550b1358e5c3e4c3b5b5374135641e92f92",
+      "label": "Selenium current proof"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/quality-reference-application/releases/tag/v0.2.0",
+      "label": "QRA historical release"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/quality-reference-application/commit/b1851e0403f6d6a1ce12e9fde5ac5ccb3c634d94",
+      "label": "QRA current source proof"
+    },
+    {
+      "sourcePath": "profile/README.md",
       "repository": "qa-test-automation-frameworks/verity-policy-coverage-eval-framework",
       "path": "docs/reviewer-guide.md",
       "kind": "blob",

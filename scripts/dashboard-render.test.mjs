@@ -35,6 +35,25 @@ test('static row renderer escapes evidence metadata and rejects non-HTTPS links'
   assert.match(html, /&lt;\/li&gt;/);
 });
 
+test('release rendering labels an older tag and links the immutable current source proof', () => {
+  const sourceSha = 'a'.repeat(40);
+  const html = renderRepositoryRows([{
+    ...repository,
+    name: 'playwright-typescript-framework',
+    url: 'https://github.com/qa-test-automation-frameworks/playwright-typescript-framework',
+    currentSha: sourceSha,
+    release: {
+      tag: 'v1.0.0',
+      url: 'https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases/tag/v1.0.0',
+      sourceSha: 'b'.repeat(40),
+      historical: true,
+    },
+  }]);
+  assert.match(html, /Historical release v1\.0\.0/);
+  assert.match(html, /Current proof: aaaaaaa/);
+  assert.match(html, new RegExp(`/commit/${sourceSha}`));
+});
+
 test('latest attempt rendering exposes current-code compatibility', () => {
   const html = renderRepositoryRows([{
     ...repository,

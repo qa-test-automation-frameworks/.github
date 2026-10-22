@@ -73,7 +73,22 @@ export function renderRepositoryRows(repositories) {
           return `${anchor(`#${run.runId} · attempt ${run.attempt}`, run.url)}<br>${label ? `${escapeHtml(label)} ` : ''}${date}`;
         })()
       : 'No successful run found';
-    const release = repository.release ? anchor(repository.release.tag, repository.release.url) : 'Unreleased';
+    const release = repository.release
+      ? (() => {
+          const label = repository.release.historical === true
+            ? `Historical release ${repository.release.tag}`
+            : repository.release.historical === false
+              ? `Current release ${repository.release.tag}`
+              : `Published release ${repository.release.tag}`;
+          const sourceSha = repository.currentSha;
+          const proofUrl =
+            /^[A-Za-z0-9_.-]+$/u.test(repository.name ?? '') &&
+            /^[a-f0-9]{40}$/u.test(sourceSha ?? '')
+              ? `https://github.com/qa-test-automation-frameworks/${repository.name}/commit/${sourceSha}`
+              : null;
+          return `${anchor(label, repository.release.url)}${proofUrl ? `<br>${anchor(`Current proof: ${sourceSha.slice(0, 7)}`, proofUrl)}` : ''}`;
+        })()
+      : 'Unreleased';
     const links = [
       ['Verification', repository.verificationUrl],
       ['Limitations', repository.limitationsUrl],
