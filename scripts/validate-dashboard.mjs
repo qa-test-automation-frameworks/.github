@@ -55,6 +55,17 @@ for (const repository of data.repositories) {
   if (repository.publication.status === 'published' && (repository.publication.indexStatus !== 'available' || repository.publication.scopeCount < 1)) {
     throw new Error(`${repository.name} claims publication without verified records.`);
   }
+  if (repository.release) {
+    if (!/^[a-f0-9]{40}$/.test(repository.release.sourceSha ?? '') || !/^[a-f0-9]{40}$/.test(repository.currentSha ?? '')) {
+      throw new Error(`${repository.name} release proof is missing an exact tag or current source SHA.`);
+    }
+    if (typeof repository.release.historical !== 'boolean') {
+      throw new Error(`${repository.name} release must identify whether its tag differs from current source.`);
+    }
+    if (repository.release.historical !== (repository.release.sourceSha !== repository.currentSha)) {
+      throw new Error(`${repository.name} release history label does not match its exact source SHAs.`);
+    }
+  }
   for (const scope of repository.evidenceRecords ?? []) {
     if (!scope.id || !scope.state || !scope.evidenceClass || !scope.freshnessPolicy || !Array.isArray(scope.reasons)) {
       throw new Error(`${repository.name} contains an incomplete evidence-scope state.`);
@@ -70,6 +81,15 @@ const html = await readFile(new URL('../site/index.html', import.meta.url), 'utf
 for (const repository of data.repositories) {
   if (!html.includes(repository.url) || !html.includes(repository.label)) {
     throw new Error(`Static dashboard fallback is missing ${repository.name}`);
+  }
+  if (repository.release) {
+    const proofUrl = `https://github.com/${data.organization}/${repository.name}/commit/${repository.currentSha}`;
+    const releaseLabel = repository.release.historical
+      ? `Historical release ${repository.release.tag}`
+      : `Current release ${repository.release.tag}`;
+    if (!html.includes(repository.release.url) || !html.includes(releaseLabel) || !html.includes(proofUrl)) {
+      throw new Error(`Static dashboard fallback is missing the release or current proof for ${repository.name}`);
+    }
   }
 }
 if (html.includes('Loading evidence') || html.includes('<tbody id="repository-rows"></tbody>')) {

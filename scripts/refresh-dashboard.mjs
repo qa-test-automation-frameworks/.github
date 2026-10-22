@@ -156,6 +156,7 @@ const query = `
             name
             url
             publishedAt
+            tagCommit { oid }
           }
           defaultBranchRef {
             name
@@ -232,6 +233,10 @@ const repositories = await Promise.all(
             name: repo.latestRelease.name,
             url: repo.latestRelease.url,
             publishedAt: repo.latestRelease.publishedAt,
+            sourceSha: repo.latestRelease.tagCommit?.oid ?? null,
+            historical: repo.latestRelease.tagCommit?.oid && currentSha
+              ? repo.latestRelease.tagCommit.oid !== currentSha
+              : null,
           }
         : null,
       commitCount: repo.defaultBranchRef?.target?.history?.totalCount ?? 0,

@@ -7,6 +7,8 @@ on:
     paths:
       - "**/*.md"
       - "portfolio/**"
+      - "scripts/check-reviewer-links.mjs"
+      - "scripts/check-reviewer-links.test.mjs"
       - "site/**"
       - "site/render.mjs"
       - "scripts/dashboard-state.mjs"
@@ -49,6 +51,10 @@ jobs:
         run: bash scripts/test-evidence-git-push-atomicity.sh
       - name: Validate static dashboard snapshot
         run: node scripts/validate-dashboard.mjs
+      - name: Test curated reviewer-link contract
+        run: node --test scripts/check-reviewer-links.test.mjs
+      - name: Validate curated reviewer links against public GitHub
+        run: node scripts/check-reviewer-links.mjs --check-public
       - name: Reject local links and unsupported self-assessment in this repository
         shell: bash
         run: |

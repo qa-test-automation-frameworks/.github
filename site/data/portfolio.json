@@ -40,12 +40,14 @@
         "tag": "v0.1.0",
         "name": "v0.1.0",
         "url": "https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/releases/tag/v0.1.0",
-        "publishedAt": "2026-07-04T00:00:00Z"
+        "publishedAt": "2026-07-04T00:00:00Z",
+        "sourceSha": "94e64e4b66783fa8a2f5a25cd927a050c4c49af0",
+        "historical": true
       },
       "commitCount": 341,
       "stars": 0,
       "forks": 0,
-      "currentSha": null,
+      "currentSha": "2de24e67d5d2f06b1085243f66765fbbd4cca6cc",
       "publication": {
         "status": "unavailable",
         "indexStatus": "unavailable",
@@ -91,12 +93,14 @@
         "tag": "v1.0.0",
         "name": "v1.0.0",
         "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases/tag/v1.0.0",
-        "publishedAt": "2026-06-14T14:53:23Z"
+        "publishedAt": "2026-06-14T14:53:23Z",
+        "sourceSha": "282577954f392c7c97406f476313523ccae9d56c",
+        "historical": true
       },
       "commitCount": 32,
       "stars": 0,
       "forks": 0,
-      "currentSha": null,
+      "currentSha": "bef9f91d179ff46aba934b307561a11fd2f660b9",
       "publication": {
         "status": "unavailable",
         "indexStatus": "unavailable",
@@ -143,12 +147,14 @@
         "tag": "v1.0.0",
         "name": "ARIA API Framework v1.0.0",
         "url": "https://github.com/qa-test-automation-frameworks/aria-api-framework/releases/tag/v1.0.0",
-        "publishedAt": "2026-06-09T03:17:23Z"
+        "publishedAt": "2026-06-09T03:17:23Z",
+        "sourceSha": "40eaa48fbe607a824e604731463cccf003668507",
+        "historical": true
       },
       "commitCount": 45,
       "stars": 0,
       "forks": 0,
-      "currentSha": null,
+      "currentSha": "103b4f020676e3cb249a0c2c625a63e342654ec4",
       "publication": {
         "status": "unavailable",
         "indexStatus": "unavailable",
@@ -194,12 +200,14 @@
         "tag": "v1.0.0",
         "name": "Selenium TestNG Java Framework v1.0.0",
         "url": "https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/releases/tag/v1.0.0",
-        "publishedAt": "2026-06-09T03:17:25Z"
+        "publishedAt": "2026-06-09T03:17:25Z",
+        "sourceSha": "f2a4f3a7f6438ce3fb1ee59dfae53a8d7324c16d",
+        "historical": true
       },
       "commitCount": 62,
       "stars": 0,
       "forks": 0,
-      "currentSha": null,
+      "currentSha": "ab6fe550b1358e5c3e4c3b5b5374135641e92f92",
       "publication": {
         "status": "unavailable",
         "indexStatus": "unavailable",
@@ -246,12 +254,14 @@
         "tag": "v0.4.0",
         "name": "v0.4.0",
         "url": "https://github.com/qa-test-automation-frameworks/k6-performance-framework/releases/tag/v0.4.0",
-        "publishedAt": "2026-06-14T05:59:04Z"
+        "publishedAt": "2026-06-14T05:59:04Z",
+        "sourceSha": "4659a3426f3175b617416481765a1138a3d69161",
+        "historical": true
       },
       "commitCount": 123,
       "stars": 0,
       "forks": 0,
-      "currentSha": null,
+      "currentSha": "38bef5b2182a4a73259d943acf79e9df56997bd5",
       "publication": {
         "status": "unavailable",
         "indexStatus": "unavailable",

@@ -3,6 +3,8 @@
 This repository owns the default community-health files, organization profile,
 and generated portfolio dashboard for
 [`qa-test-automation-frameworks`](https://github.com/qa-test-automation-frameworks).
+The organization has seven public repositories: five frameworks, the shared
+Quality Reference Application, and this governance/dashboard repository.
 
 ## Reviewer proof
 
@@ -25,9 +27,10 @@ organizational outcomes that cannot be independently verified. See the
 [runtime policy](docs/runtime-policy.md), the
 [durable-publication status](docs/verification/2026-10-16-durable-evidence-publication.md),
 and the [dashboard evidence-state and refresh-health notes](docs/verification/2026-10-16-dashboard-evidence-state.md).
-The proposed shared reference target is defined in
-[ADR 007](docs/adr/007-shared-reference-application.md); it is a design decision,
-not a claim that the application or integrations exist yet.
+The shared Quality Reference Application is implemented and used by all five
+frameworks. [ADR 007](docs/adr/007-shared-reference-application.md) records the
+original design decision; the [target identity page](https://github.com/qa-test-automation-frameworks/quality-reference-application/blob/main/docs/target-identity.md)
+tracks its current source, image and consumer evidence.
 
 `site/data/portfolio.json` in this checkout is a committed seed snapshot for local rendering
 and testing, not the live evidence record. The scheduled workflow regenerates the deployed
@@ -54,16 +57,16 @@ and network access. CI selects `.nvmrc`; a stable later Node24 patch/minor is
 allowed but not automatically verified. Unsupported runtimes fail before token
 or snapshot handling with a setup instruction.
 
-The version3 [evidence contract](docs/PORTFOLIO_EVIDENCE_STANDARD.md) is validated
-locally and by the documentation workflow. It separates native execution, artifact
-publication and historical attestations. As of 2026-10-17, default-branch durable
-publication and retrieved, checksummed bundles are verified for ARIA, K6, Playwright
-and Selenium; Verity remains unpublished because required security checks still fail.
-Dashboard run `39003146926` deployed the current inspected snapshot, generated at
-`2026-10-17T04:35:46Z`. It reports the Verity publication gap and preserves the
-Selenium Firefox failure alongside current source-run states. The scheduled-refresh
-health remains stale, last checked `2026-09-09T09:00:22Z`, so the manual deployment
-does not prove the schedule works.
+### Historical dashboard observation — 2026-10-17
+
+At this dated snapshot, the version3 [evidence contract](docs/PORTFOLIO_EVIDENCE_STANDARD.md)
+separated native execution, artifact publication and historical attestations.
+Default-branch durable publication and retrieved, checksummed bundles had been
+verified for ARIA, k6, Playwright and Selenium; the dashboard recorded a Verity
+publication gap and a Selenium Firefox failure. Run `39003146926` deployed a
+snapshot generated at `2026-10-17T04:35:46Z`. Its schedule-health data was last
+checked at `2026-09-09T09:00:22Z`. These statements describe that snapshot only.
+For current run, publication and schedule status, use the live dashboard above.
 `site/data/portfolio.json` here is a seed snapshot for local rendering, not the live
 record; check the deployed timestamp before relying on live cards. Synthetic fixtures
 remain contract controls, not framework execution proof.

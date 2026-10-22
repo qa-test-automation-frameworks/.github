@@ -24,7 +24,7 @@
     <nav class="topbar">
       <a class="wordmark" href="#top">QA Test Automation Frameworks</a>
       <div class="topbar-links">
-        <a href="#start">Review order</a>
+        <a href="#decision-story">Start here</a>
         <a href="#matrix">Evidence</a>
         <a href="#case-study">Case study</a>
         <a href="#provenance">Provenance</a>
@@ -69,10 +69,46 @@
     </header>
 
     <main>
+      <section id="decision-story" aria-labelledby="decision-story-title" class="reveal">
+        <div class="section-heading">
+          <p class="eyebrow">DECISION STORY · ABOUT 90 SECONDS, NOT USER-TIMED</p>
+          <h2 id="decision-story-title">Lower the cap without breaking old clients</h2>
+          <p class="section-intro">
+            The Quality Reference Application added a $5,000 API v2 policy limit while keeping
+            the existing $10,000 API v1 contract. A deliberate red control proved the old
+            boundary was protected; the repair passed the PostgreSQL verification gate.
+          </p>
+        </div>
+        <div class="case-study-grid">
+          <dl>
+            <div>
+              <dt>Business risk</dt>
+              <dd>Changing v1 in place would reject claims that existing clients could submit before.</dd>
+            </div>
+            <div>
+              <dt>Detecting control</dt>
+              <dd>The preserved v1 boundary test failed when the limit was deliberately changed, then passed with additive v2.</dd>
+            </div>
+            <div>
+              <dt>Compatibility boundary</dt>
+              <dd>The product release passed QRA verification. Consumer evidence is tied to its exact image digest; the target record carries those pins and limits.</dd>
+            </div>
+          </dl>
+          <p class="case-study-cta">
+            <a class="btn" href="https://github.com/qa-test-automation-frameworks/.github/blob/main/docs/start-here.md">
+              Follow the decision path
+            </a>
+            <a href="https://github.com/qa-test-automation-frameworks/quality-reference-application/blob/main/docs/target-identity.md">
+              Check the exact target identity
+            </a>
+          </p>
+        </div>
+      </section>
+
       <section id="start" aria-labelledby="review-order-title" class="reveal">
         <div class="section-heading">
-          <p class="eyebrow">START HERE</p>
-          <h2 id="review-order-title">Recommended review order</h2>
+          <p class="eyebrow">CAPABILITY REVIEWS</p>
+          <h2 id="review-order-title">Recommended framework review order</h2>
           <p class="section-intro">
             Five repositories, one layered quality model. Each has a documented,
             time-boxed review path — this is the order that tells the story fastest.
@@ -126,7 +162,7 @@
       <td class="status unavailable">unavailable</td>
       <td>No successful run found</td>
       <td><details><summary>No verified published scope records</summary><p>No public durable index is available.</p></details></td>
-      <td><a href="https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/releases/tag/v0.1.0">v0.1.0</a></td>
+      <td><a href="https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/releases/tag/v0.1.0">Historical release v0.1.0</a><br><a href="https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/commit/2de24e67d5d2f06b1085243f66765fbbd4cca6cc">Current proof: 2de24e6</a></td>
       <td>341 commits · 0 PRs</td>
       <td class="evidence-links"><a href="https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/blob/main/docs/evidence/latest-verification.md">Verification</a> <a href="https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/blob/main/docs/known-issues.md">Limitations</a> <a href="https://qa-test-automation-frameworks.github.io/verity-policy-coverage-eval-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/main/docs/screenshots/calibration.png">Screenshot</a></td>
     </tr>
@@ -138,7 +174,7 @@
       <td class="status unavailable">unavailable</td>
       <td>No successful run found</td>
       <td><details><summary>No verified published scope records</summary><p>No public durable index is available.</p></details></td>
-      <td><a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases/tag/v1.0.0">v1.0.0</a></td>
+      <td><a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/releases/tag/v1.0.0">Historical release v1.0.0</a><br><a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/commit/bef9f91d179ff46aba934b307561a11fd2f660b9">Current proof: bef9f91</a></td>
       <td>32 commits · 21 PRs</td>
       <td class="evidence-links"><a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/evidence/latest-verification.md">Verification</a> <a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/known-issues.md">Limitations</a> <a href="https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/playwright-typescript-framework/main/docs/assets/screenshots/debugging-failure.png">Screenshot</a></td>
     </tr>
@@ -150,7 +186,7 @@
       <td class="status unavailable">unavailable</td>
       <td>No successful run found</td>
       <td><details><summary>No verified published scope records</summary><p>No public durable index is available.</p></details></td>
-      <td><a href="https://github.com/qa-test-automation-frameworks/aria-api-framework/releases/tag/v1.0.0">v1.0.0</a></td>
+      <td><a href="https://github.com/qa-test-automation-frameworks/aria-api-framework/releases/tag/v1.0.0">Historical release v1.0.0</a><br><a href="https://github.com/qa-test-automation-frameworks/aria-api-framework/commit/103b4f020676e3cb249a0c2c625a63e342654ec4">Current proof: 103b4f0</a></td>
       <td>45 commits · 29 PRs</td>
       <td class="evidence-links"><a href="https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/evidence/latest-verification.md">Verification</a> <a href="https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/known-issues.md">Limitations</a> <a href="https://qa-test-automation-frameworks.github.io/aria-api-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/aria-api-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/aria-api-framework/main/docs/assets/allure/allure-diagnostic-attachment.png">Screenshot</a></td>
     </tr>
@@ -162,7 +198,7 @@
       <td class="status unavailable">unavailable</td>
       <td>No successful run found</td>
       <td><details><summary>No verified published scope records</summary><p>No public durable index is available.</p></details></td>
-      <td><a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/releases/tag/v1.0.0">v1.0.0</a></td>
+      <td><a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/releases/tag/v1.0.0">Historical release v1.0.0</a><br><a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/commit/ab6fe550b1358e5c3e4c3b5b5374135641e92f92">Current proof: ab6fe55</a></td>
       <td>62 commits · 21 PRs</td>
       <td class="evidence-links"><a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/evidence/latest-verification.md">Verification</a> <a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/known-issues.md">Limitations</a> <a href="https://qa-test-automation-frameworks.github.io/selenium-testng-java-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/selenium-testng-java-framework/main/docs/images/allure-failed-screenshot-attachment-preview.png">Screenshot</a></td>
     </tr>
@@ -174,7 +210,7 @@
       <td class="status unavailable">unavailable</td>
       <td>No successful run found</td>
       <td><details><summary>No verified published scope records</summary><p>No public durable index is available.</p></details></td>
-      <td><a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework/releases/tag/v0.4.0">v0.4.0</a></td>
+      <td><a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework/releases/tag/v0.4.0">Historical release v0.4.0</a><br><a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework/commit/38bef5b2182a4a73259d943acf79e9df56997bd5">Current proof: 38bef5b</a></td>
       <td>123 commits · 15 PRs</td>
       <td class="evidence-links"><a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework/blob/main/docs/evidence/latest-verification.md">Verification</a> <a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework/blob/main/docs/known-issues.md">Limitations</a> <a href="https://qa-test-automation-frameworks.github.io/k6-performance-framework/">Report</a> <a href="https://github.com/qa-test-automation-frameworks/k6-performance-framework/tree/main/docs">Docs</a> <a href="https://raw.githubusercontent.com/qa-test-automation-frameworks/k6-performance-framework/main/docs/images/performance-overview-example.svg">Screenshot</a></td>
     </tr>
@@ -188,8 +224,9 @@
           <p class="eyebrow">PLATFORM CASE STUDY</p>
           <h2 id="case-study-title">Scaling shared automation with reliability controls</h2>
           <p class="section-intro">
-            An anonymized client migration, ≈1 month: replace raw test count with a
-            layered pyramid of critical journeys plus API coverage.
+            Owner-reported estimates from an anonymized client migration: replace
+            raw test count with critical journeys and API coverage. Sample counts
+            and source run records are unavailable in the public portfolio.
           </p>
         </div>
 
@@ -206,7 +243,7 @@
             <p class="metric-value">~2 h <span class="arrow">→</span> <strong>~15 min</strong></p>
             <div class="bar dim"><span class="fill" style="--w:1"></span></div>
             <div class="bar"><span class="fill accent" style="--w:.125"></span></div>
-            <p class="metric-note">8× faster feedback</p>
+            <p class="metric-note">approximate wall-clock estimate</p>
           </article>
           <article class="metric" style="--a:#a78bfa">
             <p class="metric-label">TEST MIX</p>

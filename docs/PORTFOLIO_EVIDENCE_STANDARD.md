@@ -111,8 +111,12 @@ Consumers must retain three separate concepts:
 
 A later failure does not erase the prior report, and a prior report does not hide
 the failure. An attestation never upgrades a new run by matching its SHA/run ID.
-E04 will implement dashboard selection/rendering against these histories; this
-package supplies the record contract and controlled-clock freshness checks.
+The dashboard now selects and renders against these histories, keeping the latest
+attempt, last successful execution, and reviewed historical attestations separate.
+This contract supplies the record rules and controlled-clock freshness checks;
+dashboard implementation and deployed observations are recorded in the dated
+[dashboard verification notes](verification/2026-10-16-dashboard-evidence-state.md)
+and the [operation log](PORTFOLIO_OPERATION_LOG.md).
 
 ## Additive migration from the existing dashboard
 
@@ -123,15 +127,17 @@ they are dashboard documents, not new execution manifests. Preserve existing
 counts, target, shards or timestamps and marks them ineligible as current execution.
 Do not mutate tested branches merely to record a run generated after checkout.
 
-E02 adds version3 records from native runners; E03 publishes immutable bundles
-keyed by repository/run/attempt and a validated atomic index; E04 consumes those
-records while displaying legacy attestations separately. Until that chain is
-verified, the existing dashboard still uses its old readiness logic and must not
-be represented as migrated. Old labels `review-ready`, `evidence-stale`,
+Implemented native producers emit version3 records and the publisher makes
+immutable bundles keyed by repository/run/attempt with a validated atomic index.
+The dashboard consumes available bundles and displays legacy attestations
+separately. Missing producer data remains unavailable; the Verity producer
+follow-up is tracked in the organization roadmap. Old labels `review-ready`, `evidence-stale`,
 `evidence-unavailable` and `work-in-progress` remain legacy display states only.
 
 The `.github` documentation workflow validates this repository's Markdown and
 contract tests. It does not validate every framework's native outputs or enforce
-all organization branch protections. As inspected2026-10-04, GitHub reports the
-Portfolio dashboard workflow `disabled_inactivity`; restoring scheduled refresh
-and deployment requires actual E04/P03 operational verification.
+all organization branch protections. The 2026-10-04 readback found the Portfolio
+dashboard workflow `disabled_inactivity`; the 2026-10-19 observation later
+recorded healthy schedule status. Neither dated observation establishes current
+health. Use the live dashboard and P03 operation log for current status and
+continued schedule verification.
