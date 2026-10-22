@@ -67,11 +67,11 @@ function parseJsonBytes(bytes, label) {
   }
 }
 
-function timestamp(value, label, now, { allowExpired = false } = {}) {
+function timestamp(value, label, now, { allowExpired = false, allowFuture = false } = {}) {
   requireValue(typeof value === 'string' && /Z$/.test(value), `${label} must be a UTC timestamp.`);
   const time = Date.parse(value);
   requireValue(Number.isFinite(time), `${label} is not a valid timestamp.`);
-  requireValue(time <= now, `${label} is in the future.`);
+  if (!allowFuture) requireValue(time <= now, `${label} is in the future.`);
   if (!allowExpired) requireValue(time >= now, `${label} has expired.`);
   return time;
 }
@@ -130,7 +130,7 @@ function validateCandidate(input, now) {
       issues.push(`Descriptor receipt ${field} is unsafe.`);
     }
   }
-  try { timestamp(receipt.expiresAt, 'descriptor artifact expiresAt', now); } catch (error) { issues.push(error.message); }
+  try { timestamp(receipt.expiresAt, 'descriptor artifact expiresAt', now, { allowFuture: true }); } catch (error) { issues.push(error.message); }
   try { timestamp(receipt.verifiedAt, 'descriptor receipt verifiedAt', now, { allowExpired: true }); } catch (error) { issues.push(error.message); }
   if (issues.length) return { descriptor, issues };
   return { descriptor, issues: [] };
@@ -154,7 +154,7 @@ function validateArtifactReceipt(receipt, expected, now) {
   }
   const expectedPath = `/${receipt.repository}/actions/runs/${receipt.runId}/artifacts/${receipt.artifactId}`;
   if (!trustedGithubUrl(receipt.artifactUrl, expectedPath)) errors.push('Evidence artifact URL is unsafe or does not match its stable IDs.');
-  try { timestamp(receipt.expiresAt, 'evidence artifact expiresAt', now); } catch (error) { errors.push(error.message); }
+  try { timestamp(receipt.expiresAt, 'evidence artifact expiresAt', now, { allowFuture: true }); } catch (error) { errors.push(error.message); }
   try { timestamp(receipt.verifiedAt, 'evidence receipt verifiedAt', now, { allowExpired: true }); } catch (error) { errors.push(error.message); }
   return errors;
 }
@@ -265,7 +265,7 @@ function inspectFaultProof(proofEntry, risk, candidate, now) {
   }
   try {
     const created = timestamp(proof.generatedAt, 'risk proof generatedAt', now, { allowExpired: true });
-    const expires = timestamp(proof.expiresAt, 'risk proof expiresAt', now);
+    const expires = timestamp(proof.expiresAt, 'risk proof expiresAt', now, { allowFuture: true });
     if (now - created > risk.expectedFaultControl.proofMaxAgeHours * 3_600_000) {
       return { state: 'incomplete', reasons: ['Risk-specific fault proof is older than the configured freshness window.'], proof };
     }
