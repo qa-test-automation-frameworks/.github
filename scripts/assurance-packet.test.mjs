@@ -71,6 +71,11 @@ test('fixture, API-version, profile, and framework revision mismatches remain in
   const wrongApi = replaceDescriptor(makeInput(), (descriptor) => ({ ...descriptor, apiVersions: ['v1'] }));
   assert.equal(build(wrongApi).verdict, 'incomplete');
 
+  for (const applicationVersion of [undefined, 'latest', '01.2.3']) {
+    const wrongApplicationVersion = replaceDescriptor(makeInput(), (descriptor) => ({ ...descriptor, applicationVersion }));
+    assert.equal(build(wrongApplicationVersion).verdict, 'incomplete');
+  }
+
   const map = structuredClone(riskMap);
   map.frameworkContexts.find((context) => context.repository === playwright).sourceSha = 'c'.repeat(40);
   assert.equal(build(makeInput(), map).verdict, 'incomplete');
@@ -179,4 +184,5 @@ test('an empty evidence input and an invalid candidate descriptor can never beco
   assert.equal(build(malformedDescriptor).verdict, 'incomplete');
   assert.notEqual(build(makeInput({ bundles: [], riskProofs: [] })).verdict, 'ready-for-review');
   assert.equal(build(makeInput()).candidate.imageDigest, candidateDigest);
+  assert.equal(build(makeInput()).candidate.applicationVersion, '0.2.0');
 });

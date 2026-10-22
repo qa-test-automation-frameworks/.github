@@ -9,6 +9,7 @@ const APP_REPOSITORY = `${ORG}/quality-reference-application`;
 const DESCRIPTOR_ARTIFACT = 'qra-release-descriptor';
 const PROOF_ARTIFACT = 'qra-risk-proofs';
 const SHA256 = /^sha256:[0-9a-f]{64}$/;
+const APPLICATION_VERSION = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
 const HEX_SHA256 = /^[0-9a-f]{64}$/;
 const ARTIFACT_SHA256 = /^(?:sha256:)?[0-9a-f]{64}$/;
 const SOURCE_SHA = /^[0-9a-f]{40}$/;
@@ -91,6 +92,7 @@ function validateCandidate(input, now) {
   if (descriptor.schemaVersion !== 1) issues.push('Unsupported release descriptor schema version.');
   if (descriptor.repository !== APP_REPOSITORY) issues.push('Candidate repository is not the configured application repository.');
   if (!SOURCE_SHA.test(descriptor.sourceSha ?? '')) issues.push('Candidate source SHA is missing or invalid.');
+  if (!APPLICATION_VERSION.test(descriptor.applicationVersion ?? '')) issues.push('Candidate application version is missing or invalid.');
   if (!SHA256.test(descriptor.imageDigest ?? '')) issues.push('Candidate image digest is missing or is not immutable sha256.');
   if (typeof descriptor.fixtureVersion !== 'string' || !descriptor.fixtureVersion.trim()) issues.push('Candidate fixture version is missing.');
   if (!Array.isArray(descriptor.apiVersions) || !descriptor.apiVersions.length
@@ -463,6 +465,7 @@ export function buildAssurancePacket({ riskMap, input, repositoryRegistry, schem
     candidate: descriptor && candidateIssues.length === 0 ? {
       repository: descriptor.repository,
       sourceSha: descriptor.sourceSha,
+      applicationVersion: descriptor.applicationVersion,
       imageDigest: descriptor.imageDigest,
       fixtureVersion: descriptor.fixtureVersion,
       apiVersions: descriptor.apiVersions,

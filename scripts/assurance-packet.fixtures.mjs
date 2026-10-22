@@ -17,6 +17,7 @@ const descriptor = {
   schemaVersion: 1,
   repository: appRepository,
   sourceSha: candidateSha,
+  applicationVersion: '0.2.0',
   imageDigest: candidateDigest,
   fixtureVersion: 'v0.2.0',
   apiVersions: ['v1', 'v2'],
