@@ -28,6 +28,25 @@ test('every repository exposes evidence metadata and an explicit state', () => {
   }
 });
 
+test('every producer has explicit required scope IDs derived from its workflow contract', () => {
+  for (const repository of definition.repositories) {
+    assert.ok(Array.isArray(repository.requiredScopeIds) && repository.requiredScopeIds.length > 0, repository.name);
+    assert.equal(new Set(repository.requiredScopeIds).size, repository.requiredScopeIds.length, repository.name);
+    assert.ok(Array.isArray(repository.controlPairs), repository.name);
+    for (const pair of repository.controlPairs) {
+      assert.ok(pair.label && pair.rawScopeId && pair.verifierScopeId, repository.name);
+      assert.ok(!repository.requiredScopeIds.includes(pair.rawScopeId), repository.name);
+      assert.ok(repository.requiredScopeIds.includes(pair.verifierScopeId), repository.name);
+    }
+  }
+  const verity = definition.repositories.find(({ name }) => name === 'verity-policy-coverage-eval-framework');
+  assert.deepEqual(verity.requiredScopeIds, [
+    'verity.deterministic-py3.12.15',
+    'verity.deterministic-py3.13.16',
+    'verity.failure-control-verification-py3.12.15',
+  ]);
+});
+
 test('Selenium evidence distinguishes the controlled Grid from its vendor-operated target', async () => {
   const selenium = snapshot.repositories.find(({ name }) => name === 'selenium-testng-java-framework');
   assert.ok(selenium);

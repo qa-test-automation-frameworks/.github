@@ -13,6 +13,19 @@
       "name": "verity-policy-coverage-eval-framework",
       "label": "Verity Policy Coverage Eval",
       "status": "configured",
+      "requiredScopeIds": [
+        "verity.deterministic-py3.12.15",
+        "verity.deterministic-py3.13.16",
+        "verity.failure-control-verification-py3.12.15"
+      ],
+      "controlPairs": [
+        {
+          "id": "verity-failure-control",
+          "label": "Verity failure control",
+          "rawScopeId": "verity.failure-control-py3.12.15",
+          "verifierScopeId": "verity.failure-control-verification-py3.12.15"
+        }
+      ],
       "workflow": "pr-gate.yml",
       "evidenceClass": "hermetic + credentialed",
       "fullEvidenceWorkflow": "semantic-eval.yml",
@@ -28,6 +41,17 @@
       "name": "playwright-typescript-framework",
       "label": "Playwright TypeScript",
       "status": "configured",
+      "requiredScopeIds": [
+        "framework-unit",
+        "api",
+        "e2e",
+        "visual",
+        "accessibility",
+        "selector-contract",
+        "shared-app-ui",
+        "cross-browser"
+      ],
+      "controlPairs": [],
       "workflow": "ci.yml",
       "evidenceClass": "controlled",
       "verificationUrl": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/evidence/latest-verification.md",
@@ -42,6 +66,12 @@
       "name": "aria-api-framework",
       "label": "ARIA API",
       "status": "configured",
+      "requiredScopeIds": [
+        "aria.deterministic",
+        "aria.container",
+        "aria.shared-app"
+      ],
+      "controlPairs": [],
       "workflow": "ci.yml",
       "evidenceClass": "controlled + scheduled-live",
       "fullEvidenceWorkflow": "ci.yml#live-smoke",
@@ -57,6 +87,14 @@
       "name": "selenium-testng-java-framework",
       "label": "Selenium TestNG Java",
       "status": "configured",
+      "requiredScopeIds": [
+        "framework-quality",
+        "ui.CHROME",
+        "ui.FIREFOX",
+        "ui.EDGE",
+        "accessibility.CHROME"
+      ],
+      "controlPairs": [],
       "workflow": "ui-tests.yml",
       "evidenceClass": "controlled Grid + vendor-operated target",
       "verificationUrl": "https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/blob/main/docs/evidence/latest-verification.md",
@@ -71,6 +109,14 @@
       "name": "k6-performance-framework",
       "label": "k6 Performance",
       "status": "configured",
+      "requiredScopeIds": [
+        "k6.articles-load",
+        "k6.authenticated-journey",
+        "k6.pr-smoke",
+        "k6.evidence-failure-control",
+        "k6.shared-app-load"
+      ],
+      "controlPairs": [],
       "workflow": "main-load.yml",
       "evidenceClass": "controlled + scheduled-load",
       "fullEvidenceWorkflow": "main-load.yml",

@@ -1,7 +1,7 @@
 import './check-runtime.mjs';
 import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
-import { publicationState, summarizeEvidence } from './dashboard-state.mjs';
+import { normalizeRunSummary, publicationState, summarizeEvidence } from './dashboard-state.mjs';
 import { validateEvidence } from './evidence-contract.mjs';
 import { classifyRefreshHealth } from './dashboard-refresh-health.mjs';
 import { renderDashboard } from '../site/render.mjs';
@@ -37,6 +37,7 @@ const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
 async function workflowMetrics(repository, defaultBranch, currentSha) {
   if (!repository.workflow) return { status: 'not-configured', latestAttempt: null, lastSuccess: null };
+  const now = Date.now();
   try {
     const encodedWorkflow = encodeURIComponent(repository.workflow);
     const base = `/repos/${owner}/${repository.name}/actions/workflows/${encodedWorkflow}/runs?branch=${encodeURIComponent(defaultBranch)}&per_page=20`;
@@ -54,29 +55,21 @@ async function workflowMetrics(repository, defaultBranch, currentSha) {
     const latest = trusted[0];
     const successes = completedTrusted
       .filter((run) => run.conclusion === 'success')
-      .sort((a, b) => Date.parse(b.completed_at ?? b.updated_at) - Date.parse(a.completed_at ?? a.updated_at));
+      .map((run) => normalizeRunSummary(run, now))
+      .filter((run) => run.lastSuccessTimestamp)
+      .sort((a, b) => Date.parse(b.lastSuccessTimestamp) - Date.parse(a.lastSuccessTimestamp));
     const durations = completedTrusted
-      .map((run) => Date.parse(run.completed_at ?? run.updated_at) - Date.parse(run.run_started_at ?? run.created_at))
+      .map((run) => {
+        const normalized = normalizeRunSummary(run, now);
+        if (!normalized || normalized.lastSuccessTimestampLabel !== 'Completed') return null;
+        return Date.parse(normalized.completedAt) - Date.parse(normalized.startedAt ?? normalized.createdAt);
+      })
       .filter((duration) => Number.isFinite(duration) && duration >= 0)
       .sort((a, b) => a - b);
-    const runSummary = (run) => run ? {
-      runId: String(run.id),
-      attempt: run.run_attempt,
-      status: run.status,
-      conclusion: run.conclusion,
-      event: run.event,
-      branch: run.head_branch,
-      headSha: run.head_sha,
-      createdAt: run.created_at,
-      startedAt: run.run_started_at,
-      completedAt: run.completed_at,
-      updatedAt: run.updated_at,
-      url: run.html_url,
-    } : null;
     return {
       status: latest ? 'available' : 'no-run',
-      latestAttempt: runSummary(latest),
-      lastSuccess: runSummary(successes[0]),
+      latestAttempt: normalizeRunSummary(latest, now),
+      lastSuccess: successes[0] ?? null,
       conclusion: latest?.conclusion ?? null,
       url: latest?.html_url ?? null,
       runId: latest ? String(latest.id) : null,
@@ -221,6 +214,8 @@ const repositories = await Promise.all(
       currentSha,
       now: Date.now(),
       policies: freshnessPolicies,
+      requiredScopeIds: repository.requiredScopeIds,
+      controlPairs: repository.controlPairs ?? [],
     });
     const evidenceState = metrics.status === 'available' ? evidence.state : 'evidence-unavailable';
     return {
