@@ -99,15 +99,18 @@ repository's default-branch run, SHA, verification record, and freshness. These
 are repository-local and portfolio-contract checks; they are not semantic
 validation of every organization claim. See the [portfolio evidence standard](../docs/PORTFOLIO_EVIDENCE_STANDARD.md).
 
-## Field Results
+## Field Results — Owner-Reported Estimates
 
-![Field results from an anonymized platform migration over about one month: suite stability from about 40% to about 90%; full-suite runtime from about 2 hours to about 15 minutes; test mix from 1,000+ UI-heavy checks to 40 critical journeys plus API coverage; authoring about 3 times faster.](assets/metrics.svg)
+![Owner-reported estimates from an anonymized platform migration over about one month: suite stability from about 40% to about 90%; full-suite runtime from about 2 hours to about 15 minutes; test mix from 1,000+ UI-heavy checks to 40 critical journeys plus API coverage; authoring about 3 times faster.](assets/metrics.svg)
 
-These numbers come from one client platform migration, documented in the
-anonymized [platform scaling case study](../docs/automation-platform-scaling-case-study.md) —
-including the decision record behind them: stop optimizing for raw test count,
-keep a small set of business-critical E2E journeys, and push repeatable
-validations down to API level. The fixture, data-builder, and reporting
+These are owner-reported estimates from one anonymized client platform migration.
+The source run records, exact denominators, sample counts, and retry/product/
+infrastructure splits are not available in the materials reviewed for this public
+portfolio. The [platform scaling case study](../docs/automation-platform-scaling-case-study.md)
+records each known scope and the missing measurements. It also explains the
+decision: stop optimizing for raw test count, keep a small set of business-critical
+E2E journeys, and push repeatable validations down to API level. The fixture,
+data-builder, and reporting
 conventions behind those numbers are implemented publicly in the
 [Playwright](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework),
 [ARIA](https://github.com/qa-test-automation-frameworks/aria-api-framework), and

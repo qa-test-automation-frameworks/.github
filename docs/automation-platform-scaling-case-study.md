@@ -2,7 +2,7 @@
 
 ## Summary
 
-This is an anonymized professional case study from a client delivery environment. It connects the public portfolio repositories to real operating outcomes without presenting client work as public repository adoption.
+This is an anonymized professional case study from a client delivery environment. The outcomes below are owner-reported estimates; they connect the public portfolio repositories to professional work without presenting client work as public repository adoption.
 
 ## Scope
 
@@ -12,7 +12,7 @@ This is an anonymized professional case study from a client delivery environment
 
 ## Baseline
 
-| Area | Before | After |
+| Area | Before estimate | After estimate |
 | --- | --- | --- |
 | Suite stability | About 40% reliable | About 90% reliable |
 | Full-suite runtime | About 2 hours | About 15 minutes |
@@ -22,7 +22,17 @@ This is an anonymized professional case study from a client delivery environment
 
 ## Measurement Method
 
-These are approximate, anonymized delivery measurements from the focused migration window. Stability is the proportion of representative executions that completed without an infrastructure or product-test failure; retries are reported separately where available. Runtime is wall-clock duration for the same critical scope before and after the change. The test-mix counts are inventory counts, not a quality score. “About 3x faster authoring” means comparable critical scenarios completed per authoring period after shared fixtures and builders were adopted. The figures are directional evidence for the decision, not independently reproducible public benchmark data.
+These figures are approximate owner recollections from the focused migration window. Source run records, exact sample counts, retry splits, product-versus-infrastructure classification, and dated inventory exports are not available in the materials reviewed for this public portfolio. Values remain “not recorded” where no source is available. The figures support a directional account of the decision; they are not independently reproduced benchmark results.
+
+| Reported outcome | Before → after scope | Observation window | Sample count or range | First pass / retries | Product / infrastructure split | Source category | Personal contribution | Limit |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Suite stability: ~40% → ~90% | Representative executions without product or infrastructure failure | Focused migration, about one month (owner estimate) | Not recorded | Not recorded | Not recorded | Owner-reported client outcome estimate | Led the test-pyramid migration and failure triage; exact attribution split is not recorded | Execution logs and denominator are unavailable; percentage is directional |
+| Full-suite runtime: ~2 h → ~15 min | Wall-clock duration for the same critical scope | Focused migration, about one month (owner estimate) | Not recorded | Not recorded | Not recorded | Owner-reported duration estimate | Reallocated duplicate UI checks to API coverage and tuned parallelism | Run list, environment, and timing records are unavailable |
+| Test mix: 1,000+ UI checks → 40 critical journeys plus API coverage | Test inventory; these counts are not a quality score | Before/after migration points; dates not recorded | Approximate inventory counts only | Not applicable to inventory | Not recorded | Owner-reported inventory estimate | Selected critical journeys and moved repeatable checks to lower layers | Underlying inventories are unavailable; exact counts may vary by classification |
+| Critical-scope automation: 100% about one month early | Critical release scope targeted for automation | Schedule-relative; exact dates not recorded | Not recorded | Not recorded | Not recorded | Owner-reported delivery estimate | Led scope migration and rollout; date attribution is not recorded | Original target date and completion records are unavailable |
+| Authoring throughput: about 3x faster | Comparable critical scenarios per authoring period | Focused migration; authoring periods not recorded | Not recorded | Not applicable to throughput | Not recorded | Owner-reported throughput estimate | Introduced shared fixtures, builders, and reporting conventions | Scenario counts and period lengths are unavailable; multiplier is directional |
+
+The [optional professional-impact review template](professional-impact-template.md) describes a small test-change and controlled-failure exercise. It is an invitation only; no external review is claimed by this case study.
 
 ## Decision Record
 
