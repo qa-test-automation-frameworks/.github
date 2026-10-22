@@ -225,7 +225,7 @@ function readBundle(bundle, knownScopes, allowedRepositories, now) {
     records.push({ path: entry.path, record, bytes, validationErrors, receiptErrors });
   }
   requireValue(referenced.size === files.size, 'Bundle contains unreferenced record files.');
-  return { repository, run, manifest, records, receiptErrors };
+  return { repository, run, manifest, records, receiptErrors, artifactReceipt: bundle.artifactReceipt };
 }
 
 function inspectFaultProof(proofEntry, risk, candidate, now) {

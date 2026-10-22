@@ -222,9 +222,9 @@ export function makeProof(risk) {
 export function makeInput({ bundles, riskProofs } = {}) {
   return {
     schemaVersion: 1,
-    candidateDescriptor: descriptor,
+    candidateDescriptor: structuredClone(descriptor),
     descriptorBytes,
-    descriptorReceipt,
+    descriptorReceipt: structuredClone(descriptorReceipt),
     bundles: bundles ?? [
       makeBundle(`${org}/aria-api-framework`, {
         records: [{ scopeId: 'aria.shared-app', profile: null }],
