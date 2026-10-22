@@ -1,0 +1,232 @@
+{
+  "schemaVersion": 1,
+  "candidateDescriptor": {
+    "schemaVersion": 1,
+    "repository": "qa-test-automation-frameworks/quality-reference-application",
+    "sourceSha": "3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d",
+    "applicationVersion": "0.2.0",
+    "imageDigest": "sha256:3f325dc978aeb66a7250a413f7fe9e32204b955bd8042d61d66588deecda2ed3",
+    "fixtureVersion": "v0.1.0",
+    "apiVersions": [
+      "v1",
+      "v2"
+    ],
+    "sourceRun": {
+      "id": "39821471692",
+      "attempt": 1,
+      "url": "https://github.com/qa-test-automation-frameworks/quality-reference-application/actions/runs/39821471692"
+    },
+    "generatedAt": "2026-10-22T17:23:30.266Z"
+  },
+  "descriptorBytes": "{\n  \"schemaVersion\": 1,\n  \"repository\": \"qa-test-automation-frameworks/quality-reference-application\",\n  \"sourceSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n  \"applicationVersion\": \"0.2.0\",\n  \"imageDigest\": \"sha256:3f325dc978aeb66a7250a413f7fe9e32204b955bd8042d61d66588deecda2ed3\",\n  \"fixtureVersion\": \"v0.1.0\",\n  \"apiVersions\": [\n    \"v1\",\n    \"v2\"\n  ],\n  \"sourceRun\": {\n    \"id\": \"39821471692\",\n    \"attempt\": 1,\n    \"url\": \"https://github.com/qa-test-automation-frameworks/quality-reference-application/actions/runs/39821471692\"\n  },\n  \"generatedAt\": \"2026-10-22T17:23:30.266Z\"\n}\n",
+  "descriptorReceipt": {
+    "schemaVersion": 1,
+    "repository": "qa-test-automation-frameworks/quality-reference-application",
+    "workflowPath": ".github/workflows/ci.yml",
+    "event": "push",
+    "branch": "main",
+    "conclusion": "success",
+    "runId": "39821471692",
+    "attempt": 1,
+    "sourceSha": "3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d",
+    "runUrl": "https://github.com/qa-test-automation-frameworks/quality-reference-application/actions/runs/39821471692",
+    "artifactId": "12444419125",
+    "artifactName": "qra-release-descriptor",
+    "artifactUrl": "https://github.com/qa-test-automation-frameworks/quality-reference-application/actions/runs/39821471692/artifacts/12444419125",
+    "artifactSha256": "sha256:1c6a9a611f6698198d1f2311a089ffc6e27089c31acd8147daf3c769f973e3e9",
+    "descriptorSha256": "c54d824357ea5f33a6904e71fcdbc4cb26aeb0ca53de087c1ba6ff65e267643a",
+    "expiresAt": "2026-11-21T17:23:30Z",
+    "verifiedAt": "2026-10-22T17:51:46.993Z"
+  },
+  "riskProofArtifactReceipt": {
+    "schemaVersion": 1,
+    "repository": "qa-test-automation-frameworks/quality-reference-application",
+    "workflowPath": ".github/workflows/ci.yml",
+    "event": "push",
+    "branch": "main",
+    "conclusion": "success",
+    "runId": "39821471692",
+    "attempt": 1,
+    "sourceSha": "3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d",
+    "artifactId": "12444423466",
+    "artifactName": "qra-risk-proofs",
+    "artifactUrl": "https://github.com/qa-test-automation-frameworks/quality-reference-application/actions/runs/39821471692/artifacts/12444423466",
+    "artifactSha256": "sha256:4e22a7b46d8ce275a94e3b85e421a6c4555037f665c9816dc852eeb060cb3c2c",
+    "artifactFileName": "risk-proofs.json",
+    "artifactFileSha256": "7f64128619f27521a26312c3a21fd29d5c30ba51988468c169ed08d3651d84b6",
+    "expiresAt": "2026-11-21T17:24:01Z",
+    "verifiedAt": "2026-10-22T17:51:46.993Z"
+  },
+  "riskProofBundleSha256": "7f64128619f27521a26312c3a21fd29d5c30ba51988468c169ed08d3651d84b6",
+  "riskProofs": [
+    {
+      "path": "proofs/claim_cross_member_denial.json",
+      "bytes": "{\n  \"schemaVersion\": 1,\n  \"riskId\": \"CLAIM_CROSS_MEMBER_DENIAL\",\n  \"controlId\": \"cross-member-isolation\",\n  \"repository\": \"qa-test-automation-frameworks/quality-reference-application\",\n  \"sourceSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n  \"candidateDigest\": \"sha256:3f325dc978aeb66a7250a413f7fe9e32204b955bd8042d61d66588deecda2ed3\",\n  \"detectorRepository\": \"qa-test-automation-frameworks/quality-reference-application\",\n  \"detectorFrameworkSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n  \"expectedNativeTestIds\": [\n    \"persisted claim journey enforces identity ownership, reviewer transitions, concurrency, and run isolation\"\n  ],\n  \"cleanNativeTestIds\": [\n    \"persisted claim journey enforces identity ownership, reviewer transitions, concurrency, and run isolation\"\n  ],\n  \"observedNativeTestIds\": [\n    \"persisted claim journey enforces identity ownership, reviewer transitions, concurrency, and run isolation\"\n  ],\n  \"detectedNativeTestIds\": [\n    \"persisted claim journey enforces identity ownership, reviewer transitions, concurrency, and run isolation\"\n  ],\n  \"cleanNativeResultsSha256\": \"e06061d81d455133277035e07fa0d51ed5361e4f1e8bfa9536a24b48e2dbc175\",\n  \"mutatedNativeResultsSha256\": \"7b184501d533e3943cebed97e38a0d81cb44d3ad625e64cfb2a4f3d324bac9e2\",\n  \"cleanExitCode\": 0,\n  \"mutatedExitCode\": 1,\n  \"outcome\": \"detected\",\n  \"generatedAt\": \"2026-10-22T17:24:00.599Z\",\n  \"expiresAt\": \"2026-10-29T17:24:00.599Z\",\n  \"mutation\": {\n    \"cleanCandidateDigest\": \"sha256:3f325dc978aeb66a7250a413f7fe9e32204b955bd8042d61d66588deecda2ed3\",\n    \"derivedFromCandidateSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n    \"mutatedTargetSourceSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n    \"mutatedTargetDigest\": \"sha256:88c1421ddd083f4b914da583dbb332bc6df5fa7f22f9ffef6404dc726e7176ae\",\n    \"patchSha256\": \"9152d05abfd79abeb2d4420b461c8ac4429d6a4f366ac80865d8e37af37a7adc\",\n    \"controlledFaultConfig\": \"allow every seeded member to list every policy\",\n    \"targetKind\": \"mutated-source-tree-v1\"\n  },\n  \"cleanRun\": {\n    \"id\": \"39821471692\",\n    \"attempt\": 1,\n    \"sourceSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n    \"jobName\": \"risk-proof\",\n    \"execution\": \"clean-candidate\",\n    \"resultSha256\": \"e06061d81d455133277035e07fa0d51ed5361e4f1e8bfa9536a24b48e2dbc175\"\n  },\n  \"mutatedRun\": {\n    \"id\": \"39821471692\",\n    \"attempt\": 1,\n    \"sourceSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n    \"jobName\": \"risk-proof\",\n    \"execution\": \"cross-member-isolation\",\n    \"resultSha256\": \"7b184501d533e3943cebed97e38a0d81cb44d3ad625e64cfb2a4f3d324bac9e2\"\n  }\n}\n",
+      "sha256": "d2c66543f0dc2d6f9d9c1e2bd25c0c99d240087de04113d3f82b6687d5a390cb",
+      "artifactReceipt": {
+        "schemaVersion": 1,
+        "repository": "qa-test-automation-frameworks/quality-reference-application",
+        "workflowPath": ".github/workflows/ci.yml",
+        "event": "push",
+        "branch": "main",
+        "conclusion": "success",
+        "runId": "39821471692",
+        "attempt": 1,
+        "sourceSha": "3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d",
+        "artifactId": "12444423466",
+        "artifactName": "qra-risk-proofs",
+        "artifactUrl": "https://github.com/qa-test-automation-frameworks/quality-reference-application/actions/runs/39821471692/artifacts/12444423466",
+        "artifactSha256": "sha256:4e22a7b46d8ce275a94e3b85e421a6c4555037f665c9816dc852eeb060cb3c2c",
+        "artifactFileName": "risk-proofs.json",
+        "artifactFileSha256": "7f64128619f27521a26312c3a21fd29d5c30ba51988468c169ed08d3651d84b6",
+        "expiresAt": "2026-11-21T17:24:01Z",
+        "verifiedAt": "2026-10-22T17:51:46.993Z"
+      }
+    },
+    {
+      "path": "proofs/claim_version_conflict.json",
+      "bytes": "{\n  \"schemaVersion\": 1,\n  \"riskId\": \"CLAIM_VERSION_CONFLICT\",\n  \"controlId\": \"stale-claim-version-rejection\",\n  \"repository\": \"qa-test-automation-frameworks/quality-reference-application\",\n  \"sourceSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n  \"candidateDigest\": \"sha256:3f325dc978aeb66a7250a413f7fe9e32204b955bd8042d61d66588deecda2ed3\",\n  \"detectorRepository\": \"qa-test-automation-frameworks/quality-reference-application\",\n  \"detectorFrameworkSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n  \"expectedNativeTestIds\": [\n    \"persisted claim journey enforces identity ownership, reviewer transitions, concurrency, and run isolation\"\n  ],\n  \"cleanNativeTestIds\": [\n    \"persisted claim journey enforces identity ownership, reviewer transitions, concurrency, and run isolation\"\n  ],\n  \"observedNativeTestIds\": [\n    \"persisted claim journey enforces identity ownership, reviewer transitions, concurrency, and run isolation\"\n  ],\n  \"detectedNativeTestIds\": [\n    \"persisted claim journey enforces identity ownership, reviewer transitions, concurrency, and run isolation\"\n  ],\n  \"cleanNativeResultsSha256\": \"e06061d81d455133277035e07fa0d51ed5361e4f1e8bfa9536a24b48e2dbc175\",\n  \"mutatedNativeResultsSha256\": \"7b184501d533e3943cebed97e38a0d81cb44d3ad625e64cfb2a4f3d324bac9e2\",\n  \"cleanExitCode\": 0,\n  \"mutatedExitCode\": 1,\n  \"outcome\": \"detected\",\n  \"generatedAt\": \"2026-10-22T17:24:00.599Z\",\n  \"expiresAt\": \"2026-10-29T17:24:00.599Z\",\n  \"mutation\": {\n    \"cleanCandidateDigest\": \"sha256:3f325dc978aeb66a7250a413f7fe9e32204b955bd8042d61d66588deecda2ed3\",\n    \"derivedFromCandidateSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n    \"mutatedTargetSourceSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n    \"mutatedTargetDigest\": \"sha256:30bb0e50f2d065b76f9f85aaf3acd00be09f6a76ecc11c3437ada3c15ee0dfeb\",\n    \"patchSha256\": \"ae2201ef31c860fddad6ce74e8f2d52b3de8ebda36e97a58a2574445aa3f71e6\",\n    \"controlledFaultConfig\": \"disable the stale expectedVersion conflict predicate\",\n    \"targetKind\": \"mutated-source-tree-v1\"\n  },\n  \"cleanRun\": {\n    \"id\": \"39821471692\",\n    \"attempt\": 1,\n    \"sourceSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n    \"jobName\": \"risk-proof\",\n    \"execution\": \"clean-candidate\",\n    \"resultSha256\": \"e06061d81d455133277035e07fa0d51ed5361e4f1e8bfa9536a24b48e2dbc175\"\n  },\n  \"mutatedRun\": {\n    \"id\": \"39821471692\",\n    \"attempt\": 1,\n    \"sourceSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n    \"jobName\": \"risk-proof\",\n    \"execution\": \"stale-claim-version-rejection\",\n    \"resultSha256\": \"7b184501d533e3943cebed97e38a0d81cb44d3ad625e64cfb2a4f3d324bac9e2\"\n  }\n}\n",
+      "sha256": "707a3405c69c075d90e73e1a3f3c3e95174a066dcf40b291efdce75d8b9439c6",
+      "artifactReceipt": {
+        "schemaVersion": 1,
+        "repository": "qa-test-automation-frameworks/quality-reference-application",
+        "workflowPath": ".github/workflows/ci.yml",
+        "event": "push",
+        "branch": "main",
+        "conclusion": "success",
+        "runId": "39821471692",
+        "attempt": 1,
+        "sourceSha": "3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d",
+        "artifactId": "12444423466",
+        "artifactName": "qra-risk-proofs",
+        "artifactUrl": "https://github.com/qa-test-automation-frameworks/quality-reference-application/actions/runs/39821471692/artifacts/12444423466",
+        "artifactSha256": "sha256:4e22a7b46d8ce275a94e3b85e421a6c4555037f665c9816dc852eeb060cb3c2c",
+        "artifactFileName": "risk-proofs.json",
+        "artifactFileSha256": "7f64128619f27521a26312c3a21fd29d5c30ba51988468c169ed08d3651d84b6",
+        "expiresAt": "2026-11-21T17:24:01Z",
+        "verifiedAt": "2026-10-22T17:51:46.993Z"
+      }
+    },
+    {
+      "path": "proofs/api_v1_v2_claim_limits.json",
+      "bytes": "{\n  \"schemaVersion\": 1,\n  \"riskId\": \"API_V1_V2_CLAIM_LIMITS\",\n  \"controlId\": \"a07-policy-limit-compatibility\",\n  \"repository\": \"qa-test-automation-frameworks/quality-reference-application\",\n  \"sourceSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n  \"candidateDigest\": \"sha256:3f325dc978aeb66a7250a413f7fe9e32204b955bd8042d61d66588deecda2ed3\",\n  \"detectorRepository\": \"qa-test-automation-frameworks/quality-reference-application\",\n  \"detectorFrameworkSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n  \"expectedNativeTestIds\": [\n    \"compatibility contract: API v1 accepts the published 10,000 USD claim limit\",\n    \"API v2 caps claims at 5,000 USD while API v1 keeps its 10,000 USD contract\"\n  ],\n  \"cleanNativeTestIds\": [\n    \"compatibility contract: API v1 accepts the published 10,000 USD claim limit\",\n    \"API v2 caps claims at 5,000 USD while API v1 keeps its 10,000 USD contract\"\n  ],\n  \"observedNativeTestIds\": [\n    \"compatibility contract: API v1 accepts the published 10,000 USD claim limit\",\n    \"API v2 caps claims at 5,000 USD while API v1 keeps its 10,000 USD contract\"\n  ],\n  \"detectedNativeTestIds\": [\n    \"API v2 caps claims at 5,000 USD while API v1 keeps its 10,000 USD contract\"\n  ],\n  \"cleanNativeResultsSha256\": \"e06061d81d455133277035e07fa0d51ed5361e4f1e8bfa9536a24b48e2dbc175\",\n  \"mutatedNativeResultsSha256\": \"f19d371cf1639841441ed662c0355356f104958994c3ba91eb58bac41bbcbdb0\",\n  \"cleanExitCode\": 0,\n  \"mutatedExitCode\": 1,\n  \"outcome\": \"detected\",\n  \"generatedAt\": \"2026-10-22T17:24:00.599Z\",\n  \"expiresAt\": \"2026-10-29T17:24:00.599Z\",\n  \"mutation\": {\n    \"cleanCandidateDigest\": \"sha256:3f325dc978aeb66a7250a413f7fe9e32204b955bd8042d61d66588deecda2ed3\",\n    \"derivedFromCandidateSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n    \"mutatedTargetSourceSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n    \"mutatedTargetDigest\": \"sha256:9b503ddfecb9c8b35c1bcf78da3f27c7a4cbda40a536f776d0193f12b77ad4af\",\n    \"patchSha256\": \"bdb9d7efa0c70196fa6e5cbc416e530efb02795f6c3afd728d08854639342756\",\n    \"controlledFaultConfig\": \"raise the API v2 claim limit to the API v1 limit\",\n    \"targetKind\": \"mutated-source-tree-v1\"\n  },\n  \"cleanRun\": {\n    \"id\": \"39821471692\",\n    \"attempt\": 1,\n    \"sourceSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n    \"jobName\": \"risk-proof\",\n    \"execution\": \"clean-candidate\",\n    \"resultSha256\": \"e06061d81d455133277035e07fa0d51ed5361e4f1e8bfa9536a24b48e2dbc175\"\n  },\n  \"mutatedRun\": {\n    \"id\": \"39821471692\",\n    \"attempt\": 1,\n    \"sourceSha\": \"3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d\",\n    \"jobName\": \"risk-proof\",\n    \"execution\": \"a07-policy-limit-compatibility\",\n    \"resultSha256\": \"f19d371cf1639841441ed662c0355356f104958994c3ba91eb58bac41bbcbdb0\"\n  }\n}\n",
+      "sha256": "6dbde9d9e0cd783028b682025987e1181db2c893e9997195e7b65e6030b6c035",
+      "artifactReceipt": {
+        "schemaVersion": 1,
+        "repository": "qa-test-automation-frameworks/quality-reference-application",
+        "workflowPath": ".github/workflows/ci.yml",
+        "event": "push",
+        "branch": "main",
+        "conclusion": "success",
+        "runId": "39821471692",
+        "attempt": 1,
+        "sourceSha": "3f0a56d425cb6b6f44d4196a2ce8dd6a1933f00d",
+        "artifactId": "12444423466",
+        "artifactName": "qra-risk-proofs",
+        "artifactUrl": "https://github.com/qa-test-automation-frameworks/quality-reference-application/actions/runs/39821471692/artifacts/12444423466",
+        "artifactSha256": "sha256:4e22a7b46d8ce275a94e3b85e421a6c4555037f665c9816dc852eeb060cb3c2c",
+        "artifactFileName": "risk-proofs.json",
+        "artifactFileSha256": "7f64128619f27521a26312c3a21fd29d5c30ba51988468c169ed08d3651d84b6",
+        "expiresAt": "2026-11-21T17:24:01Z",
+        "verifiedAt": "2026-10-22T17:51:46.993Z"
+      }
+    }
+  ],
+  "bundles": [
+    {
+      "manifestBytes": "{\n  \"schemaVersion\": 1,\n  \"repository\": \"qa-test-automation-frameworks/playwright-typescript-framework\",\n  \"run\": {\n    \"id\": \"39822602172\",\n    \"attempt\": 2,\n    \"sourceSha\": \"4254a8e711d510c41c67d76b314f01ae34c3a12b\",\n    \"branch\": \"main\",\n    \"event\": \"workflow_dispatch\",\n    \"conclusion\": \"success\",\n    \"url\": \"https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39822602172\"\n  },\n  \"records\": [\n    {\n      \"path\": \"test-results/evidence-v3.json\",\n      \"scope\": \"shared-app-ui\",\n      \"sha256\": \"a10b7e2322e4ededec62139a8c80e916c59a50075e37da6aecb92fb5571f8caa\"\n    }\n  ]\n}\n",
+      "manifestSha256": "1d56e9714a7256cac1408412caafdcba1cf8cda736fc55b8c62afef41d162893",
+      "artifactReceipt": {
+        "schemaVersion": 1,
+        "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+        "workflowPath": ".github/workflows/ci.yml",
+        "event": "workflow_dispatch",
+        "branch": "main",
+        "conclusion": "success",
+        "runId": "39822602172",
+        "attempt": 2,
+        "sourceSha": "4254a8e711d510c41c67d76b314f01ae34c3a12b",
+        "artifactId": "12446321436",
+        "artifactName": "reports-shared-app-ui",
+        "artifactUrl": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39822602172/artifacts/12446321436",
+        "artifactSha256": "sha256:192c3771af726a2eff8e0099177d57f0b78fe56aff268569f2b253f51d749e10",
+        "expiresAt": "2026-10-29T17:40:42Z",
+        "verifiedAt": "2026-10-22T18:06:22Z"
+      },
+      "records": [
+        {
+          "path": "test-results/evidence-v3.json",
+          "bytes": "{\n  \"schemaVersion\": 3,\n  \"kind\": \"execution\",\n  \"repository\": \"qa-test-automation-frameworks/playwright-typescript-framework\",\n  \"sourceSha\": \"4254a8e711d510c41c67d76b314f01ae34c3a12b\",\n  \"workflow\": {\n    \"id\": \"ci.yml\",\n    \"name\": \"CI\",\n    \"runId\": \"39822602172\",\n    \"attempt\": 2,\n    \"url\": \"https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39822602172\",\n    \"trigger\": \"workflow_dispatch\",\n    \"branch\": \"main\"\n  },\n  \"scope\": {\n    \"id\": \"shared-app-ui\",\n    \"required\": true,\n    \"evidenceClass\": \"controlled\",\n    \"freshnessPolicy\": \"daily_gate_v1\"\n  },\n  \"target\": {\n    \"identity\": \"quality-reference-application\",\n    \"revision\": \"oci:sha256:3f325dc978aeb66a7250a413f7fe9e32204b955bd8042d61d66588deecda2ed3\",\n    \"fixtureVersion\": \"v0.1.0\",\n    \"environment\": \"isolated-github-actions\",\n    \"profile\": \"shared-app-ui\",\n    \"tools\": {\n      \"node\": \"24.21.0\",\n      \"playwright\": \"1.64.0\"\n    }\n  },\n  \"execution\": {\n    \"disposition\": \"passed\",\n    \"reason\": null,\n    \"startedAt\": \"2026-10-22T17:40:32.367Z\",\n    \"completedAt\": \"2026-10-22T17:40:42.529Z\",\n    \"integrity\": \"complete\",\n    \"counts\": {\n      \"unit\": \"parameter_case\",\n      \"selected\": 10,\n      \"executed\": 10,\n      \"passed\": 10,\n      \"failed\": 0,\n      \"skipped\": 0,\n      \"retried\": 0,\n      \"semantics\": \"Unique native spec ID/project cases including setup and teardown. Expected failures count as native expected outcomes. Retried counts unique cases, not extra attempts.\"\n    },\n    \"measurements\": [],\n    \"shards\": {\n      \"expected\": [\n        \"shard-1-of-1\"\n      ],\n      \"received\": [\n        \"shard-1-of-1\"\n      ]\n    }\n  },\n  \"publication\": {\n    \"disposition\": \"pending\",\n    \"reason\": null,\n    \"publishedAt\": null,\n    \"reportUrl\": null,\n    \"artifacts\": []\n  },\n  \"generator\": {\n    \"name\": \"playwright_native_v3\",\n    \"version\": \"3.0.0\"\n  },\n  \"limitations\": [\n    \"Native duration rounded to millisecond manifest precision.\",\n    \"Target digest covers owned target files, seed implementation and dependency lock; target is co-versioned with the framework, not independently deployed.\",\n    \"Shared reference target is an independently pinned OCI image; the workflow checks readiness source and fixture before browser tests.\"\n  ]\n}\n"
+        }
+      ]
+    },
+    {
+      "manifestBytes": "{\n  \"schemaVersion\": 1,\n  \"repository\": \"qa-test-automation-frameworks/aria-api-framework\",\n  \"run\": {\n    \"id\": \"39832484524\",\n    \"attempt\": 1,\n    \"sourceSha\": \"7e505afcbf9c7037e3d2b905c9fd91c813765b93\",\n    \"event\": \"workflow_dispatch\",\n    \"branch\": \"main\",\n    \"workflowName\": \"ARIA API Framework CI\",\n    \"conclusion\": \"success\",\n    \"completedAt\": \"2026-10-22T18:38:54Z\",\n    \"url\": \"https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/runs/39832484524\"\n  },\n  \"records\": [\n    {\n      \"scope\": \"aria.shared-app\",\n      \"evidenceClass\": \"controlled\",\n      \"execution\": \"passed\",\n      \"integrity\": \"complete\",\n      \"path\": \"records/aria-shared-app.json\",\n      \"sha256\": \"58b9aeaa6b737dc3da10726862a7b61487a522209d0e0e73ed757dd3331531ff\"\n    }\n  ]\n}\n",
+      "manifestSha256": "1ccad32968e09878f112ae5d2c521dc0edb082c2eee5a283d96db82e68e72a3a",
+      "artifactReceipt": {
+        "schemaVersion": 1,
+        "repository": "qa-test-automation-frameworks/aria-api-framework",
+        "workflowPath": ".github/workflows/ci.yml",
+        "event": "workflow_dispatch",
+        "branch": "main",
+        "conclusion": "success",
+        "runId": "39832484524",
+        "attempt": 1,
+        "sourceSha": "7e505afcbf9c7037e3d2b905c9fd91c813765b93",
+        "artifactId": "12448519151",
+        "artifactName": "evidence-aria-shared-app",
+        "artifactUrl": "https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/runs/39832484524/artifacts/12448519151",
+        "artifactSha256": "sha256:76697cdf4dbbdb8f7b173f9ffc09d2eeb625ad1700ac0b541aa4e31f362f9c3b",
+        "expiresAt": "2026-11-21T18:38:40Z",
+        "verifiedAt": "2026-10-22T18:39:57Z"
+      },
+      "records": [
+        {
+          "path": "records/aria-shared-app.json",
+          "bytes": "{\n  \"schemaVersion\": 3,\n  \"repository\": \"qa-test-automation-frameworks/aria-api-framework\",\n  \"sourceSha\": \"7e505afcbf9c7037e3d2b905c9fd91c813765b93\",\n  \"limitations\": [\n    \"JUnit testcase names, parameters, failure text and environment values are omitted.\",\n    \"Retries are counted only when native flakyFailure/flakyError elements are present.\",\n    \"Native JUnit report bundle SHA-256: 7688c954bbd902fc4ddae1d5fdcb98ee6d102600a9965280adb176f795cb733b.\"\n  ],\n  \"kind\": \"execution\",\n  \"workflow\": {\n    \"id\": \"qa-test-automation-frameworks/aria-api-framework/.github/workflows/ci.yml@refs/heads/main\",\n    \"name\": \"ARIA API Framework CI\",\n    \"runId\": \"39832484524\",\n    \"attempt\": 1,\n    \"url\": \"https://github.com/qa-test-automation-frameworks/aria-api-framework/actions/runs/39832484524\",\n    \"trigger\": \"workflow_dispatch\",\n    \"branch\": \"main\"\n  },\n  \"scope\": {\n    \"id\": \"aria.shared-app\",\n    \"evidenceClass\": \"controlled\",\n    \"required\": true,\n    \"freshnessPolicy\": \"daily_gate_v1\"\n  },\n  \"target\": {\n    \"identity\": \"quality-reference-application\",\n    \"revision\": \"oci:sha256:3f325dc978aeb66a7250a413f7fe9e32204b955bd8042d61d66588deecda2ed3\",\n    \"fixtureVersion\": \"v0.1.0\",\n    \"environment\": \"isolated-github-actions\",\n    \"profile\": null,\n    \"tools\": {\n      \"java\": \"21.0.12.1\",\n      \"gradle\": \"8.7\"\n    }\n  },\n  \"execution\": {\n    \"disposition\": \"passed\",\n    \"reason\": null,\n    \"startedAt\": \"2026-10-22T18:34:16Z\",\n    \"completedAt\": \"2026-10-22T18:35:21Z\",\n    \"integrity\": \"complete\",\n    \"counts\": {\n      \"selected\": 6,\n      \"executed\": 6,\n      \"passed\": 6,\n      \"failed\": 0,\n      \"skipped\": 0,\n      \"retried\": 0,\n      \"unit\": \"parameter_case\",\n      \"semantics\": \"JUnit XML testcase invocations; selected includes skips; errors are combined with failures.\"\n    },\n    \"measurements\": [],\n    \"shards\": {\n      \"expected\": [\n        \"aria.shared-app\"\n      ],\n      \"received\": [\n        \"aria.shared-app\"\n      ]\n    }\n  },\n  \"publication\": {\n    \"disposition\": \"pending\",\n    \"reason\": null,\n    \"publishedAt\": null,\n    \"reportUrl\": null,\n    \"artifacts\": []\n  },\n  \"generator\": {\n    \"name\": \"aria-gradle-junit-evidence\",\n    \"version\": \"1.0.0\"\n  }\n}\n"
+        }
+      ]
+    }
+  ],
+  "rollbackEvidence": {
+    "path": "rollback-summary.json",
+    "bytes": "{\n  \"check\": \"shared-app-immutable-rollback\",\n  \"image\": \"ghcr.io/qa-test-automation-frameworks/quality-reference-application@sha256:284ae3fa4f2a31a4322b74a6f37e38f0d101879389c656bf1d553df7ec616469\",\n  \"digest\": \"sha256:284ae3fa4f2a31a4322b74a6f37e38f0d101879389c656bf1d553df7ec616469\",\n  \"sourceRevision\": \"e9f438e06a2b092dccfc6e9ab1820ff2562ddad7\",\n  \"fixtureVersion\": \"v0.1.0\",\n  \"startedAt\": \"2026-10-22T17:27:21.567Z\",\n  \"checks\": [\n    {\n      \"name\": \"pinned rollback image readiness and identity\",\n      \"status\": \"passed\"\n    },\n    {\n      \"name\": \"API v1 accepts 1,000,000 cents\",\n      \"status\": \"passed\"\n    },\n    {\n      \"name\": \"API v1 rejects 1,000,001 cents\",\n      \"status\": \"passed\"\n    }\n  ],\n  \"outcome\": \"passed\",\n  \"completedAt\": \"2026-10-22T17:27:22.701Z\"\n}\n",
+    "sha256": "4e6c39a26256d9415d1f65cafd77bed21bd2fee10b86de94ee54fc298d48ee34",
+    "workflowRun": {
+      "id": "39822602172",
+      "attempt": 1,
+      "sourceSha": "4254a8e711d510c41c67d76b314f01ae34c3a12b",
+      "branch": "main",
+      "event": "workflow_dispatch",
+      "conclusion": "failure",
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39822602172"
+    },
+    "rollbackJob": {
+      "id": "119978096534",
+      "runId": "39822602172",
+      "attempt": 1,
+      "name": "shared-app-rollback",
+      "conclusion": "success",
+      "url": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39822602172/job/119978096534"
+    },
+    "artifactReceipt": {
+      "schemaVersion": 1,
+      "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+      "workflowPath": ".github/workflows/ci.yml",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "conclusion": "failure",
+      "runId": "39822602172",
+      "attempt": 1,
+      "sourceSha": "4254a8e711d510c41c67d76b314f01ae34c3a12b",
+      "artifactId": "12444677909",
+      "artifactName": "shared-app-rollback-proof",
+      "artifactUrl": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39822602172/artifacts/12444677909",
+      "artifactSha256": "sha256:54b6272cc43eedd0e97b3fae9a4e124174606e961f54bca7cc9f33ede082b72c",
+      "artifactFileName": "rollback-summary.json",
+      "artifactFileSha256": "4e6c39a26256d9415d1f65cafd77bed21bd2fee10b86de94ee54fc298d48ee34",
+      "expiresAt": "2027-01-20T17:25:51Z",
+      "verifiedAt": "2026-10-22T18:31:17Z"
+    }
+  }
+}
