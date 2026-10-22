@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "application": {
+    "repository": "qa-test-automation-frameworks/quality-reference-application",
+    "apiVersions": ["v1", "v2"]
+  },
+  "frameworkContexts": [
+    {
+      "repository": "qa-test-automation-frameworks/aria-api-framework",
+      "ref": "refs/heads/main",
+      "sourceSha": "103b4f020676e3cb249a0c2c625a63e342654ec4"
+    },
+    {
+      "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+      "ref": "refs/heads/main",
+      "sourceSha": "f91c47e9b0faf67464710873c4151d8ae5c663e6"
+    }
+  ],
+  "risks": [
+    {
+      "id": "CLAIM_CROSS_MEMBER_DENIAL",
+      "description": "A member must not read another member's policy or claim, including across concurrent sessions.",
+      "ownerRepository": "qa-test-automation-frameworks/quality-reference-application",
+      "relevantApiVersions": ["v1", "v2"],
+      "requiredScopes": [
+        {
+          "repository": "qa-test-automation-frameworks/aria-api-framework",
+          "scopeId": "aria.shared-app",
+          "allowedProfiles": [null]
+        },
+        {
+          "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+          "scopeId": "shared-app-ui",
+          "allowedProfiles": ["shared-app-ui"]
+        }
+      ],
+      "expectedFaultControl": {
+        "id": "cross-member-isolation",
+        "detectorRepository": "qa-test-automation-frameworks/quality-reference-application",
+        "nativeTestIds": ["persisted claim journey enforces identity ownership, reviewer transitions, concurrency, and run isolation"],
+        "proofMaxAgeHours": 168,
+        "mutationRequired": true
+      },
+      "residualLimitations": [
+        "The configured consumer scopes are synthetic isolated-app runs and do not establish production identity-provider behavior."
+      ]
+    },
+    {
+      "id": "CLAIM_VERSION_CONFLICT",
+      "description": "Concurrent claim updates must reject stale versions instead of overwriting a newer state.",
+      "ownerRepository": "qa-test-automation-frameworks/quality-reference-application",
+      "relevantApiVersions": ["v1", "v2"],
+      "requiredScopes": [
+        {
+          "repository": "qa-test-automation-frameworks/aria-api-framework",
+          "scopeId": "aria.shared-app",
+          "allowedProfiles": [null]
+        },
+        {
+          "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+          "scopeId": "shared-app-ui",
+          "allowedProfiles": ["shared-app-ui"]
+        }
+      ],
+      "expectedFaultControl": {
+        "id": "stale-claim-version-rejection",
+        "detectorRepository": "qa-test-automation-frameworks/quality-reference-application",
+        "nativeTestIds": ["persisted claim journey enforces identity ownership, reviewer transitions, concurrency, and run isolation"],
+        "proofMaxAgeHours": 168,
+        "mutationRequired": true
+      },
+      "residualLimitations": [
+        "The controlled conflict proves the documented API response contract, not database behavior under production traffic."
+      ]
+    },
+    {
+      "id": "API_V1_V2_CLAIM_LIMITS",
+      "description": "API v1 retains its published USD 10,000 limit while API v2 enforces the USD 5,000 limit.",
+      "ownerRepository": "qa-test-automation-frameworks/quality-reference-application",
+      "relevantApiVersions": ["v1", "v2"],
+      "requiredScopes": [
+        {
+          "repository": "qa-test-automation-frameworks/aria-api-framework",
+          "scopeId": "aria.shared-app",
+          "allowedProfiles": [null]
+        },
+        {
+          "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+          "scopeId": "shared-app-ui",
+          "allowedProfiles": ["shared-app-ui"]
+        }
+      ],
+      "expectedFaultControl": {
+        "id": "a07-policy-limit-compatibility",
+        "detectorRepository": "qa-test-automation-frameworks/quality-reference-application",
+        "nativeTestIds": [
+          "compatibility contract: API v1 accepts the published 10,000 USD claim limit",
+          "API v2 caps claims at 5,000 USD while API v1 keeps its 10,000 USD contract"
+        ],
+        "proofMaxAgeHours": 168,
+        "mutationRequired": true
+      },
+      "residualLimitations": [
+        "A passing packet supports review of this exact synthetic candidate and consumer revisions; it is not a production safety certification.",
+        "Historical A07 runs remain context only until an exact current-candidate clean and mutated pair is available."
+      ]
+    }
+  ]
+}
