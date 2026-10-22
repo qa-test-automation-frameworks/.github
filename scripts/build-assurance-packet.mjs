@@ -245,6 +245,10 @@ function inspectFaultProof(proofEntry, risk, candidate, now) {
     event: 'push',
   }, now);
   if (receiptErrors.length) return { state: 'incomplete', reasons: receiptErrors };
+  if (proofEntry.artifactReceipt.artifactFileName !== 'risk-proofs.json'
+      || !HEX_SHA256.test(proofEntry.artifactReceipt.artifactFileSha256 ?? '')) {
+    return { state: 'incomplete', reasons: ['Risk proof artifact file hash is missing or invalid.'] };
+  }
   if (String(proofEntry.artifactReceipt.runId) !== String(candidate.sourceRun.id)
       || proofEntry.artifactReceipt.attempt !== candidate.sourceRun.attempt
       || proofEntry.artifactReceipt.sourceSha !== candidate.sourceSha) {
@@ -278,16 +282,30 @@ function inspectFaultProof(proofEntry, risk, candidate, now) {
   const mutation = proof.mutation;
   if (!isObject(mutation) || mutation.cleanCandidateDigest !== candidate.imageDigest
       || mutation.derivedFromCandidateSha !== candidate.sourceSha
-      || !SOURCE_SHA.test(mutation.mutatedTargetSourceSha ?? '')
+      || mutation.mutatedTargetSourceSha !== candidate.sourceSha
       || !SHA256.test(mutation.mutatedTargetDigest ?? '') || mutation.mutatedTargetDigest === candidate.imageDigest
-      || !(HEX_SHA256.test(mutation.patchSha256 ?? '') || (typeof mutation.controlledFaultConfig === 'string' && mutation.controlledFaultConfig.trim()))) {
+      || mutation.targetKind !== 'mutated-source-tree-v1'
+      || !HEX_SHA256.test(mutation.patchSha256 ?? '')
+      || typeof mutation.controlledFaultConfig !== 'string' || !mutation.controlledFaultConfig.trim()) {
     return { state: 'blocked', reasons: ['Fault proof does not describe a distinct, candidate-derived mutated target.'], proof };
   }
   const cleanRun = proof.cleanRun;
   const mutatedRun = proof.mutatedRun;
   if (!isObject(cleanRun) || cleanRun.id !== candidate.sourceRun.id || cleanRun.attempt !== candidate.sourceRun.attempt
       || !isObject(mutatedRun) || !NUMERIC_ID.test(String(mutatedRun.id ?? ''))
-      || !Number.isSafeInteger(mutatedRun.attempt) || mutatedRun.attempt < 1) {
+      || !Number.isSafeInteger(mutatedRun.attempt) || mutatedRun.attempt < 1
+      || cleanRun.jobName !== 'risk-proof' || cleanRun.execution !== 'clean-candidate'
+      || mutatedRun.jobName !== 'risk-proof' || mutatedRun.execution !== risk.expectedFaultControl.id
+      || cleanRun.sourceSha !== candidate.sourceSha || mutatedRun.sourceSha !== candidate.sourceSha
+      || !HEX_SHA256.test(cleanRun.resultSha256 ?? '') || !HEX_SHA256.test(mutatedRun.resultSha256 ?? '')
+      || !HEX_SHA256.test(proof.cleanNativeResultsSha256 ?? '')
+      || !HEX_SHA256.test(proof.mutatedNativeResultsSha256 ?? '')
+      || cleanRun.resultSha256 !== proof.cleanNativeResultsSha256
+      || mutatedRun.resultSha256 !== proof.mutatedNativeResultsSha256
+      || proof.cleanExitCode !== 0 || !Number.isInteger(proof.mutatedExitCode) || proof.mutatedExitCode === 0
+      || !Array.isArray(proof.cleanNativeTestIds) || !Array.isArray(proof.detectedNativeTestIds)
+      || !expectedIds.every((id) => proof.cleanNativeTestIds.includes(id))
+      || !proof.detectedNativeTestIds.some((id) => expectedIds.includes(id))) {
     return { state: 'blocked', reasons: ['Clean and mutated fault-control run identities are incomplete or unrelated.'], proof };
   }
   return {
@@ -301,14 +319,20 @@ function inspectFaultProof(proofEntry, risk, candidate, now) {
       cleanCandidateDigest: mutation.cleanCandidateDigest,
       mutatedTargetDigest: mutation.mutatedTargetDigest,
       mutatedTargetSourceSha: mutation.mutatedTargetSourceSha,
+      mutatedTargetKind: mutation.targetKind,
       patchSha256: mutation.patchSha256 ?? null,
       controlledFaultConfig: mutation.controlledFaultConfig ?? null,
       detectorFrameworkSha: proof.detectorFrameworkSha,
+      cleanNativeTestIds: proof.cleanNativeTestIds,
+      detectedNativeTestIds: proof.detectedNativeTestIds,
+      cleanNativeResultsSha256: proof.cleanNativeResultsSha256,
+      mutatedNativeResultsSha256: proof.mutatedNativeResultsSha256,
       cleanRun,
       mutatedRun,
       artifactId: proofEntry.artifactReceipt.artifactId,
       artifactUrl: proofEntry.artifactReceipt.artifactUrl,
       artifactSha256: proofEntry.artifactReceipt.artifactSha256,
+      artifactFileSha256: proofEntry.artifactReceipt.artifactFileSha256,
       proofSha256: proofEntry.sha256,
     },
   };
