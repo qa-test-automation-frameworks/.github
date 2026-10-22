@@ -6,6 +6,7 @@ import {
   candidateDigest,
   makeBundle,
   makeInput,
+  makeRollbackEvidence,
   now,
   replaceDescriptor,
   replaceProof,
@@ -38,10 +39,44 @@ function rewriteBundle(bundle, mutateRecord) {
 }
 
 test('validates the bounded risk map and its selected framework scope references', () => {
-  assert.equal(build().verdict, 'ready-for-review');
+  const packet = build();
+  assert.equal(packet.verdict, 'ready-for-review');
+  assert.equal(packet.rollbackEvidence.state, 'complete');
+  assert.equal(packet.rollbackEvidence.workflowRun.conclusion, 'failure');
+  assert.equal(packet.rollbackEvidence.rollbackJob.conclusion, 'success');
   const map = structuredClone(riskMap);
   map.risks[0].requiredScopes[0].scopeId = 'not-a-portfolio-scope';
   assert.throws(() => build(makeInput(), map), /Invalid risk map.*unknown portfolio scope/s);
+});
+
+test('missing, invalid, or expired retained rollback evidence keeps the packet incomplete', () => {
+  assert.equal(build(makeInput({ rollbackEvidence: null })).verdict, 'incomplete');
+
+  const invalid = makeInput();
+  invalid.rollbackEvidence.sha256 = '0'.repeat(64);
+  assert.equal(build(invalid).verdict, 'incomplete');
+
+  const expired = makeInput();
+  expired.rollbackEvidence.artifactReceipt.expiresAt = new Date(now - 1).toISOString();
+  assert.equal(build(expired).verdict, 'incomplete');
+
+  const wrongIdentity = makeInput();
+  wrongIdentity.rollbackEvidence.artifactReceipt.artifactFileSha256 = 'f'.repeat(64);
+  assert.equal(build(wrongIdentity).verdict, 'incomplete');
+
+  const wrongSource = makeInput();
+  wrongSource.rollbackEvidence.workflowRun.sourceSha = 'f'.repeat(40);
+  wrongSource.rollbackEvidence.artifactReceipt.sourceSha = 'f'.repeat(40);
+  assert.equal(build(wrongSource).verdict, 'incomplete');
+});
+
+test('a failed rollback job or failed rollback outcome blocks review', () => {
+  assert.equal(build(makeInput({
+    rollbackEvidence: makeRollbackEvidence({ jobConclusion: 'failure' }),
+  })).verdict, 'blocked');
+  assert.equal(build(makeInput({
+    rollbackEvidence: makeRollbackEvidence({ outcome: 'failed' }),
+  })).verdict, 'blocked');
 });
 
 test('missing scope evidence is incomplete and cannot be hidden by the remaining green input', () => {
