@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { validateReviewerLinks } from "./check-reviewer-links.mjs";
+import {
+  trackedSourcePathForMainBlob,
+  validateReviewerLinks,
+} from "./check-reviewer-links.mjs";
 
 const OWNER = "qa-test-automation-frameworks";
 const REPOSITORY = `${OWNER}/aria-api-framework`;
@@ -155,4 +158,40 @@ test("reports a missing remote inventory as unavailable instead of a fabricated 
   assert.equal(result.errors.length, 0);
   assert.equal(result.unavailable.length, 1);
   assert.match(result.unavailable[0].reason, /no sibling clone or sanitized inventory/u);
+});
+
+test("identifies tracked same-repository main pages that are not public until merge", () => {
+  const tracked = new Set(["docs/start-here.md"]);
+  assert.equal(
+    trackedSourcePathForMainBlob(
+      "https://github.com/qa-test-automation-frameworks/.github/blob/main/docs/start-here.md",
+      `${OWNER}/.github`,
+      tracked,
+    ),
+    "docs/start-here.md",
+  );
+  assert.equal(
+    trackedSourcePathForMainBlob(
+      "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/start-here.md",
+      `${OWNER}/.github`,
+      tracked,
+    ),
+    null,
+  );
+  assert.equal(
+    trackedSourcePathForMainBlob(
+      "https://github.com/qa-test-automation-frameworks/.github/blob/main/docs/missing.md",
+      `${OWNER}/.github`,
+      tracked,
+    ),
+    null,
+  );
+  assert.equal(
+    trackedSourcePathForMainBlob(
+      "https://github.com/qa-test-automation-frameworks/.github/blob/topic/docs/start-here.md",
+      `${OWNER}/.github`,
+      tracked,
+    ),
+    null,
+  );
 });

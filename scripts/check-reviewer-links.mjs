@@ -83,6 +83,34 @@ function safeExternalUrl(value) {
   }
 }
 
+export function trackedSourcePathForMainBlob(value, sourceRepository, sourcePaths) {
+  if (typeof value !== "string" || typeof sourceRepository !== "string") return null;
+  let url;
+  try {
+    url = new URL(value);
+  } catch {
+    return null;
+  }
+  if (
+    url.protocol !== "https:" ||
+    url.hostname !== "github.com" ||
+    url.username ||
+    url.password ||
+    url.port ||
+    url.search
+  ) return null;
+  const prefix = `/${sourceRepository}/blob/main/`;
+  if (!url.pathname.startsWith(prefix)) return null;
+  let destinationPath;
+  try {
+    destinationPath = decodeURIComponent(url.pathname.slice(prefix.length));
+  } catch {
+    return null;
+  }
+  if (!isSafeRepositoryPath(destinationPath) || !sourcePaths.has(destinationPath)) return null;
+  return destinationPath;
+}
+
 function hasPath(paths, wanted, kind) {
   if (kind === "tree") {
     return paths.some((candidate) => candidate.startsWith(`${wanted}/`));
@@ -441,6 +469,21 @@ export async function runReviewerLinkCheck({
     for (const link of contract.links ?? []) {
       if (typeof link.externalUrl === "string") {
         if (!safeExternalUrl(link.externalUrl)) continue;
+        if (process.env.GITHUB_EVENT_NAME === "pull_request") {
+          const destinationPath = trackedSourcePathForMainBlob(
+            link.externalUrl,
+            contract.sourceRepository,
+            sources,
+          );
+          if (destinationPath && fs.existsSync(path.join(repoRoot, destinationPath))) {
+            publicResults.push({
+              label: link.label,
+              state: "deferred",
+              reason: `same-repository main path is tracked in this pull request and will be checked after merge: ${destinationPath}`,
+            });
+            continue;
+          }
+        }
         const checked = await checkPublicExternalUrl(link.externalUrl);
         publicResults.push({ label: link.label, ...checked });
         if (checked.state === "error") result.errors.push(checked.reason);
@@ -484,10 +527,11 @@ async function main() {
   }
   for (const item of result.publicResults) {
     if (item.state === "checked") console.log(`PUBLIC PASS ${item.label}: ${item.reason}`);
+    if (item.state === "deferred") console.log(`DEFERRED ${item.label}: ${item.reason}`);
   }
   for (const error of result.errors) console.error(`FAIL ${error}`);
   console.log(
-    `Curated routes: ${result.checked.length} inventory-checked, ${result.publicResults.filter((item) => item.state === "checked").length} public-checked, ${result.unavailable.length} unavailable, ${result.errors.length} failed.`,
+    `Curated routes: ${result.checked.length} inventory-checked, ${result.publicResults.filter((item) => item.state === "checked").length} public-checked, ${result.publicResults.filter((item) => item.state === "deferred").length} deferred until merge, ${result.unavailable.length} unavailable, ${result.errors.length} failed.`,
   );
   if (result.errors.length > 0) process.exitCode = 1;
 }

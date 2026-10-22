@@ -28,6 +28,7 @@
       "revision": "f5cba3a3b136c0376ca5099c1698a42ce4efb153",
       "trackedPaths": [
         "docs/cross-commit-regression.md",
+        "docs/evidence.md",
         "scripts/compare-performance.cjs"
       ]
     },
@@ -35,6 +36,7 @@
       "revision": "bef9f91d179ff46aba934b307561a11fd2f660b9",
       "trackedPaths": [
         "docs/debugging-test-failures.md",
+        "docs/portfolio-review-guide.md",
         "docs/test-strategy-matrix.md",
         "tests/api/articles.api.spec.ts",
         "tests/api/auth.api.spec.ts",
