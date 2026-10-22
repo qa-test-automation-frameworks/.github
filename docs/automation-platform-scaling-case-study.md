@@ -63,9 +63,9 @@ The metrics above are real professional outcomes, anonymized to remove client, p
 
 | Practice | Public implementation |
 | --- | --- |
-| Critical E2E journey ownership | `playwright-typescript-framework/tests/e2e/` |
-| API-level replacement coverage | `aria-api-framework/src/test/java/com/aria/framework/contracts/` and `playwright-typescript-framework/tests/api/` |
+| Critical E2E journey ownership | [Playwright E2E coverage](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/tree/main/tests/e2e) |
+| API-level replacement coverage | [ARIA contract tests](https://github.com/qa-test-automation-frameworks/aria-api-framework/tree/main/src/test/java/com/aria/framework/contracts) and [Playwright API tests](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/tree/main/tests/api) |
 | Runtime and failure diagnostics | [Playwright](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/debugging-test-failures.md), [ARIA API](https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/debugging-test-failures.md) |
-| Performance regression comparison | `k6-performance-framework/scripts/compare-performance.cjs` and `k6-performance-framework/docs/cross-commit-regression.md` |
+| Performance regression comparison | [k6 comparator](https://github.com/qa-test-automation-frameworks/k6-performance-framework/blob/main/scripts/compare-performance.cjs) and [regression guide](https://github.com/qa-test-automation-frameworks/k6-performance-framework/blob/main/docs/cross-commit-regression.md) |
 | Review expectations | [Playwright](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/test-strategy-matrix.md) and [ARIA API](https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/portfolio-review-guide.md) |
 | Shared target identity | [Quality Reference Application](https://github.com/qa-test-automation-frameworks/quality-reference-application/blob/main/docs/target-identity.md) |

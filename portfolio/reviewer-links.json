@@ -1,0 +1,241 @@
+{
+  "version": 1,
+  "organization": "qa-test-automation-frameworks",
+  "sourceRepository": "qa-test-automation-frameworks/.github",
+  "inventoryDate": "2026-10-22",
+  "repositories": {
+    "qa-test-automation-frameworks/aria-api-framework": {
+      "revision": "b38dc32366d1a8fa213d6091e6fb0726226ead35",
+      "trackedPaths": [
+        "docs/debugging-test-failures.md",
+        "docs/portfolio-review-guide.md",
+        "src/test/java/com/aria/framework/contracts/BookingCompatibilityExperimentTest.java",
+        "src/test/java/com/aria/framework/contracts/BookingConsumerPactTest.java",
+        "src/test/java/com/aria/framework/contracts/DeterministicApiCoverageTest.java",
+        "src/test/java/com/aria/framework/contracts/GithubConsumerPactTest.java",
+        "src/test/java/com/aria/framework/contracts/OpenApiCoverageTest.java",
+        "src/test/java/com/aria/framework/contracts/OpenApiResponseValidatorFixtureTest.java",
+        "src/test/java/com/aria/framework/contracts/OpenApiRuntimeValidationTest.java",
+        "src/test/java/com/aria/framework/contracts/OwnedProviderPactVerificationTest.java",
+        "src/test/java/com/aria/framework/contracts/OwnedProviderStateContractTest.java",
+        "src/test/java/com/aria/framework/contracts/ReferenceApplicationApiTest.java",
+        "src/test/java/com/aria/framework/contracts/ReferenceApplicationConsumerPactTest.java",
+        "src/test/java/com/aria/framework/contracts/ReferenceApplicationPactVerificationTest.java",
+        "src/test/java/com/aria/framework/contracts/ReferenceApplicationProviderStateGeneratorTest.java"
+      ]
+    },
+    "qa-test-automation-frameworks/k6-performance-framework": {
+      "revision": "f5cba3a3b136c0376ca5099c1698a42ce4efb153",
+      "trackedPaths": [
+        "docs/cross-commit-regression.md",
+        "scripts/compare-performance.cjs"
+      ]
+    },
+    "qa-test-automation-frameworks/playwright-typescript-framework": {
+      "revision": "bef9f91d179ff46aba934b307561a11fd2f660b9",
+      "trackedPaths": [
+        "docs/debugging-test-failures.md",
+        "docs/test-strategy-matrix.md",
+        "tests/api/articles.api.spec.ts",
+        "tests/api/auth.api.spec.ts",
+        "tests/api/controlled-target-regressions.api.spec.ts",
+        "tests/api/profile.api.spec.ts",
+        "tests/e2e/article-lifecycle.spec.ts",
+        "tests/e2e/auth.spec.ts",
+        "tests/e2e/network-resilience.spec.ts",
+        "tests/e2e/user-journey.spec.ts"
+      ]
+    },
+    "qa-test-automation-frameworks/quality-reference-application": {
+      "revision": "b1851e0403f6d6a1ce12e9fde5ac5ccb3c634d94",
+      "trackedPaths": [
+        "docs/a07-policy-limit-compatibility.md",
+        "docs/target-identity.md"
+      ]
+    },
+    "qa-test-automation-frameworks/selenium-testng-java-framework": {
+      "revision": "5313fe5b7e9b47e0d1ae6ee6979f8c095d8c4533",
+      "trackedPaths": [
+        "docs/PORTFOLIO_REVIEW_GUIDE.md"
+      ]
+    },
+    "qa-test-automation-frameworks/verity-policy-coverage-eval-framework": {
+      "revision": "2de24e67d5d2f06b1085243f66765fbbd4cca6cc",
+      "trackedPaths": [
+        "docs/reviewer-guide.md"
+      ]
+    }
+  },
+  "links": [
+    {
+      "sourcePath": "profile/README.md",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/.github/blob/main/docs/start-here.md",
+      "label": "Decision-led portfolio start page"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "repository": "qa-test-automation-frameworks/verity-policy-coverage-eval-framework",
+      "path": "docs/reviewer-guide.md",
+      "kind": "blob",
+      "label": "Verity review guide"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+      "path": "docs/portfolio-review-guide.md",
+      "kind": "blob",
+      "label": "Playwright review guide"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "repository": "qa-test-automation-frameworks/k6-performance-framework",
+      "path": "docs/evidence.md",
+      "kind": "blob",
+      "label": "k6 evidence guide"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "repository": "qa-test-automation-frameworks/aria-api-framework",
+      "path": "docs/portfolio-review-guide.md",
+      "kind": "blob",
+      "label": "ARIA review guide"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "repository": "qa-test-automation-frameworks/selenium-testng-java-framework",
+      "path": "docs/PORTFOLIO_REVIEW_GUIDE.md",
+      "kind": "blob",
+      "label": "Selenium review guide"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "repository": "qa-test-automation-frameworks/quality-reference-application",
+      "path": "docs/target-identity.md",
+      "kind": "blob",
+      "label": "Quality Reference Application target identity"
+    },
+    {
+      "sourcePath": "profile/README.md",
+      "repository": "qa-test-automation-frameworks/quality-reference-application",
+      "path": "docs/a07-policy-limit-compatibility.md",
+      "kind": "blob",
+      "label": "Quality Reference Application compatibility guide"
+    },
+    {
+      "sourcePath": "docs/automation-platform-scaling-case-study.md",
+      "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+      "path": "tests/e2e",
+      "kind": "tree",
+      "label": "Playwright E2E coverage"
+    },
+    {
+      "sourcePath": "docs/automation-platform-scaling-case-study.md",
+      "repository": "qa-test-automation-frameworks/aria-api-framework",
+      "path": "src/test/java/com/aria/framework/contracts",
+      "kind": "tree",
+      "label": "ARIA contract tests"
+    },
+    {
+      "sourcePath": "docs/automation-platform-scaling-case-study.md",
+      "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+      "path": "tests/api",
+      "kind": "tree",
+      "label": "Playwright API tests"
+    },
+    {
+      "sourcePath": "docs/automation-platform-scaling-case-study.md",
+      "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+      "path": "docs/debugging-test-failures.md",
+      "kind": "blob",
+      "label": "Playwright failure diagnostics"
+    },
+    {
+      "sourcePath": "docs/automation-platform-scaling-case-study.md",
+      "repository": "qa-test-automation-frameworks/aria-api-framework",
+      "path": "docs/debugging-test-failures.md",
+      "kind": "blob",
+      "label": "ARIA failure diagnostics"
+    },
+    {
+      "sourcePath": "docs/automation-platform-scaling-case-study.md",
+      "repository": "qa-test-automation-frameworks/k6-performance-framework",
+      "path": "scripts/compare-performance.cjs",
+      "kind": "blob",
+      "label": "k6 performance comparator"
+    },
+    {
+      "sourcePath": "docs/automation-platform-scaling-case-study.md",
+      "repository": "qa-test-automation-frameworks/k6-performance-framework",
+      "path": "docs/cross-commit-regression.md",
+      "kind": "blob",
+      "label": "k6 regression guide"
+    },
+    {
+      "sourcePath": "docs/automation-platform-scaling-case-study.md",
+      "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+      "path": "docs/test-strategy-matrix.md",
+      "kind": "blob",
+      "label": "Playwright test strategy"
+    },
+    {
+      "sourcePath": "docs/automation-platform-scaling-case-study.md",
+      "repository": "qa-test-automation-frameworks/aria-api-framework",
+      "path": "docs/portfolio-review-guide.md",
+      "kind": "blob",
+      "label": "ARIA review guide"
+    },
+    {
+      "sourcePath": "docs/automation-platform-scaling-case-study.md",
+      "repository": "qa-test-automation-frameworks/quality-reference-application",
+      "path": "docs/target-identity.md",
+      "kind": "blob",
+      "label": "Quality Reference Application target identity"
+    },
+    {
+      "sourcePath": "docs/start-here.md",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/quality-reference-application/actions/runs/39007706443",
+      "label": "QRA deliberate v1 compatibility break control"
+    },
+    {
+      "sourcePath": "docs/start-here.md",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/quality-reference-application/actions/runs/39751334958",
+      "label": "QRA compatible PostgreSQL verification"
+    },
+    {
+      "sourcePath": "docs/start-here.md",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/39090674631",
+      "label": "Playwright consumer and rollback verification"
+    },
+    {
+      "sourcePath": "docs/start-here.md",
+      "repository": "qa-test-automation-frameworks/quality-reference-application",
+      "path": "docs/target-identity.md",
+      "kind": "blob",
+      "label": "QRA release identity"
+    },
+    {
+      "sourcePath": "docs/start-here.md",
+      "externalUrl": "https://qa-test-automation-frameworks.github.io/.github/",
+      "label": "Live portfolio evidence dashboard"
+    },
+    {
+      "sourcePath": "docs/start-here.md",
+      "repository": "qa-test-automation-frameworks/quality-reference-application",
+      "path": "docs/a07-policy-limit-compatibility.md",
+      "kind": "blob",
+      "label": "Detailed QRA compatibility record"
+    },
+    {
+      "sourcePath": "site/index.html",
+      "externalUrl": "https://github.com/qa-test-automation-frameworks/.github/blob/main/docs/start-here.md",
+      "label": "Dashboard decision-led start page"
+    },
+    {
+      "sourcePath": "site/index.html",
+      "repository": "qa-test-automation-frameworks/quality-reference-application",
+      "path": "docs/target-identity.md",
+      "kind": "blob",
+      "label": "Dashboard QRA target identity"
+    }
+  ]
+}

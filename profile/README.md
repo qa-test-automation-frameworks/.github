@@ -17,13 +17,16 @@ Quality Engineering Lead conversations. Reach out on
 [LinkedIn](https://www.linkedin.com/in/prayag-vyas/) or through the
 [personal profile](https://github.com/prayagv).
 
-**Start here:** five reference frameworks demonstrate deterministic
-feedback, diagnosable failure, and governed delivery across UI, API contracts,
-performance, JVM browser execution, and LLM evaluation. A separate shared
-product target lets those frameworks exercise the same persisted policy-and-claims
-domain without turning the app into a sixth framework. Open the dashboard,
-choose a capability below, and verify the current evidence record before reading
-the deeper architecture.
+**Start here:** the organization has seven public repositories: five reference
+frameworks, one shared product target, and this governance/dashboard repository.
+Follow the [policy-limit change](https://github.com/qa-test-automation-frameworks/.github/blob/main/docs/start-here.md)
+to see how the Quality Reference Application added a $5,000 API v2 cap while
+preserving existing $10,000 API v1 clients. It is a roughly 90-second review
+target; reader completion time has not been measured. Then choose a capability
+below to explore deterministic feedback, diagnosable failure, and governed
+delivery across UI, API contracts, performance, JVM browser execution, and LLM
+evaluation. The shared target lets each framework exercise the same persisted
+policy-and-claims domain without turning the app into a sixth framework.
 
 **Live evidence status:** use the [deployed dashboard](https://qa-test-automation-frameworks.github.io/.github/)
 as the source of truth. Check its `generatedAt`, schedule health, per-repository

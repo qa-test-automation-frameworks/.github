@@ -24,7 +24,7 @@
     <nav class="topbar">
       <a class="wordmark" href="#top">QA Test Automation Frameworks</a>
       <div class="topbar-links">
-        <a href="#start">Review order</a>
+        <a href="#decision-story">Start here</a>
         <a href="#matrix">Evidence</a>
         <a href="#case-study">Case study</a>
         <a href="#provenance">Provenance</a>
@@ -69,10 +69,46 @@
     </header>
 
     <main>
+      <section id="decision-story" aria-labelledby="decision-story-title" class="reveal">
+        <div class="section-heading">
+          <p class="eyebrow">DECISION STORY · ABOUT 90 SECONDS, NOT USER-TIMED</p>
+          <h2 id="decision-story-title">Lower the cap without breaking old clients</h2>
+          <p class="section-intro">
+            The Quality Reference Application added a $5,000 API v2 policy limit while keeping
+            the existing $10,000 API v1 contract. A deliberate red control proved the old
+            boundary was protected; the repair passed the PostgreSQL verification gate.
+          </p>
+        </div>
+        <div class="case-study-grid">
+          <dl>
+            <div>
+              <dt>Business risk</dt>
+              <dd>Changing v1 in place would reject claims that existing clients could submit before.</dd>
+            </div>
+            <div>
+              <dt>Detecting control</dt>
+              <dd>The preserved v1 boundary test failed when the limit was deliberately changed, then passed with additive v2.</dd>
+            </div>
+            <div>
+              <dt>Compatibility boundary</dt>
+              <dd>The product release passed QRA verification. Consumer evidence is tied to its exact image digest; the target record carries those pins and limits.</dd>
+            </div>
+          </dl>
+          <p class="case-study-cta">
+            <a class="btn" href="https://github.com/qa-test-automation-frameworks/.github/blob/main/docs/start-here.md">
+              Follow the decision path
+            </a>
+            <a href="https://github.com/qa-test-automation-frameworks/quality-reference-application/blob/main/docs/target-identity.md">
+              Check the exact target identity
+            </a>
+          </p>
+        </div>
+      </section>
+
       <section id="start" aria-labelledby="review-order-title" class="reveal">
         <div class="section-heading">
-          <p class="eyebrow">START HERE</p>
-          <h2 id="review-order-title">Recommended review order</h2>
+          <p class="eyebrow">CAPABILITY REVIEWS</p>
+          <h2 id="review-order-title">Recommended framework review order</h2>
           <p class="section-intro">
             Five repositories, one layered quality model. Each has a documented,
             time-boxed review path — this is the order that tells the story fastest.

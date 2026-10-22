@@ -1,5 +1,14 @@
 # Capability Status
 
+## Current status source — 2026-10-22
+
+The organization has seven public repositories: five frameworks, the Quality Reference
+Application, and this governance/dashboard repository. The shared target is implemented and is
+consumed by all five frameworks. For current workflow runs, publication, freshness and schedule
+health, use the [live evidence dashboard](https://qa-test-automation-frameworks.github.io/.github/).
+The dated reviews and snapshots below preserve what was observed at their stated times; for example,
+the Verity 2/3 count in the 2026-10-19 snapshot is historical, not a current failure claim.
+
 ## Feature currency review — 2026-10-19
 
 | Capability | Current implementation | Official support checked | Benefit and compatibility risk | Decision and proof |
