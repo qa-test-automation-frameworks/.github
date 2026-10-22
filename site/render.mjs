@@ -29,8 +29,9 @@ function evidenceDetails(repository) {
   const scopes = repository.evidenceRecords ?? [];
   const required = repository.evidenceSummary?.requiredCount ?? 0;
   const fresh = repository.evidenceSummary?.freshRequiredCount ?? 0;
+  const controlPairs = repository.evidenceSummary?.controlPairs ?? [];
   const summary = scopes.length
-    ? `${fresh}/${required} required scopes fresh · ${scopes.length} latest scope records`
+    ? `${fresh}/${required} required scopes fresh · ${scopes.length} scope statuses${controlPairs.length ? ` · ${controlPairs.filter((pair) => pair.state === 'verified').length}/${controlPairs.length} failure controls verified` : ''}`
     : 'No verified published scope records';
   const rows = scopes.map((scope) => {
     const reasons = (scope.reasons ?? []).map((reason) => `<li>${escapeHtml(reason)}</li>`).join('');
@@ -39,7 +40,13 @@ function evidenceDetails(repository) {
       : '';
     return `<li><strong>${escapeHtml(scope.id)}</strong> — <span class="status ${stateClass(scope.state)}">${escapeHtml(scope.state)}</span>; ${escapeHtml(scope.evidenceClass)}; ${escapeHtml(scope.freshnessPolicy)}; completed ${escapeHtml(timestamp(scope.completedAt))}<ul>${reasons}</ul>${limitations}</li>`;
   }).join('');
-  return `<details><summary>${escapeHtml(summary)}</summary>${rows ? `<ul class="scope-list">${rows}</ul>` : '<p>No public durable index is available.</p>'}</details>`;
+  const controlRows = controlPairs.map((pair) =>
+    `<li><strong>${escapeHtml(pair.label)}</strong> — <span class="status ${stateClass(pair.state)}">${escapeHtml(pair.state)}</span>; ${escapeHtml(pair.message)} <span>(raw: ${escapeHtml(pair.rawScopeId)}; verifier: ${escapeHtml(pair.verifierScopeId)})</span></li>`,
+  ).join('');
+  const controls = controlRows
+    ? `<h4>Verified failure controls</h4><ul class="scope-list">${controlRows}</ul>`
+    : '';
+  return `<details><summary>${escapeHtml(summary)}</summary>${controls}${rows ? `<ul class="scope-list">${rows}</ul>` : '<p>No public durable index is available.</p>'}</details>`;
 }
 
 export function renderRepositoryRows(repositories) {
@@ -53,7 +60,18 @@ export function renderRepositoryRows(repositories) {
       ? attempt.status
       : attempt?.conclusion ?? 'unavailable';
     const lastSuccess = workflow?.lastSuccess
-      ? `${anchor(`#${workflow.lastSuccess.runId} · attempt ${workflow.lastSuccess.attempt}`, workflow.lastSuccess.url)}<br><time datetime="${escapeHtml(workflow.lastSuccess.completedAt)}">${escapeHtml(timestamp(workflow.lastSuccess.completedAt))}</time>`
+      ? (() => {
+          const run = workflow.lastSuccess;
+          const normalized = Object.hasOwn(run, 'lastSuccessTimestamp');
+          const at = normalized ? run.lastSuccessTimestamp : run.completedAt ?? run.updatedAt ?? null;
+          const label = normalized
+            ? run.lastSuccessTimestampLabel
+            : run.completedAt ? 'Completed' : run.updatedAt ? 'Last updated' : null;
+          const date = at
+            ? `<time datetime="${escapeHtml(at)}">${escapeHtml(timestamp(at))}</time>`
+            : 'Not recorded';
+          return `${anchor(`#${run.runId} · attempt ${run.attempt}`, run.url)}<br>${label ? `${escapeHtml(label)} ` : ''}${date}`;
+        })()
       : 'No successful run found';
     const release = repository.release ? anchor(repository.release.tag, repository.release.url) : 'Unreleased';
     const links = [

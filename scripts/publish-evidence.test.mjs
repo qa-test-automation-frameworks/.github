@@ -113,6 +113,49 @@ test('artifact discovery selects schema-v3 records and fails closed on broken ev
   }
 });
 
+test('publishes the failed raw control and passing required verifier as distinct schema-v3 scopes', async () => {
+  const context = await setup();
+  const artifactDir = join(context.root, 'artifacts', 'reports', 'evidence');
+  const rawScope = 'verity.failure-control-py3.12.15';
+  const verifierScope = 'verity.failure-control-verification-py3.12.15';
+  try {
+    await mkdir(artifactDir, { recursive: true });
+    const raw = JSON.parse(await readFile(context.input, 'utf8'));
+    raw.scope = { ...raw.scope, id: rawScope, required: false };
+    raw.execution = {
+      ...raw.execution,
+      disposition: 'failed',
+      reason: 'The seeded failure assertion failed as intended.',
+      counts: {
+        ...raw.execution.counts,
+        selected: 1,
+        executed: 1,
+        passed: 0,
+        failed: 1,
+        skipped: 0,
+        retried: 0,
+      },
+    };
+    const verifier = JSON.parse(await readFile(context.input, 'utf8'));
+    verifier.scope = { ...verifier.scope, id: verifierScope, required: true };
+    const rawPath = join(artifactDir, `${rawScope}.json`);
+    const verifierPath = join(artifactDir, `${verifierScope}.json`);
+    await writeFile(rawPath, JSON.stringify(raw));
+    await writeFile(verifierPath, JSON.stringify(verifier));
+
+    const discovered = await discoverEvidence(join(context.root, 'artifacts'));
+    assert.deepEqual([...discovered].sort(), [rawPath, verifierPath].sort());
+    const result = await publishEvidence({ ...context, inputs: discovered });
+    const latest = JSON.parse(await readFile(result.latestPath, 'utf8'));
+    assert.equal(latest.scopes[rawScope].execution, 'failed');
+    assert.equal(latest.scopes[verifierScope].execution, 'passed');
+    assert.equal(latest.scopes[rawScope].runId, latest.scopes[verifierScope].runId);
+    assert.equal(latest.scopes[rawScope].attempt, latest.scopes[verifierScope].attempt);
+  } finally {
+    await rm(context.root, { recursive: true, force: true });
+  }
+});
+
 test('uses complete aggregate scopes instead of publishing duplicate shard leaves', async () => {
   const context = await setup();
   const artifactDir = join(context.root, 'artifacts');
