@@ -230,12 +230,85 @@ export function makeProof(risk) {
   };
 }
 
-export function makeInput({ bundles, riskProofs } = {}) {
+export function makeRollbackEvidence({
+  runConclusion = 'failure',
+  jobConclusion = 'success',
+  outcome = 'passed',
+} = {}) {
+  const repository = `${org}/playwright-typescript-framework`;
+  const runId = '4001';
+  const attempt = 1;
+  const sourceSha = riskMap.frameworkContexts.find((context) => context.repository === repository).sourceSha;
+  const runUrl = `https://github.com/${repository}/actions/runs/${runId}`;
+  const jobId = '4101';
+  const digest = `sha256:${'8'.repeat(64)}`;
+  const summary = {
+    check: 'shared-app-immutable-rollback',
+    image: `ghcr.io/${appRepository}@${digest}`,
+    digest,
+    sourceRevision: '9'.repeat(40),
+    fixtureVersion: 'v0.1.0',
+    startedAt: iso(now - 20 * 60_000),
+    checks: [
+      { name: 'pinned rollback image readiness and identity', status: 'passed' },
+      { name: 'API v1 accepts 1,000,000 cents', status: 'passed' },
+      { name: 'API v1 rejects 1,000,001 cents', status: 'passed' },
+    ],
+    outcome,
+    completedAt: iso(now - 19 * 60_000),
+  };
+  const bytes = `${JSON.stringify(summary, null, 2)}\n`;
+  const fileSha256 = hash(bytes);
+  return {
+    path: 'rollback-summary.json',
+    bytes,
+    sha256: fileSha256,
+    workflowRun: {
+      id: runId,
+      attempt,
+      sourceSha,
+      branch: 'main',
+      event: 'workflow_dispatch',
+      conclusion: runConclusion,
+      url: runUrl,
+    },
+    rollbackJob: {
+      id: jobId,
+      runId,
+      attempt,
+      name: 'shared-app-rollback',
+      conclusion: jobConclusion,
+      url: `${runUrl}/job/${jobId}`,
+    },
+    artifactReceipt: {
+      schemaVersion: 1,
+      repository,
+      workflowPath: '.github/workflows/ci.yml',
+      event: 'workflow_dispatch',
+      branch: 'main',
+      conclusion: runConclusion,
+      runId,
+      attempt,
+      sourceSha,
+      artifactId: '4201',
+      artifactName: 'shared-app-rollback-proof',
+      artifactUrl: `${runUrl}/artifacts/4201`,
+      artifactSha256: `sha256:${'7'.repeat(64)}`,
+      artifactFileName: 'rollback-summary.json',
+      artifactFileSha256: fileSha256,
+      expiresAt: iso(now + 90 * 24 * 60 * 60_000),
+      verifiedAt: iso(now - 10 * 60_000),
+    },
+  };
+}
+
+export function makeInput({ bundles, riskProofs, rollbackEvidence } = {}) {
   return {
     schemaVersion: 1,
     candidateDescriptor: structuredClone(descriptor),
     descriptorBytes,
     descriptorReceipt: structuredClone(descriptorReceipt),
+    rollbackEvidence: rollbackEvidence === undefined ? makeRollbackEvidence() : rollbackEvidence,
     bundles: bundles ?? [
       makeBundle(`${org}/aria-api-framework`, {
         records: [{ scopeId: 'aria.shared-app', profile: null }],

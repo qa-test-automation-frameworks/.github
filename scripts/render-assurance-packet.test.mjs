@@ -27,6 +27,39 @@ function packet(overrides = {}) {
         artifactSha256: `sha256:${'c'.repeat(64)}`,
       },
     },
+    rollbackEvidence: {
+      state: 'complete',
+      reasons: [],
+      summarySha256: '5'.repeat(64),
+      summary: {
+        outcome: 'passed',
+        digest: `sha256:${'6'.repeat(64)}`,
+        sourceRevision: '7'.repeat(40),
+        fixtureVersion: 'v0.1.0',
+        startedAt: '2026-10-22T15:40:00.000Z',
+        completedAt: '2026-10-22T15:41:00.000Z',
+        checks: [{ name: 'pinned rollback image readiness and identity', status: 'passed' }],
+      },
+      workflowRun: {
+        id: '3001',
+        attempt: 1,
+        conclusion: 'failure',
+        url: 'https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/3001',
+      },
+      rollbackJob: {
+        id: '3101',
+        name: 'shared-app-rollback',
+        conclusion: 'success',
+        url: 'https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/3001/job/3101',
+      },
+      artifactReceipt: {
+        artifactId: '3201',
+        artifactUrl: 'https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/actions/runs/3001/artifacts/3201',
+        artifactSha256: `sha256:${'8'.repeat(64)}`,
+        artifactFileSha256: '9'.repeat(64),
+        expiresAt: '2027-01-20T17:25:51Z',
+      },
+    },
     risks: [
       {
         id: 'CLAIM_CROSS_MEMBER_DENIAL',
@@ -86,6 +119,9 @@ test('renders candidate, consumer, mutation, and decision evidence as a static r
   assert.match(html, /aria\.shared-app/);
   assert.match(html, /mutated-source-tree-v1/);
   assert.match(html, /artifact 6002/);
+  assert.match(html, /Retained rollback evidence/);
+  assert.match(html, /workflow conclusion: failure; rollback job conclusion: success/);
+  assert.match(html, /artifact 3201/);
   assert.match(html, /Human review only\./);
   assert.doesNotMatch(html, /<script\b/i);
 });

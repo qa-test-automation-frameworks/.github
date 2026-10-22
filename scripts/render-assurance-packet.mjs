@@ -79,6 +79,45 @@ function renderCandidate(candidate) {
   return `<dl class="identity">${rows.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${value}</dd></div>`).join('')}</dl>`;
 }
 
+function renderRollbackEvidence(rollbackEvidence) {
+  if (!rollbackEvidence || rollbackEvidence.state !== 'complete') {
+    const reasons = list(rollbackEvidence?.reasons);
+    return `<p class="empty">Retained rollback proof is ${escapeHtml(rollbackEvidence?.state ?? 'missing')}.</p>${reasons}`;
+  }
+  const run = rollbackEvidence.workflowRun;
+  const job = rollbackEvidence.rollbackJob;
+  const receipt = rollbackEvidence.artifactReceipt;
+  const summary = rollbackEvidence.summary;
+  const rows = [
+    ['Outcome', summary?.outcome],
+    ['Prior image digest', summary?.digest],
+    ['Prior image source revision', summary?.sourceRevision],
+    ['Fixture version', summary?.fixtureVersion],
+    ['Rollback started', summary?.startedAt],
+    ['Rollback completed', summary?.completedAt],
+    ['Summary SHA-256', rollbackEvidence.summarySha256],
+    ['Artifact archive SHA-256', receipt?.artifactSha256],
+    ['Artifact file SHA-256', receipt?.artifactFileSha256],
+  ];
+  const checks = Array.isArray(summary?.checks)
+    ? `<ul>${summary.checks.map((check) => `<li>${escapeHtml(check?.name)}: ${escapeHtml(check?.status)}</li>`).join('')}</ul>`
+    : '<p>None recorded.</p>';
+  const workflow = run?.url
+    ? githubLink(run.url, `run ${escapeHtml(run.id)} · attempt ${escapeHtml(run.attempt)}`)
+    : 'Unavailable';
+  const rollbackJob = job?.url
+    ? githubLink(job.url, `job ${escapeHtml(job.id)} · ${escapeHtml(job.conclusion)}`)
+    : 'Unavailable';
+  const artifact = receipt?.artifactUrl
+    ? githubLink(receipt.artifactUrl, `artifact ${escapeHtml(receipt.artifactId)}`)
+    : 'Unavailable';
+  return `<p><strong>Rollback job:</strong> ${rollbackJob}</p>
+    <p><strong>Workflow:</strong> ${workflow} · workflow conclusion: ${escapeHtml(run?.conclusion)}; rollback job conclusion: ${escapeHtml(job?.conclusion)}.</p>
+    <p><strong>Retained proof:</strong> ${artifact} · expires ${escapeHtml(receipt?.expiresAt)}</p>
+    <dl class="identity">${rows.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd><code>${escapeHtml(value ?? 'Unavailable')}</code></dd></div>`).join('')}</dl>
+    <h4>Rollback checks</h4>${checks}`;
+}
+
 function renderEvidence(evidence) {
   if (!Array.isArray(evidence) || evidence.length === 0)
     return '<p class="empty">No consumer evidence matched this risk.</p>';
@@ -195,6 +234,8 @@ export function renderAssurancePacket(packet) {
       <p><span class="badge ${escapeHtml(packet.verdict)}">${escapeHtml(packet.verdict)}</span></p>
       ${renderCandidate(packet.candidate)}
     </header>
+    <h2>Retained rollback evidence</h2>
+    ${renderRollbackEvidence(packet.rollbackEvidence)}
     <h2>Business risks</h2>
     ${risks || '<p class="empty">No configured risks are present.</p>'}
     <h2>Unrelated evidence</h2>

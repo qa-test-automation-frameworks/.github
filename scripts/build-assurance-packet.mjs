@@ -6,8 +6,10 @@ import { validateRiskMap } from './validate-risk-map.mjs';
 
 const ORG = 'qa-test-automation-frameworks';
 const APP_REPOSITORY = `${ORG}/quality-reference-application`;
+const PLAYWRIGHT_REPOSITORY = `${ORG}/playwright-typescript-framework`;
 const DESCRIPTOR_ARTIFACT = 'qra-release-descriptor';
 const PROOF_ARTIFACT = 'qra-risk-proofs';
+const ROLLBACK_ARTIFACT = 'shared-app-rollback-proof';
 const SHA256 = /^sha256:[0-9a-f]{64}$/;
 const APPLICATION_VERSION = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
 const HEX_SHA256 = /^[0-9a-f]{64}$/;
@@ -15,6 +17,7 @@ const ARTIFACT_SHA256 = /^(?:sha256:)?[0-9a-f]{64}$/;
 const SOURCE_SHA = /^[0-9a-f]{40}$/;
 const NUMERIC_ID = /^[1-9][0-9]*$/;
 const inputSchemaVersion = 1;
+const MAX_ROLLBACK_SUMMARY_BYTES = 64 * 1024;
 
 function isObject(value) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -159,6 +162,143 @@ function validateArtifactReceipt(receipt, expected, now) {
   try { timestamp(receipt.expiresAt, 'evidence artifact expiresAt', now, { allowFuture: true }); } catch (error) { errors.push(error.message); }
   try { timestamp(receipt.verifiedAt, 'evidence receipt verifiedAt', now, { allowExpired: true }); } catch (error) { errors.push(error.message); }
   return errors;
+}
+
+function inspectRollbackEvidence(entry, candidate, expectedSourceSha, now) {
+  if (entry === undefined || entry === null) {
+    return { state: 'incomplete', reasons: ['Retained rollback evidence is missing.'] };
+  }
+  if (!isObject(entry) || entry.path !== 'rollback-summary.json'
+      || typeof entry.bytes !== 'string' || !HEX_SHA256.test(entry.sha256 ?? '')
+      || Buffer.byteLength(entry.bytes, 'utf8') > MAX_ROLLBACK_SUMMARY_BYTES
+      || sha256(entry.bytes) !== entry.sha256) {
+    return { state: 'incomplete', reasons: ['Rollback summary bytes or SHA-256 are missing or invalid.'] };
+  }
+
+  let summary;
+  try { summary = parseJsonBytes(entry.bytes, 'rollback summary'); }
+  catch (error) { return { state: 'incomplete', reasons: [error.message] }; }
+
+  const receipt = entry.artifactReceipt;
+  const receiptErrors = validateArtifactReceipt(receipt, {
+    repository: PLAYWRIGHT_REPOSITORY,
+    artifactName: ROLLBACK_ARTIFACT,
+    allowFailure: true,
+  }, now);
+  if (receipt?.artifactFileName !== 'rollback-summary.json'
+      || receipt?.artifactFileSha256 !== entry.sha256) {
+    receiptErrors.push('Rollback artifact file name or raw summary hash does not match the retrieved bytes.');
+  }
+
+  const run = entry.workflowRun;
+  const job = entry.rollbackJob;
+  if (!isObject(run) || !NUMERIC_ID.test(String(run.id ?? ''))
+      || !Number.isSafeInteger(run.attempt) || run.attempt < 1
+      || !SOURCE_SHA.test(run.sourceSha ?? '') || run.branch !== 'main'
+      || run.event !== 'workflow_dispatch' || !['success', 'failure'].includes(run.conclusion)
+      || !trustedGithubUrl(run.url, `/${PLAYWRIGHT_REPOSITORY}/actions/runs/${run.id}`)) {
+    receiptErrors.push('Rollback workflow run identity is invalid.');
+  }
+  if (isObject(run) && isObject(receipt)
+      && (String(receipt.runId) !== String(run.id) || receipt.attempt !== run.attempt
+        || receipt.sourceSha !== run.sourceSha || receipt.branch !== run.branch
+        || receipt.event !== run.event || receipt.conclusion !== run.conclusion)) {
+    receiptErrors.push('Rollback artifact receipt does not match its workflow run.');
+  }
+  if (expectedSourceSha && run?.sourceSha !== expectedSourceSha) {
+    receiptErrors.push('Rollback workflow source SHA does not match the selected Playwright revision.');
+  }
+  if (!isObject(job) || !NUMERIC_ID.test(String(job.id ?? ''))
+      || job.name !== 'shared-app-rollback' || !['success', 'failure'].includes(job.conclusion)
+      || String(job.runId) !== String(run?.id) || job.attempt !== run?.attempt
+      || !trustedGithubUrl(job.url, `/${PLAYWRIGHT_REPOSITORY}/actions/runs/${job.runId}/job/${job.id}`)) {
+    receiptErrors.push('Rollback job identity is invalid.');
+  }
+  if (receiptErrors.length) return { state: 'incomplete', reasons: receiptErrors };
+
+  const digest = summary.digest;
+  const expectedChecks = [
+    'pinned rollback image readiness and identity',
+    'API v1 accepts 1,000,000 cents',
+    'API v1 rejects 1,000,001 cents',
+  ];
+  const summaryValid = summary.check === 'shared-app-immutable-rollback'
+    && SHA256.test(digest ?? '')
+    && summary.image === `ghcr.io/${APP_REPOSITORY}@${digest}`
+    && SOURCE_SHA.test(summary.sourceRevision ?? '')
+    && typeof summary.fixtureVersion === 'string' && summary.fixtureVersion.trim().length > 0
+    && ['passed', 'failed'].includes(summary.outcome)
+    && Array.isArray(summary.checks)
+    && summary.checks.length === expectedChecks.length
+    && expectedChecks.every((name) => summary.checks.some((check) => check?.name === name))
+    && summary.checks.every((check) => ['passed', 'failed'].includes(check?.status));
+  if (!summaryValid) {
+    return { state: 'incomplete', reasons: ['Rollback summary schema, target identity, or required checks are invalid.'] };
+  }
+  try {
+    const started = timestamp(summary.startedAt, 'rollback startedAt', now, { allowExpired: true });
+    const completed = timestamp(summary.completedAt, 'rollback completedAt', now, { allowExpired: true });
+    if (completed < started) return { state: 'incomplete', reasons: ['Rollback completion precedes its start time.'] };
+  } catch (error) {
+    return { state: 'incomplete', reasons: [error.message] };
+  }
+  if (candidate && digest === candidate.imageDigest) {
+    return { state: 'incomplete', reasons: ['Rollback proof does not identify a prior image distinct from the candidate.'] };
+  }
+  if (job.conclusion !== 'success' || summary.outcome !== 'passed'
+      || summary.checks.some((check) => check.status !== 'passed')) {
+    return {
+      state: 'blocked',
+      reasons: [job.conclusion !== 'success'
+        ? 'The shared-app rollback job did not succeed.'
+        : 'The rollback summary reports an outcome other than passed.'],
+    };
+  }
+
+  return {
+    state: 'complete',
+    reasons: [],
+    summarySha256: entry.sha256,
+    summary: {
+      check: summary.check,
+      image: summary.image,
+      digest,
+      sourceRevision: summary.sourceRevision,
+      fixtureVersion: summary.fixtureVersion,
+      startedAt: summary.startedAt,
+      completedAt: summary.completedAt,
+      outcome: summary.outcome,
+      checks: summary.checks,
+    },
+    workflowRun: {
+      id: run.id,
+      attempt: run.attempt,
+      sourceSha: run.sourceSha,
+      branch: run.branch,
+      event: run.event,
+      conclusion: run.conclusion,
+      url: run.url,
+    },
+    rollbackJob: {
+      id: job.id,
+      name: job.name,
+      conclusion: job.conclusion,
+      url: job.url,
+    },
+    artifactReceipt: {
+      repository: receipt.repository,
+      runId: receipt.runId,
+      attempt: receipt.attempt,
+      artifactId: receipt.artifactId,
+      artifactName: receipt.artifactName,
+      artifactUrl: receipt.artifactUrl,
+      artifactSha256: receipt.artifactSha256,
+      artifactFileName: receipt.artifactFileName,
+      artifactFileSha256: receipt.artifactFileSha256,
+      expiresAt: receipt.expiresAt,
+      verifiedAt: receipt.verifiedAt,
+    },
+  };
 }
 
 function readBundle(bundle, knownScopes, allowedRepositories, now) {
@@ -348,6 +488,13 @@ export function buildAssurancePacket({ riskMap, input, repositoryRegistry, schem
   const candidateResult = validateCandidate(input, now);
   const descriptor = candidateResult.descriptor;
   const candidateIssues = [...candidateResult.issues];
+  const rollbackContext = riskMap.frameworkContexts.find((context) => context.repository === PLAYWRIGHT_REPOSITORY);
+  const rollbackEvidence = inspectRollbackEvidence(
+    input.rollbackEvidence,
+    descriptor && candidateIssues.length === 0 ? descriptor : null,
+    rollbackContext?.sourceSha,
+    now,
+  );
   const knownScopes = new Map((repositoryRegistry.repositories ?? []).map((repository) => [
     `${ORG}/${repository.name}`,
     new Set(repository.requiredScopeIds ?? []),
@@ -476,9 +623,10 @@ export function buildAssurancePacket({ riskMap, input, repositoryRegistry, schem
     artifactId: bundle.artifactReceipt.artifactId,
     artifactUrl: bundle.receiptErrors.length ? null : bundle.artifactReceipt.artifactUrl,
   }));
-  const verdict = riskRows.some((risk) => risk.verdict === 'blocked')
+  const verdict = riskRows.some((risk) => risk.verdict === 'blocked') || rollbackEvidence.state === 'blocked'
     ? 'blocked'
     : riskRows.length > 0 && riskRows.every((risk) => risk.verdict === 'complete')
+      && rollbackEvidence.state === 'complete'
       ? 'ready-for-review'
       : 'incomplete';
   return {
@@ -507,11 +655,13 @@ export function buildAssurancePacket({ riskMap, input, repositoryRegistry, schem
       } : null,
     } : null,
     risks: riskRows,
+    rollbackEvidence,
     unrelatedEvidence,
     limitations: [
       'Bundle and artifact hashes prove byte integrity only; the caller must retrieve them through the approved read-only GitHub artifact verifier.',
       'Source-SHA-only consumer targets do not prove that the candidate image was exercised.',
       'Missing, stale, incompatible, or invalid evidence remains incomplete; a relevant detected failure blocks review.',
+      'The named rollback job must pass and its retained artifact must be available; the overall workflow may have failed in an unrelated job.',
       'Authored offline fixtures demonstrate packet logic only and are not hosted release evidence.',
     ],
   };
