@@ -13,9 +13,12 @@ node scripts/build-assurance-packet.mjs \
   --risk-map portfolio/risk-map.json \
   --input work/release-assurance/packet-input.json \
   --output work/release-assurance/packet.json
+node scripts/render-assurance-packet.mjs \
+  --input work/release-assurance/packet.json \
+  --output work/release-assurance/packet-review.html
 ```
 
-The fetch command writes the candidate descriptor and verified QRA risk proofs. Add the selected consumer evidence bundles to that input before building the complete packet.
+The fetch command writes the candidate descriptor and verified QRA risk proofs. Add the selected consumer evidence bundles to that input before building the complete packet. The renderer creates one standalone HTML review page with inline styles and no scripts or external assets.
 
 The input keeps the existing strict schema-v3 records unchanged. Bundle manifests bind each record's raw bytes to its repository, source SHA, workflow run, attempt, scope, and checksum. Consumer evidence must match the explicit framework ref and SHA in `portfolio/risk-map.json`, an allowed profile, the candidate fixture version, and the immutable candidate image digest. `oci:sha256:<digest>` is the only prefixed digest representation normalized by the builder. A source SHA, tag, URL, or previous image pin cannot stand in for the candidate digest.
 
