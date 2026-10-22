@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "report_generated_at": "2026-10-22T15:14:49Z",
+  "window": {
+    "start": "2026-10-22T13:48:50Z",
+    "end": "2026-10-22T13:49:27Z"
+  },
+  "decision": {
+    "statement": "Keep the four-hour dashboard cadence through the October 27 observation close.",
+    "rationale": "The broader observation log records nine natural schedule successes across thirteen nominal opportunities, with four still unaccounted for. This single-run sample cannot resolve those opportunities or close the observation window.",
+    "source": "docs/PORTFOLIO_OPERATION_LOG.md, October 22 schedule checkpoint"
+  },
+  "sources": [
+    {
+      "repository": "qa-test-automation-frameworks/.github",
+      "workflow": "Portfolio dashboard",
+      "workflowFile": ".github/workflows/dashboard.yml",
+      "expectedOpportunities": null,
+      "totalCount": 1,
+      "paginationIncomplete": false,
+      "artifactObservations": [
+        {
+          "id": 12430172934,
+          "name": "portfolio-dashboard",
+          "sha256": "7527d8816de6bd6445a483791eb993c7dea2abf155b2b802ee5095cef09d6465",
+          "created_at": "2026-10-22T13:49:07Z"
+        }
+      ],
+      "evidenceObservations": [
+        {
+          "repository": "qa-test-automation-frameworks/verity-policy-coverage-eval-framework",
+          "state": "evidence-unavailable",
+          "freshRequiredScopes": 2,
+          "requiredScopes": 3
+        },
+        {
+          "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+          "state": "review-ready",
+          "freshRequiredScopes": 8,
+          "requiredScopes": 8
+        },
+        {
+          "repository": "qa-test-automation-frameworks/aria-api-framework",
+          "state": "failed",
+          "freshRequiredScopes": 2,
+          "requiredScopes": 3
+        },
+        {
+          "repository": "qa-test-automation-frameworks/selenium-testng-java-framework",
+          "state": "evidence-unavailable",
+          "freshRequiredScopes": 4,
+          "requiredScopes": 5
+        },
+        {
+          "repository": "qa-test-automation-frameworks/k6-performance-framework",
+          "state": "code-mismatch",
+          "freshRequiredScopes": 0,
+          "requiredScopes": 5
+        }
+      ],
+      "runs": [
+        {
+          "id": 39790189481,
+          "run_number": 232,
+          "run_attempt": 1,
+          "event": "schedule",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "27f977e93ac962c2c184b0d4898c13471d3eeaca",
+          "head_branch": "main",
+          "created_at": "2026-10-22T13:48:50Z",
+          "run_started_at": "2026-10-22T13:48:50Z",
+          "updated_at": "2026-10-22T13:49:27Z",
+          "completed_at": "2026-10-22T13:49:27Z",
+          "report_generated_at": "2026-10-22T13:49:07.188Z",
+          "published_at": "2026-10-22T13:49:26Z",
+          "html_url": "https://github.com/qa-test-automation-frameworks/.github/actions/runs/39790189481",
+          "jobs": [
+            {
+              "id": 119863941026,
+              "name": "validate",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-22T13:49:01Z",
+              "completed_at": "2026-10-22T13:49:09Z"
+            },
+            {
+              "id": 119864045435,
+              "name": "deploy",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-22T13:49:13Z",
+              "completed_at": "2026-10-22T13:49:26Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

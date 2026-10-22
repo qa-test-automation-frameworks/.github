@@ -20,7 +20,15 @@ jobs:
         with:
           node-version-file: .nvmrc
       - name: Test dashboard contract
-        run: node --test scripts/dashboard.test.mjs scripts/dashboard-state.test.mjs scripts/dashboard-refresh-health.test.mjs scripts/dashboard-render.test.mjs scripts/evidence-contract.test.mjs
+        run: node --test scripts/dashboard.test.mjs scripts/dashboard-state.test.mjs scripts/dashboard-refresh-health.test.mjs scripts/dashboard-render.test.mjs scripts/evidence-contract.test.mjs scripts/operation-summary.test.mjs
+      - name: Rebuild the retained operation sample
+        run: |
+          node scripts/operation-summary.mjs \
+            --input portfolio/operation-samples/window-2026-10-22.json \
+            --json-out "$RUNNER_TEMP/operation-summary.json" \
+            --markdown-out "$RUNNER_TEMP/operation-summary.md"
+          cmp "$RUNNER_TEMP/operation-summary.json" portfolio/operation-samples/summary-2026-10-22.json
+          cmp "$RUNNER_TEMP/operation-summary.md" docs/operation-cost-decisions-report-2026-10-22.md
       - name: Refresh portfolio evidence
         env:
           GITHUB_TOKEN: ${{ github.token }}

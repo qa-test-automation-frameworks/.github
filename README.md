@@ -14,6 +14,7 @@ Quality Reference Application, and this governance/dashboard repository.
 | Organization profile | [Profile source](profile/README.md) |
 | Repository matrix | [Machine-readable source](portfolio/repositories.json) |
 | Dashboard assets | [Site source](site) |
+| Operations decisions | [Budgeted operation report and method](docs/operation-cost-decisions.md) |
 | CI | [Dashboard workflow](https://github.com/qa-test-automation-frameworks/.github/actions/workflows/dashboard.yml) |
 
 For a bounded, fresh-clone exercise with an expected negative control and feedback form, see the [independent review packet](docs/PORTFOLIO_INDEPENDENT_REVIEW_PACKET.md). Preparing the packet does not count as an independent review.

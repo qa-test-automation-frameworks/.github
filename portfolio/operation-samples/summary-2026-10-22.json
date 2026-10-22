@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-22T15:14:49.000Z",
+  "window": {
+    "start": "2026-10-22T13:48:50.000Z",
+    "end": "2026-10-22T13:49:27.000Z"
+  },
+  "status": "observed-issues",
+  "sourceHashes": {
+    "snapshotSha256": "b0603f50e9a2e4d02bf2182d713e405c787725d5869fb51fb54e2ed52ed1281c",
+    "triageSha256": null
+  },
+  "sources": [
+    {
+      "repository": "qa-test-automation-frameworks/.github",
+      "workflow": "Portfolio dashboard",
+      "workflowFile": ".github/workflows/dashboard.yml",
+      "expectedOpportunities": null,
+      "observedRunAttempts": 1,
+      "uniqueLogicalRuns": 1,
+      "firstAttempt": {
+        "pass": 1,
+        "fail": 0,
+        "cancel": 0,
+        "unavailable": 0
+      },
+      "retryRecovery": {
+        "retriedLogicalRuns": 0,
+        "recoveredAfterFailureOrCancel": 0,
+        "unresolvedAfterFailureOrCancel": 0,
+        "otherRetryOutcomes": 0
+      },
+      "jobElapsed": {
+        "sampleCount": 2,
+        "p50Seconds": 8,
+        "p95Seconds": 13,
+        "sumJobElapsedSeconds": 21,
+        "jobsMissingTimestamps": 0
+      },
+      "publicationDelay": {
+        "sampleCount": 1,
+        "p50Seconds": 18.812,
+        "p95Seconds": 18.812
+      },
+      "paginationIncomplete": false,
+      "totalCount": 1,
+      "evidenceObservations": [
+        {
+          "repository": "qa-test-automation-frameworks/verity-policy-coverage-eval-framework",
+          "state": "evidence-unavailable",
+          "freshRequiredScopes": 2,
+          "requiredScopes": 3,
+          "reasons": []
+        },
+        {
+          "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+          "state": "review-ready",
+          "freshRequiredScopes": 8,
+          "requiredScopes": 8,
+          "reasons": []
+        },
+        {
+          "repository": "qa-test-automation-frameworks/aria-api-framework",
+          "state": "failed",
+          "freshRequiredScopes": 2,
+          "requiredScopes": 3,
+          "reasons": []
+        },
+        {
+          "repository": "qa-test-automation-frameworks/selenium-testng-java-framework",
+          "state": "evidence-unavailable",
+          "freshRequiredScopes": 4,
+          "requiredScopes": 5,
+          "reasons": []
+        },
+        {
+          "repository": "qa-test-automation-frameworks/k6-performance-framework",
+          "state": "code-mismatch",
+          "freshRequiredScopes": 0,
+          "requiredScopes": 5,
+          "reasons": []
+        }
+      ],
+      "artifactObservations": [
+        {
+          "id": "12430172934",
+          "name": "portfolio-dashboard",
+          "sha256": "7527d8816de6bd6445a483791eb993c7dea2abf155b2b802ee5095cef09d6465",
+          "createdAt": "2026-10-22T13:49:07.000Z"
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "uniqueLogicalRuns": 1,
+    "uniqueRunAttempts": 1,
+    "firstAttempt": {
+      "pass": 1,
+      "fail": 0,
+      "cancel": 0,
+      "unavailable": 0
+    },
+    "expectedOpportunities": null,
+    "opportunityDenominator": "unknown"
+  },
+  "triage": {
+    "status": "unknown",
+    "counts": null,
+    "failureDisposition": "unknown",
+    "untriagedFailureCount": null,
+    "records": [],
+    "reason": "No triage records were supplied; incident counts are unknown, not zero."
+  },
+  "incompleteSources": [],
+  "evidenceStates": {
+    "observations": [
+      {
+        "repository": "qa-test-automation-frameworks/verity-policy-coverage-eval-framework",
+        "state": "evidence-unavailable",
+        "freshRequiredScopes": 2,
+        "requiredScopes": 3,
+        "reasons": []
+      },
+      {
+        "repository": "qa-test-automation-frameworks/playwright-typescript-framework",
+        "state": "review-ready",
+        "freshRequiredScopes": 8,
+        "requiredScopes": 8,
+        "reasons": []
+      },
+      {
+        "repository": "qa-test-automation-frameworks/aria-api-framework",
+        "state": "failed",
+        "freshRequiredScopes": 2,
+        "requiredScopes": 3,
+        "reasons": []
+      },
+      {
+        "repository": "qa-test-automation-frameworks/selenium-testng-java-framework",
+        "state": "evidence-unavailable",
+        "freshRequiredScopes": 4,
+        "requiredScopes": 5,
+        "reasons": []
+      },
+      {
+        "repository": "qa-test-automation-frameworks/k6-performance-framework",
+        "state": "code-mismatch",
+        "freshRequiredScopes": 0,
+        "requiredScopes": 5,
+        "reasons": []
+      }
+    ],
+    "counts": {
+      "evidence-unavailable": 2,
+      "review-ready": 1,
+      "failed": 1,
+      "code-mismatch": 1
+    }
+  },
+  "currencyCost": {
+    "amount": null,
+    "currency": null,
+    "source": null,
+    "asOf": null,
+    "reason": "No dated billing amount was supplied; elapsed job time is not a cost measure."
+  },
+  "decision": {
+    "statement": "Keep the four-hour dashboard cadence through the October 27 observation close.",
+    "rationale": "The broader observation log records nine natural schedule successes across thirteen nominal opportunities, with four still unaccounted for. This single-run sample cannot resolve those opportunities or close the observation window.",
+    "source": "docs/PORTFOLIO_OPERATION_LOG.md, October 22 schedule checkpoint"
+  },
+  "limitations": [
+    "Sum of job elapsed time is the sum of wall-clock durations for jobs and can include overlap; it is not CPU time or billed minutes.",
+    "A missing opportunity denominator, triage set, duration timestamp, or billing amount remains unknown and is not reported as zero.",
+    "This report describes the supplied run window only and does not establish reduced cost or improved reliability."
+  ]
+}

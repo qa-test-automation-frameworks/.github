@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qa-test-automation-frameworks.github.io/.github/portfolio/operation-sample.schema.json",
+  "title": "Saved GitHub workflow operation sample",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "window", "sources"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "report_generated_at": { "type": "string", "format": "date-time" },
+    "window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end"],
+      "properties": {
+        "start": { "type": "string", "format": "date-time" },
+        "end": { "type": "string", "format": "date-time" }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["repository", "workflow", "workflowFile", "runs"],
+        "properties": {
+          "repository": { "type": "string", "pattern": "^qa-test-automation-frameworks/[^/]+$" },
+          "workflow": { "type": "string", "minLength": 1 },
+          "workflowFile": { "type": "string", "pattern": "^\\.github/workflows/[A-Za-z0-9._-]+\\.ya?ml$" },
+          "expectedOpportunities": { "type": ["integer", "null"], "minimum": 0 },
+          "totalCount": { "type": ["integer", "null"], "minimum": 0 },
+          "paginationIncomplete": { "type": "boolean" },
+          "runs": { "type": "array", "items": { "$ref": "#/$defs/run" } },
+          "evidenceObservations": { "type": "array", "items": { "$ref": "#/$defs/evidenceObservation" } },
+          "artifactObservations": { "type": "array", "items": { "$ref": "#/$defs/artifactObservation" } }
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement", "rationale"],
+      "properties": {
+        "statement": { "type": "string", "minLength": 1 },
+        "rationale": { "type": "string", "minLength": 1 },
+        "source": { "type": ["string", "null"] }
+      }
+    },
+    "billing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["amount", "currency", "source", "asOf"],
+      "properties": {
+        "amount": { "type": "number", "minimum": 0 },
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "source": { "type": "string", "minLength": 1 },
+        "asOf": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "$defs": {
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "run_number", "run_attempt", "event", "status", "conclusion", "head_sha", "created_at", "run_started_at", "updated_at", "html_url", "jobs"],
+      "properties": {
+        "id": { "type": ["integer", "string"], "pattern": "^\\d+$" },
+        "run_number": { "type": "integer", "minimum": 1 },
+        "run_attempt": { "type": "integer", "minimum": 1 },
+        "event": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "minLength": 1 },
+        "conclusion": { "type": ["string", "null"] },
+        "head_sha": { "type": "string", "pattern": "^[0-9a-fA-F]{40}$" },
+        "head_branch": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "run_started_at": { "type": ["string", "null"], "format": "date-time" },
+        "updated_at": { "type": ["string", "null"], "format": "date-time" },
+        "completed_at": { "type": ["string", "null"], "format": "date-time" },
+        "report_generated_at": { "type": ["string", "null"], "format": "date-time" },
+        "published_at": { "type": ["string", "null"], "format": "date-time" },
+        "html_url": { "type": "string", "format": "uri", "pattern": "^https://github\\.com/qa-test-automation-frameworks/" },
+        "jobs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "status", "conclusion"],
+            "properties": {
+              "id": { "type": ["integer", "string"], "pattern": "^\\d+$" },
+              "name": { "type": "string", "minLength": 1 },
+              "status": { "type": "string", "minLength": 1 },
+              "conclusion": { "type": ["string", "null"] },
+              "started_at": { "type": ["string", "null"], "format": "date-time" },
+              "completed_at": { "type": ["string", "null"], "format": "date-time" }
+            }
+          }
+        }
+      }
+    },
+    "evidenceObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "state"],
+      "properties": {
+        "repository": { "type": "string", "pattern": "^qa-test-automation-frameworks/[^/]+$" },
+        "state": { "type": "string", "minLength": 1 },
+        "freshRequiredScopes": { "type": ["integer", "null"], "minimum": 0 },
+        "requiredScopes": { "type": ["integer", "null"], "minimum": 0 },
+        "reasons": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "artifactObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "sha256", "created_at"],
+      "properties": {
+        "id": { "type": ["integer", "string"], "pattern": "^\\d+$" },
+        "name": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-fA-F]{64}$" },
+        "created_at": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}
