@@ -68,7 +68,7 @@ function decodeUtf8(bytes, label) {
   }
 }
 
-async function readBoundedBody(response) {
+export async function readBoundedBody(response) {
   requireValue(response.body, 'Descriptor archive download has no response body.');
   const reader = response.body.getReader();
   const chunks = [];
@@ -106,7 +106,7 @@ function hasZip64Extra(bytes, start, length, label) {
   return false;
 }
 
-export function readDescriptorFromZip(archive) {
+export function readDescriptorFromZip(archive, expectedFileName = 'release-descriptor.json') {
   const bytes = Buffer.from(archive);
   requireValue(bytes.length > 0 && bytes.length <= MAX_BYTES, 'Descriptor archive exceeds the 64 KiB limit.');
   requireValue(bytes.length >= 22, 'Descriptor archive is too short to contain a ZIP end record.');
@@ -152,7 +152,7 @@ export function readDescriptorFromZip(archive) {
   requireValue(commentStart + commentLength === endRecord, 'Descriptor archive contains trailing central-directory entries.');
   requireValue(!hasZip64Extra(bytes, extraStart, extraLength, 'central'), 'ZIP64 descriptor archives are not allowed.');
   const fileName = decodeUtf8(bytes.subarray(nameStart, nameEnd), 'Descriptor archive path');
-  requireValue(fileName === 'release-descriptor.json', 'Descriptor archive must contain only release-descriptor.json.');
+  requireValue(fileName === expectedFileName, `Descriptor archive must contain only ${expectedFileName}.`);
   requireValue((flags & (0x0001 | 0x0040 | 0x2000)) === 0, 'Encrypted descriptor archives are not allowed.');
   requireValue(method === 0 || method === 8, 'Descriptor archive uses an unsupported compression method.');
   requireValue(compressedSize <= MAX_BYTES && uncompressedSize <= MAX_BYTES, 'Descriptor file exceeds the 64 KiB limit.');
@@ -225,7 +225,7 @@ function validateDescriptor(bytes, run, now) {
   return descriptor;
 }
 
-async function fetchJson(url, token, fetchImpl, label) {
+export async function fetchJson(url, token, fetchImpl, label) {
   let response;
   const headers = {
     accept: 'application/vnd.github+json',
@@ -248,7 +248,7 @@ async function fetchJson(url, token, fetchImpl, label) {
   }
 }
 
-function verifyRun(run, runId) {
+export function verifyRun(run, runId) {
   requireValue(run.id === Number(runId) && run.repository?.full_name === REPOSITORY
     && run.head_repository?.full_name === REPOSITORY,
   'Workflow run does not belong to the configured QRA repository.');
@@ -260,7 +260,7 @@ function verifyRun(run, runId) {
     'Workflow run attempt or source SHA is invalid.');
 }
 
-function verifyJobs(payload, run) {
+export function verifyJobs(payload, run) {
   requireValue(Array.isArray(payload.jobs) && Number.isSafeInteger(payload.total_count)
     && payload.total_count === payload.jobs.length,
   'Workflow job list is incomplete or malformed.');
@@ -274,13 +274,14 @@ function verifyJobs(payload, run) {
   }
 }
 
-function verifyArtifact(artifact, run, artifactId, now) {
-  requireValue(artifact.id === Number(artifactId) && artifact.name === ARTIFACT_NAME
+export function verifyArtifact(artifact, run, artifactId, now, artifactName = ARTIFACT_NAME) {
+  requireValue(artifact.id === Number(artifactId) && artifact.name === artifactName
     && artifact.expired === false && artifact.workflow_run?.id === run.id
     && artifact.workflow_run?.head_sha === run.head_sha
     && artifact.workflow_run?.head_branch === 'main'
     && artifact.workflow_run?.repository_id === run.repository?.id
-    && artifact.workflow_run?.head_repository_id === run.head_repository?.id,
+    && artifact.workflow_run?.head_repository_id === run.head_repository?.id
+    && (artifact.workflow_run?.run_attempt === undefined || artifact.workflow_run.run_attempt === run.run_attempt),
   'Artifact identity does not match the selected successful QRA workflow run.');
   requireValue(SHA256.test(artifact.digest ?? ''), 'Artifact digest is missing or invalid.');
   requireValue(Number.isSafeInteger(artifact.size_in_bytes) && artifact.size_in_bytes > 0

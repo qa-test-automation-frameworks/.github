@@ -20,6 +20,8 @@ on:
       - "scripts/refresh-dashboard.mjs"
       - "scripts/validate-dashboard.mjs"
       - "scripts/evidence-*.mjs"
+      - "scripts/fetch-risk-proofs.mjs"
+      - "scripts/fetch-risk-proofs.test.mjs"
       - "scripts/publish-evidence.mjs"
       - "scripts/publish-evidence.test.mjs"
       - "scripts/prune-evidence.mjs"

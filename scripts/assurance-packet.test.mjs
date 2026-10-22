@@ -124,6 +124,10 @@ test('expired evidence artifact and invalid descriptor artifacts are incomplete'
 test('missing and expired risk proofs remain incomplete', () => {
   assert.equal(build(makeInput({ riskProofs: [] })).verdict, 'incomplete');
 
+  const missingFileDigest = makeInput();
+  delete missingFileDigest.riskProofs[0].artifactReceipt.artifactFileSha256;
+  assert.equal(build(missingFileDigest).verdict, 'incomplete');
+
   const input = makeInput();
   input.riskProofs[0].artifactReceipt.expiresAt = new Date(now - 1000).toISOString();
   assert.equal(build(input).verdict, 'incomplete');
@@ -140,6 +144,26 @@ test('a wrong expected control blocks review while an omitted expected testcase 
     observedNativeTestIds: proof.observedNativeTestIds.slice(1),
   }));
   assert.equal(build(missingTest).verdict, 'incomplete');
+});
+
+test('mutation identity and clean/mutated native result hashes are required', () => {
+  const invalidTargetKind = makeInput();
+  invalidTargetKind.riskProofs[0] = replaceProof(invalidTargetKind.riskProofs[0], (proof) => ({
+    ...proof,
+    mutation: { ...proof.mutation, targetKind: 'untyped-digest' },
+  }));
+  assert.equal(build(invalidTargetKind).verdict, 'blocked');
+
+  for (const transform of [
+    (proof) => ({ ...proof, cleanNativeTestIds: [] }),
+    (proof) => ({ ...proof, detectedNativeTestIds: [] }),
+    (proof) => ({ ...proof, mutatedNativeResultsSha256: 'invalid' }),
+    (proof) => ({ ...proof, mutatedRun: { ...proof.mutatedRun, sourceSha: 'e'.repeat(40) } }),
+  ]) {
+    const invalidProof = makeInput();
+    invalidProof.riskProofs[0] = replaceProof(invalidProof.riskProofs[0], transform);
+    assert.equal(build(invalidProof).verdict, 'blocked');
+  }
 });
 
 test('a relevant failed native scope blocks review on the exact candidate', () => {
