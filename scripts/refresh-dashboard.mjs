@@ -12,6 +12,11 @@ const token = process.env.GITHUB_TOKEN;
 if (!token) {
   throw new Error('GITHUB_TOKEN is required to refresh portfolio evidence.');
 }
+const headers = {
+  Accept: 'application/vnd.github+json',
+  'X-GitHub-Api-Version': '2022-11-28',
+  Authorization: `Bearer ${token}`,
+};
 const definition = JSON.parse(
   await readFile(new URL('../portfolio/repositories.json', import.meta.url), 'utf8'),
 );
