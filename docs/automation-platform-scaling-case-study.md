@@ -65,6 +65,7 @@ The metrics above are real professional outcomes, anonymized to remove client, p
 | --- | --- |
 | Critical E2E journey ownership | `playwright-typescript-framework/tests/e2e/` |
 | API-level replacement coverage | `aria-api-framework/src/test/java/com/aria/framework/contracts/` and `playwright-typescript-framework/tests/api/` |
-| Runtime and failure diagnostics | `playwright-typescript-framework/docs/debugging-test-failures.md`, `aria-api-framework/docs/Debugging_Test_Failures.md` |
+| Runtime and failure diagnostics | [Playwright](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/debugging-test-failures.md), [ARIA API](https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/debugging-test-failures.md) |
 | Performance regression comparison | `k6-performance-framework/scripts/compare-performance.cjs` and `k6-performance-framework/docs/cross-commit-regression.md` |
-| Review expectations | `playwright-typescript-framework/docs/test-strategy-matrix.md` and `aria-api-framework/docs/Portfolio_Review_Guide.md` |
+| Review expectations | [Playwright](https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/blob/main/docs/test-strategy-matrix.md) and [ARIA API](https://github.com/qa-test-automation-frameworks/aria-api-framework/blob/main/docs/portfolio-review-guide.md) |
+| Shared target identity | [Quality Reference Application](https://github.com/qa-test-automation-frameworks/quality-reference-application/blob/main/docs/target-identity.md) |
