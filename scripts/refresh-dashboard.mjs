@@ -4,6 +4,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { normalizeRunSummary, publicationState, summarizeEvidence } from './dashboard-state.mjs';
 import { validateEvidence } from './evidence-contract.mjs';
 import { classifyRefreshHealth } from './dashboard-refresh-health.mjs';
+import { githubApiGet } from './github-api.mjs';
 import { renderDashboard } from '../site/render.mjs';
 
 const owner = 'qa-test-automation-frameworks';
@@ -11,22 +12,16 @@ const token = process.env.GITHUB_TOKEN;
 if (!token) {
   throw new Error('GITHUB_TOKEN is required to refresh portfolio evidence.');
 }
-const headers = {
-  Accept: 'application/vnd.github+json',
-  'X-GitHub-Api-Version': '2022-11-28',
-  Authorization: `Bearer ${token}`,
-};
-
 const definition = JSON.parse(
   await readFile(new URL('../portfolio/repositories.json', import.meta.url), 'utf8'),
 );
 
 async function github(path) {
-  const response = await fetch(`https://api.github.com${path}`, { headers });
-  if (!response.ok) {
-    throw new Error(`${path} returned ${response.status}: ${await response.text()}`);
-  }
-  return response.json();
+  return githubApiGet(path, { token });
+}
+
+async function publicGithub(path) {
+  return githubApiGet(path, { publicRead: true });
 }
 
 const trustedEvents = new Set(['push', 'schedule', 'workflow_dispatch']);
@@ -42,8 +37,8 @@ async function workflowMetrics(repository, defaultBranch, currentSha) {
     const encodedWorkflow = encodeURIComponent(repository.workflow);
     const base = `/repos/${owner}/${repository.name}/actions/workflows/${encodedWorkflow}/runs?branch=${encodeURIComponent(defaultBranch)}&per_page=20`;
     const [recent, completed] = await Promise.all([
-      github(base),
-      github(`${base}&status=completed`),
+      publicGithub(base),
+      publicGithub(`${base}&status=completed`),
     ]);
     const trusted = (recent.workflow_runs ?? []).filter(
       (run) => run.head_branch === defaultBranch && trustedEvents.has(run.event),

@@ -24,6 +24,9 @@ on:
       - "scripts/fetch-risk-proofs.test.mjs"
       - "scripts/render-assurance-packet.mjs"
       - "scripts/render-assurance-packet.test.mjs"
+      - "scripts/github-api.mjs"
+      - "scripts/github-api.test.mjs"
+      - "scripts/refresh-dashboard.mjs"
       - "scripts/publish-evidence.mjs"
       - "scripts/publish-evidence.test.mjs"
       - "scripts/prune-evidence.mjs"
@@ -48,7 +51,7 @@ jobs:
         with:
           node-version-file: .nvmrc
       - name: Test portable evidence contract
-        run: node --test scripts/dashboard.test.mjs scripts/dashboard-state.test.mjs scripts/dashboard-refresh-health.test.mjs scripts/dashboard-render.test.mjs scripts/evidence-contract.test.mjs scripts/publish-evidence.test.mjs scripts/prune-evidence.test.mjs scripts/render-assurance-packet.test.mjs
+        run: node --test scripts/dashboard.test.mjs scripts/dashboard-state.test.mjs scripts/dashboard-refresh-health.test.mjs scripts/dashboard-render.test.mjs scripts/evidence-contract.test.mjs scripts/publish-evidence.test.mjs scripts/prune-evidence.test.mjs scripts/render-assurance-packet.test.mjs scripts/github-api.test.mjs
       - name: Test trusted source-run verifier
         run: python3 scripts/test-verify-source-run.py
       - name: Test durable evidence ref-update atomicity

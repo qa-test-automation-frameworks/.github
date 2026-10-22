@@ -20,7 +20,7 @@ jobs:
         with:
           node-version-file: .nvmrc
       - name: Test dashboard contract
-        run: node --test scripts/dashboard.test.mjs scripts/dashboard-state.test.mjs scripts/dashboard-refresh-health.test.mjs scripts/dashboard-render.test.mjs scripts/evidence-contract.test.mjs scripts/operation-summary.test.mjs scripts/assurance-packet.test.mjs scripts/fetch-release-descriptor.test.mjs scripts/fetch-risk-proofs.test.mjs scripts/render-assurance-packet.test.mjs
+        run: node --test scripts/dashboard.test.mjs scripts/dashboard-state.test.mjs scripts/dashboard-refresh-health.test.mjs scripts/dashboard-render.test.mjs scripts/evidence-contract.test.mjs scripts/operation-summary.test.mjs scripts/assurance-packet.test.mjs scripts/fetch-release-descriptor.test.mjs scripts/fetch-risk-proofs.test.mjs scripts/render-assurance-packet.test.mjs scripts/github-api.test.mjs
       - name: Validate release assurance risk map
         run: node scripts/validate-risk-map.mjs
       - name: Rebuild the retained operation sample
