@@ -21,4 +21,4 @@ Currency cost is null unless the input includes a dated, explicit observed billi
 
 The dashboard workflow runs the offline unit suite in GitHub CI. No recurring workflow or new cadence was added. Any future read-only fetch wrapper must allow only configured organization repositories and workflows, stop at 100 runs per workflow/window, and mark a truncated page incomplete.
 
-The retained [October 22 report](./operation-cost-decisions-report-2026-10-22.md) is based on one completed scheduled dashboard run. Its input snapshot and dashboard artifact hashes are recorded in the accompanying JSON summary. The broader schedule observation remains open through October 27; the report does not assign the four unaccounted opportunities to specific slots or call them failures.
+The retained [October 22 report](history/operation-cost-decisions-report-2026-10-22.md) is based on one completed scheduled dashboard run. Its input snapshot and dashboard artifact hashes are recorded in the accompanying JSON summary. The broader schedule observation remains open through October 27; the report does not assign the four unaccounted opportunities to specific slots or call them failures.

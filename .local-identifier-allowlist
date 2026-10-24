@@ -1,0 +1,2 @@
+scripts/check-local-identifiers.sh # Scanner patterns necessarily contain the local identifiers they reject; explicit roadmap self-exclusion.
+docs/verification/evidence/2026-10-04-runtime/ # Dated runtime rejection evidence; preserve its original bytes and source paths.

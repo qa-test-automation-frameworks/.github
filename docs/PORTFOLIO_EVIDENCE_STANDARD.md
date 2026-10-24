@@ -116,7 +116,7 @@ attempt, last successful execution, and reviewed historical attestations separat
 This contract supplies the record rules and controlled-clock freshness checks;
 dashboard implementation and deployed observations are recorded in the dated
 [dashboard verification notes](verification/2026-10-16-dashboard-evidence-state.md)
-and the [operation log](PORTFOLIO_OPERATION_LOG.md).
+and the [operation log](history/PORTFOLIO_OPERATION_LOG.md).
 
 ## Additive migration from the existing dashboard
 

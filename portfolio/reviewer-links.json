@@ -76,11 +76,6 @@
     },
     {
       "sourcePath": "profile/README.md",
-      "externalUrl": "https://github.com/qa-test-automation-frameworks/.github/blob/main/docs/release-proof-draft-2026-10-22.md",
-      "label": "Release proof and notes draft"
-    },
-    {
-      "sourcePath": "profile/README.md",
       "externalUrl": "https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/releases/tag/v0.1.0",
       "label": "Verity historical release"
     },

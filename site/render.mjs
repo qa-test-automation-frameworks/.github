@@ -96,7 +96,7 @@ export function renderRepositoryRows(repositories) {
       ['Docs', repository.docsUrl],
       ['Screenshot', repository.screenshotUrl],
     ].map(([label, href]) => safeHref(href) ? anchor(label, href) : '').filter(Boolean).join(' ');
-    return `<tr>
+    return `<tr id="repo-${escapeHtml(repository.name)}">
       <td>${anchor(repository.label, repository.url)}</td>
       <td class="status ${stateClass(repository.evidenceState)}">${escapeHtml(repository.evidenceState)}</td>
       <td>${attemptLabel}</td>

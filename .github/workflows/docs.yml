@@ -58,6 +58,14 @@ jobs:
         run: node scripts/render-producer-table.mjs --check
       - name: Guard profile claims
         run: node scripts/profile-claims.mjs
+      - name: Test local identifier and evidence path guards
+        run: |
+          bash scripts/test-check-local-identifiers.sh
+          bash scripts/test-check-neutral-evidence-paths.sh
+      - name: Check local identifiers and evidence paths
+        run: |
+          bash scripts/check-local-identifiers.sh
+          bash scripts/check-neutral-evidence-paths.sh
       - name: Test trusted source-run verifier
         run: python3 scripts/test-verify-source-run.py
       - name: Test durable evidence ref-update atomicity
