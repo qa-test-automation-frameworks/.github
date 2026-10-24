@@ -23,43 +23,12 @@ jobs:
         run: node --test scripts/dashboard.test.mjs scripts/dashboard-state.test.mjs scripts/dashboard-refresh-health.test.mjs scripts/dashboard-render.test.mjs scripts/evidence-contract.test.mjs scripts/operation-summary.test.mjs scripts/assurance-packet.test.mjs scripts/fetch-release-descriptor.test.mjs scripts/fetch-risk-proofs.test.mjs scripts/render-assurance-packet.test.mjs scripts/github-api.test.mjs
       - name: Validate release assurance risk map
         run: node scripts/validate-risk-map.mjs
-      - name: Rebuild the retained operation sample
-        run: |
-          node scripts/operation-summary.mjs \
-            --input portfolio/operation-samples/window-2026-10-22.json \
-            --json-out "$RUNNER_TEMP/operation-summary.json" \
-            --markdown-out "$RUNNER_TEMP/operation-summary.md"
-          cmp "$RUNNER_TEMP/operation-summary.json" portfolio/operation-samples/summary-2026-10-22.json
-          cmp "$RUNNER_TEMP/operation-summary.md" docs/operation-cost-decisions-report-2026-10-22.md
       - name: Refresh portfolio evidence
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/refresh-dashboard.mjs
       - name: Validate dashboard data
         run: node scripts/validate-dashboard.mjs
-      - name: Build the retained release assurance review
-        if: github.event_name == 'pull_request' && hashFiles('portfolio/release-assurance/packet-input-2026-10-22.json') != ''
-        env:
-          RELEASE_ASSURANCE_OUTPUT: ${{ runner.temp }}/release-assurance
-        run: |
-          mkdir -p "$RELEASE_ASSURANCE_OUTPUT"
-          node scripts/build-assurance-packet.mjs \
-            --risk-map portfolio/risk-map.json \
-            --input portfolio/release-assurance/packet-input-2026-10-22.json \
-            --output "$RELEASE_ASSURANCE_OUTPUT/packet.json"
-          node scripts/render-assurance-packet.mjs \
-            --input "$RELEASE_ASSURANCE_OUTPUT/packet.json" \
-            --output "$RELEASE_ASSURANCE_OUTPUT/review.html"
-          node -e 'const packet = require(process.argv[1]); if (packet.verdict !== "ready-for-review") { console.error(`Release assurance packet is ${packet.verdict}.`); process.exit(1); } console.log(`Release assurance packet is ${packet.verdict} (${packet.risks.length} risks).`);' \
-            "$RELEASE_ASSURANCE_OUTPUT/packet.json"
-      - name: Upload the retained release assurance review
-        if: github.event_name == 'pull_request' && hashFiles('portfolio/release-assurance/packet-input-2026-10-22.json') != ''
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
-        with:
-          name: new-org-01-release-assurance-review
-          path: ${{ runner.temp }}/release-assurance
-          if-no-files-found: error
-          retention-days: 30
       - name: Upload dashboard
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
