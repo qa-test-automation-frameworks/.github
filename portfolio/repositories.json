@@ -69,7 +69,9 @@
       "requiredScopeIds": [
         "aria.deterministic",
         "aria.container",
-        "aria.shared-app"
+        "aria.shared-app",
+        "aria.contract",
+        "aria.pact-provider"
       ],
       "controlPairs": [],
       "workflow": "ci.yml",
@@ -113,10 +115,17 @@
         "k6.articles-load",
         "k6.authenticated-journey",
         "k6.pr-smoke",
-        "k6.evidence-failure-control",
+        "k6.evidence-failure-control-verification",
         "k6.shared-app-load"
       ],
-      "controlPairs": [],
+      "controlPairs": [
+        {
+          "id": "k6-failure-control",
+          "label": "k6 failure control",
+          "rawScopeId": "k6.evidence-failure-control",
+          "verifierScopeId": "k6.evidence-failure-control-verification"
+        }
+      ],
       "workflow": "main-load.yml",
       "evidenceClass": "controlled + scheduled-load",
       "fullEvidenceWorkflow": "main-load.yml",

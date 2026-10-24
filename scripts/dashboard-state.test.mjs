@@ -274,6 +274,54 @@ test('invalid, absent and unknown run timestamps stay unavailable', () => {
   assert.equal(normalizeRunSummary(null, Date.parse('2026-10-23T00:00:00Z')), null);
 });
 
+test('a k6-shaped control pair verifies and a verifier from another attempt does not', async () => {
+  const { raw, verifier } = await verityControlRecords();
+  const k6Repository = 'qa-test-automation-frameworks/k6-performance-framework';
+  const k6Raw = 'k6.evidence-failure-control';
+  const k6Verifier = 'k6.evidence-failure-control-verification';
+  for (const record of [raw, verifier]) {
+    record.repository = k6Repository;
+    record.workflow.url = `https://github.com/${k6Repository}/actions/runs/1001`;
+    record.execution.counts.unit = 'test_case';
+  }
+  raw.scope.id = k6Raw;
+  verifier.scope.id = k6Verifier;
+  const pair = { id: 'k6-failure-control', label: 'k6 failure control', rawScopeId: k6Raw, verifierScopeId: k6Verifier };
+  const context = {
+    repository: k6Repository,
+    currentSha: raw.sourceSha,
+    now,
+    policies,
+    requiredScopeIds: [k6Verifier],
+    controlPairs: [pair],
+  };
+
+  const result = summarizeEvidence([raw, verifier], context);
+  assert.equal(result.state, 'review-ready');
+  assert.equal(result.controlPairs[0].state, 'verified');
+
+  const otherAttempt = structuredClone(verifier);
+  otherAttempt.workflow.attempt = verifier.workflow.attempt + 1;
+  const mismatch = summarizeEvidence([raw, otherAttempt], context);
+  assert.equal(mismatch.controlPairs[0].state, 'unverified');
+  assert.notEqual(mismatch.state, 'review-ready');
+
+  const rawRequired = summarizeEvidence([raw, verifier], { ...context, requiredScopeIds: [k6Raw, k6Verifier] });
+  assert.match(JSON.stringify(rawRequired.controlPairs), /control-pair mapping is incomplete/);
+});
+
+test('the portfolio registry lists the scopes the ARIA and k6 emitters publish', async () => {
+  const registry = JSON.parse(await readFile(new URL('../portfolio/repositories.json', import.meta.url), 'utf8'));
+  const byName = Object.fromEntries(registry.repositories.map((repository) => [repository.name, repository]));
+
+  assert.ok(byName['aria-api-framework'].requiredScopeIds.includes('aria.contract'));
+  assert.ok(byName['aria-api-framework'].requiredScopeIds.includes('aria.pact-provider'));
+  const k6 = byName['k6-performance-framework'];
+  assert.ok(!k6.requiredScopeIds.includes('k6.evidence-failure-control'));
+  assert.ok(k6.requiredScopeIds.includes('k6.evidence-failure-control-verification'));
+  assert.deepEqual(k6.controlPairs.map((pair) => pair.id), ['k6-failure-control']);
+});
+
 test('a fresh record lists the policy rationale exactly once', async () => {
   const record = await load('valid-pass.json');
   const result = summarizeEvidence([record], contextFor(record));
