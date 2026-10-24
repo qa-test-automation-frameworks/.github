@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "pins": {
-    "publish-evidence.yml": "7960801249c036ef56370f54abdf79570b5a7bd8"
+    "publish-evidence.yml": "7960801249c036ef56370f54abdf79570b5a7bd8",
+    "scheduled-failure-triage.yml": "077cca9daadc6e7371616fe3dd4bae959054f17a"
   }
 }
