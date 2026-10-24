@@ -330,3 +330,18 @@ test('a fresh record lists the policy rationale exactly once', async () => {
   assert.equal(result.scopes[0].state, 'fresh');
   assert.equal(result.scopes[0].reasons.filter((reason) => reason === rationale).length, 1);
 });
+
+test('required records must use the repository freshness policy', async () => {
+  const record = await load('valid-pass.json');
+  const result = summarizeEvidence([record], { ...contextFor(record), requiredFreshnessPolicy: 'quarterly_experiment_v1' });
+  assert.match(result.policyMismatches.join('\n'), /Required scope .* uses daily_gate_v1; repository requires quarterly_experiment_v1/);
+  assert.notEqual(result.state, 'review-ready');
+});
+
+test('producer verification failures prevent review readiness', async () => {
+  const record = await load('valid-pass.json');
+  const result = summarizeEvidence([record], { ...contextFor(record), producerMismatches: ['fixture/ci.yml: R6d workflow is disabled_inactivity'] });
+  assert.equal(result.scopes[0].state, 'fresh');
+  assert.notEqual(result.state, 'review-ready');
+  assert.match(result.policyMismatches[0], /disabled_inactivity/);
+});
