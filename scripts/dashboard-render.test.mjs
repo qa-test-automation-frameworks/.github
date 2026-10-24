@@ -139,3 +139,24 @@ test('static page and enhanced view share generated evidence, policy, and freshn
   assert.match(html, /daily_gate_v1/);
   assert.match(html, /not-published/);
 });
+
+test('rendered scope rows show the policy rationale once', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { summarizeEvidence } = await import('./dashboard-state.mjs');
+  const fixtures = new URL('../portfolio/evidence/fixtures/', import.meta.url);
+  const record = JSON.parse(await readFile(new URL('valid-pass.json', fixtures), 'utf8'));
+  const policies = JSON.parse(await readFile(new URL('../portfolio/evidence/freshness-policies.json', import.meta.url), 'utf8')).policies;
+  const rationale = policies[record.scope.freshnessPolicy].rationale;
+  const summary = summarizeEvidence([record], {
+    repository: record.repository,
+    currentSha: record.sourceSha,
+    now: Date.parse('2026-10-04T08:01:00.000Z'),
+    policies,
+    requiredScopeIds: [record.scope.id],
+    controlPairs: [],
+  });
+  const html = renderRepositoryRows([{ ...repository, evidenceRecords: summary.scopes }]);
+  const escaped = rationale.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+
+  assert.equal(html.split(escaped).length - 1, 1);
+});

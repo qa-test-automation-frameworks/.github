@@ -321,3 +321,12 @@ test('the portfolio registry lists the scopes the ARIA and k6 emitters publish',
   assert.ok(k6.requiredScopeIds.includes('k6.evidence-failure-control-verification'));
   assert.deepEqual(k6.controlPairs.map((pair) => pair.id), ['k6-failure-control']);
 });
+
+test('a fresh record lists the policy rationale exactly once', async () => {
+  const record = await load('valid-pass.json');
+  const result = summarizeEvidence([record], contextFor(record));
+  const rationale = policies[record.scope.freshnessPolicy].rationale;
+
+  assert.equal(result.scopes[0].state, 'fresh');
+  assert.equal(result.scopes[0].reasons.filter((reason) => reason === rationale).length, 1);
+});

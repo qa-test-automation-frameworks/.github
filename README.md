@@ -40,6 +40,13 @@ freshness.
 
 ![Portfolio dashboard overview](site/assets/dashboard-overview.png)
 
+Retained operation windows and release packets are indexed under
+`portfolio/operation-samples/` and `portfolio/release-assurance/`. The separate
+[retained samples workflow](.github/workflows/retained-samples.yml) checks them
+when their inputs, scripts, or reports change. Packet replay uses the last
+recorded artifact retrieval time and labels its output as historical. It does
+not establish current release readiness; live checks still use the current time.
+
 ## Local first success
 
 Use Node.js 24.21.0 from `.nvmrc` (see the [supported runtime policy](docs/runtime-policy.md)), then run:

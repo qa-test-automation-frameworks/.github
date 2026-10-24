@@ -57,8 +57,7 @@ export function assessEvidenceRecord(record, { repository, currentSha, now, poli
   if (!Object.hasOwn(policies, record.scope.freshnessPolicy)) {
     return { state: 'invalid', reasons: ['Freshness policy is not declared'] };
   }
-  const result = evidenceFreshness(record, now);
-  return { ...result, reasons: [...result.reasons, policies[record.scope.freshnessPolicy].rationale] };
+  return evidenceFreshness(record, now);
 }
 
 export function summarizeEvidence(records, context) {

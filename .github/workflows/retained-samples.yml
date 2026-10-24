@@ -1,0 +1,41 @@
+name: Retained samples
+
+on:
+  push:
+    branches: [main]
+    paths: &retained-paths
+      - 'portfolio/operation-samples/**'
+      - 'portfolio/release-assurance/**'
+      - 'portfolio/risk-map*'
+      - 'portfolio/repositories.json'
+      - 'portfolio/evidence/**'
+      - 'scripts/**'
+      - 'docs/**/operation-cost-decisions-report-*'
+      - 'docs/operation-cost-decisions-report-*'
+      - '.github/workflows/retained-samples.yml'
+  pull_request:
+    paths: *retained-paths
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  retained-samples:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version-file: .nvmrc
+      - name: Test retained sample discovery and historical replay
+        run: node --test scripts/check-retained-samples.test.mjs
+      - name: Verify indexed samples
+        run: node scripts/check-retained-samples.mjs "$RUNNER_TEMP/retained-samples"
+      - name: Upload historical reviews
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: retained-sample-reviews
+          path: ${{ runner.temp }}/retained-samples
+          if-no-files-found: error
+          retention-days: 30
