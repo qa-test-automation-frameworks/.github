@@ -1,0 +1,81 @@
+name: Scheduled failure triage
+
+on:
+  workflow_call:
+    inputs:
+      workflow-name:
+        type: string
+        required: true
+      conclusion:
+        type: string
+        required: true
+      run-url:
+        type: string
+        required: true
+      label:
+        type: string
+        default: scheduled-failure
+
+concurrency:
+  group: scheduled-triage-${{ github.repository }}-${{ inputs.workflow-name }}
+  cancel-in-progress: false
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          TRIAGE_WORKFLOW: ${{ inputs.workflow-name }}
+          TRIAGE_CONCLUSION: ${{ inputs.conclusion }}
+          TRIAGE_RUN_URL: ${{ inputs.run-url }}
+          TRIAGE_LABEL: ${{ inputs.label }}
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const workflowName = process.env.TRIAGE_WORKFLOW;
+            const conclusion = process.env.TRIAGE_CONCLUSION;
+            const runUrl = process.env.TRIAGE_RUN_URL;
+            const label = process.env.TRIAGE_LABEL;
+            if (!workflowName || workflowName.length > 200 || !label || label.length > 50) {
+              throw new Error('Invalid triage workflow name or label.');
+            }
+            const prefix = `https://github.com/${owner}/${repo}/actions/runs/`;
+            if (!runUrl.startsWith(prefix) || !/^[1-9][0-9]*$/.test(runUrl.slice(prefix.length))) {
+              throw new Error('Triage run URL must identify a run in this repository.');
+            }
+            const failing = new Set(['failure', 'timed_out', 'startup_failure', 'cancelled']);
+            if (!failing.has(conclusion) && conclusion !== 'success') {
+              core.notice(`No triage action for ${conclusion}`);
+              return;
+            }
+            for (const name of new Set([label, 'ci'])) {
+              try {
+                await github.rest.issues.getLabel({ owner, repo, name });
+              } catch (error) {
+                if (error.status !== 404) throw error;
+                await github.rest.issues.createLabel({ owner, repo, name, color: 'b60205' });
+              }
+            }
+            const title = `Scheduled failure: ${workflowName}`;
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              owner, repo, state: 'open', labels: label, per_page: 100,
+            });
+            const matches = issues.filter((issue) => !issue.pull_request && issue.title === title);
+            if (matches.length > 1) throw new Error(`Duplicate open triage issues for ${workflowName}`);
+            const open = matches[0];
+            if (failing.has(conclusion)) {
+              const body = `Scheduled run ${runUrl} concluded **${conclusion}** at ${new Date().toISOString()}.\n\nClassify the failure, link its evidence, and resolve or disposition it within seven days.`;
+              if (open) {
+                await github.rest.issues.createComment({ owner, repo, issue_number: open.number, body });
+              } else {
+                await github.rest.issues.create({ owner, repo, title, body, labels: [...new Set([label, 'ci'])] });
+              }
+            } else if (open) {
+              await github.rest.issues.createComment({ owner, repo, issue_number: open.number, body: `Recovered in ${runUrl}` });
+              await github.rest.issues.update({ owner, repo, issue_number: open.number, state: 'closed', state_reason: 'completed' });
+            } else {
+              core.notice('Successful scheduled run has no open failure issue.');
+            }

@@ -118,6 +118,18 @@ export function renderReviewOrder(repositories, order) {
   ).join('\n');
 }
 
+export function renderScheduledTriage(data) {
+  const repositories = [...(data.repositories ?? []), ...(data.triageOnlyRepositories ?? [])];
+  return '<h2>Scheduled failure triage</h2><p>Scheduled failures need a disposition within seven days.</p><ul>' + repositories.map((repository) => {
+    const triage = repository.triage;
+    if (triage?.status !== 'available') return `<li>${escapeHtml(repository.label)}: triage unavailable</li>`;
+    const age = triage.oldestAgeDays === null ? '' : `; oldest ${triage.oldestAgeDays.toFixed(1)} days`;
+    const state = triage.overdue ? '; overdue' : '';
+    const issues = triage.issues.map((issue) => anchor(`#${issue.number}: ${issue.title}`, issue.url)).join(', ');
+    return `<li>${escapeHtml(repository.label)}: ${triage.openCount} open${age}${state}${issues ? ` — ${issues}` : ''}</li>`;
+  }).join('') + '</ul>';
+}
+
 export function renderDashboard(template, data) {
   const generatedAt = Number.isFinite(Date.parse(data.generatedAt))
     ? `${new Date(data.generatedAt).toISOString().replace('T', ' ').replace('.000Z', ' UTC').replace('Z', ' UTC')}`
@@ -126,6 +138,7 @@ export function renderDashboard(template, data) {
     ? 'Refresh completed; inspect evidence and publication states per repository'
     : 'Refresh unavailable; showing the last static snapshot';
   return template
+    .replace(/(<section id="scheduled-triage"[^>]*>)[\s\S]*?(<\/section>)/, `$1${renderScheduledTriage(data)}$2`)
     .replace(/(<span id="freshness-state"[^>]*>).*?(<\/span>)/, `$1${escapeHtml(freshness)}$2`)
     .replace(/(<span id="generated-at"[^>]*>).*?(<\/span>)/, `$1${escapeHtml(generatedAt)}$2`)
     .replace(/(<span id="refresh-schedule-state"[^>]*>).*?(<\/span>)/, `$1Scheduled refresh: ${escapeHtml(data.refresh?.schedule?.status ?? 'unavailable')}$2`)

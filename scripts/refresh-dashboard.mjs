@@ -7,6 +7,7 @@ import { classifyRefreshHealth } from './dashboard-refresh-health.mjs';
 import { githubApiGet } from './github-api.mjs';
 import { verifyProducers } from './verify-producers.mjs';
 import { checkReusablePins } from './check-reusable-pins.mjs';
+import { fetchScheduledTriage } from './scheduled-triage.mjs';
 import { renderDashboard } from '../site/render.mjs';
 
 const owner = 'qa-test-automation-frameworks';
@@ -209,11 +210,12 @@ const repositories = await Promise.all(
     if (!repo) throw new Error(`Repository ${repository.name} was not returned by GitHub.`);
     const defaultBranch = repo.defaultBranchRef?.name ?? 'main';
     const currentSha = repo.defaultBranchRef?.target?.oid ?? null;
-    const [metrics, durable, producerMismatches, pinMismatches] = await Promise.all([
+    const [metrics, durable, producerMismatches, pinMismatches, triage] = await Promise.all([
       workflowMetrics(repository, defaultBranch, currentSha),
       durableEvidence(repository),
       verifyProducers(repository, freshnessPolicies, publicGithub),
       checkReusablePins(repository, reusablePins, publicGithub),
+      fetchScheduledTriage(repository.name, publicGithub),
     ]);
     const evidence = summarizeEvidence(durable.records, {
       repository: `${owner}/${repository.name}`,
@@ -228,6 +230,7 @@ const repositories = await Promise.all(
     const evidenceState = metrics.status === 'available' ? evidence.state : 'evidence-unavailable';
     return {
       ...repository,
+      triage,
       url: repo.url,
       description: repo.description,
       defaultBranch,
@@ -265,6 +268,11 @@ const repositories = await Promise.all(
   }),
 );
 
+const triageOnlyRepositories = await Promise.all([
+  { name: "quality-reference-application", label: "Quality Reference Application" },
+  { name: ".github", label: "Organization dashboard" },
+].map(async (repository) => ({ ...repository, triage: await fetchScheduledTriage(repository.name, publicGithub) })));
+
 const output = {
   schemaVersion: 3,
   generatedAt: new Date().toISOString(),
@@ -275,6 +283,7 @@ const output = {
     unavailableRepositories: repositories.filter((repository) => repository.workflow?.status === 'unavailable' || repository.publication.indexStatus === 'unavailable').map(({ name }) => name),
     schedule: scheduleHealth,
   },
+  triageOnlyRepositories,
   recommendedReviewOrder: definition.recommendedReviewOrder,
   repositories,
 };

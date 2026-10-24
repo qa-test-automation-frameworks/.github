@@ -1,0 +1,107 @@
+name: Scheduled triage self-test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  initial-success:
+    uses: ./.github/workflows/scheduled-failure-triage.yml
+    with: &selftest-inputs
+      workflow-name: Triage self-test ${{ github.run_id }}
+      conclusion: success
+      run-url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      label: triage-selftest
+
+  assert-empty:
+    needs: initial-success
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          EXPECTED_STAGE: empty
+          EXPECTED_ISSUE_NUMBER: ''
+        with:
+          script: &assert-triage |
+            const { owner, repo } = context.repo;
+            const title = `Scheduled failure: Triage self-test ${context.runId}`;
+            const issues = (await github.paginate(github.rest.issues.listForRepo, {
+              owner, repo, state: 'all', labels: 'triage-selftest', per_page: 100,
+            })).filter((issue) => !issue.pull_request && issue.title === title);
+            const stage = process.env.EXPECTED_STAGE;
+            if (stage === 'empty') {
+              if (issues.length !== 0) throw new Error('Initial success created an issue.');
+              return;
+            }
+            if (issues.length !== 1) throw new Error(`Expected one issue, found ${issues.length}.`);
+            const issue = issues[0];
+            const expectedNumber = process.env.EXPECTED_ISSUE_NUMBER;
+            if (expectedNumber && String(issue.number) !== expectedNumber) throw new Error('Triage replaced the issue instead of updating it.');
+            const closed = stage === 'closed';
+            if (issue.state !== (closed ? 'closed' : 'open')) throw new Error(`Unexpected issue state ${issue.state}.`);
+            const comments = stage === 'open' ? 0 : closed ? 2 : 1;
+            if (issue.comments !== comments) throw new Error(`Expected ${comments} comments, found ${issue.comments}.`);
+            core.setOutput('issue-number', String(issue.number));
+            core.notice(`Verified ${stage}: issue #${issue.number}, ${issue.comments} comments.`);
+
+  first-failure:
+    needs: assert-empty
+    uses: ./.github/workflows/scheduled-failure-triage.yml
+    with:
+      workflow-name: Triage self-test ${{ github.run_id }}
+      conclusion: failure
+      run-url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      label: triage-selftest
+
+  assert-open:
+    needs: first-failure
+    runs-on: ubuntu-latest
+    outputs:
+      issue-number: ${{ steps.assert.outputs.issue-number }}
+    steps:
+      - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        id: assert
+        env:
+          EXPECTED_STAGE: open
+          EXPECTED_ISSUE_NUMBER: ''
+        with:
+          script: *assert-triage
+
+  repeated-failure:
+    needs: assert-open
+    uses: ./.github/workflows/scheduled-failure-triage.yml
+    with:
+      workflow-name: Triage self-test ${{ github.run_id }}
+      conclusion: failure
+      run-url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      label: triage-selftest
+
+  assert-comment:
+    needs: [repeated-failure, assert-open]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          EXPECTED_STAGE: comment
+          EXPECTED_ISSUE_NUMBER: ${{ needs.assert-open.outputs.issue-number }}
+        with:
+          script: *assert-triage
+
+  recovery:
+    needs: assert-comment
+    uses: ./.github/workflows/scheduled-failure-triage.yml
+    with: *selftest-inputs
+
+  assert-closed:
+    needs: [recovery, assert-open]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          EXPECTED_STAGE: closed
+          EXPECTED_ISSUE_NUMBER: ${{ needs.assert-open.outputs.issue-number }}
+        with:
+          script: *assert-triage

@@ -10,3 +10,16 @@ The portfolio uses one decision loop across five quality surfaces:
 6. **Lifecycle:** a capability is deprecated when its target, tool, or signal no longer earns its execution and maintenance cost; the replacement and removal date belong in the changelog.
 
 The five repositories implement different layers of this loop. The organization profile and dashboard show the current evidence state; they do not substitute for repository-owned proof.
+
+## Scheduled failure follow-up
+
+Each scheduled main-branch failure opens or updates one issue named for its
+workflow. Repeated failures add evidence to that issue; the next successful
+scheduled run records recovery and closes it. Classify and disposition failures
+within seven days. The dashboard shows open counts, oldest age, and overdue
+issues for the five frameworks, shared reference application, and dashboard.
+Triage is an operating signal; it does not change an execution result.
+
+The reusable triage workflow has a dispatch-only self-test with its own
+`triage-selftest` label. It checks initial success, issue creation, deduplication,
+and recovery using a unique run-specific title.
