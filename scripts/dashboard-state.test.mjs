@@ -273,3 +273,12 @@ test('invalid, absent and unknown run timestamps stay unavailable', () => {
   assert.equal(absent.lastSuccessTimestamp, null);
   assert.equal(normalizeRunSummary(null, Date.parse('2026-10-23T00:00:00Z')), null);
 });
+
+test('a fresh record lists the policy rationale exactly once', async () => {
+  const record = await load('valid-pass.json');
+  const result = summarizeEvidence([record], contextFor(record));
+  const rationale = policies[record.scope.freshnessPolicy].rationale;
+
+  assert.equal(result.scopes[0].state, 'fresh');
+  assert.equal(result.scopes[0].reasons.filter((reason) => reason === rationale).length, 1);
+});
