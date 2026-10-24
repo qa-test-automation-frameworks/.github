@@ -75,7 +75,7 @@ export function summarizeEvidence(records, context) {
     countsById.set(id, (countsById.get(id) ?? 0) + 1);
   }
 
-  const policyMismatches = [];
+  const policyMismatches = [...(context.producerMismatches ?? [])];
   if (!registryValid) policyMismatches.push('Repository must declare unique requiredScopeIds');
   const scopes = input.map((record) => {
     const scope = record?.scope ?? {};
@@ -91,6 +91,10 @@ export function summarizeEvidence(records, context) {
     if (scope.required === true && !requiredIds.has(id)) {
       policyMismatches.push(`Incoming required scope ${id} is absent from the repository registry`);
       reasons.push('Incoming required scope is not declared by repository policy');
+    }
+    if (requiredIds.has(id) && context.requiredFreshnessPolicy
+        && scope.freshnessPolicy !== context.requiredFreshnessPolicy) {
+      policyMismatches.push(`Required scope ${id} uses ${scope.freshnessPolicy}; repository requires ${context.requiredFreshnessPolicy}`);
     }
     if (scope.required === false && requiredIds.has(id)) {
       reasons.push('Repository policy requires this scope despite the record declaration');

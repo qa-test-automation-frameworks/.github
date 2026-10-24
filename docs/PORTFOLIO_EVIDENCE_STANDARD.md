@@ -141,3 +141,53 @@ dashboard workflow `disabled_inactivity`; the 2026-10-19 observation later
 recorded healthy schedule status. Neither dated observation establishes current
 health. Use the live dashboard and P03 operation log for current status and
 continued schedule verification.
+
+## Evidence producer cadence
+
+Every required scope and failure-control scope has exactly one declared workflow
+and job below. Its producer runs on every push to `main`, without path filters,
+and on a schedule whose maximum gap plus twelve hours is within the required
+freshness policy. The checker enumerates UTC firing times across two years.
+
+Exact source matching means a push causes `code-mismatch` until its producers
+publish for the new SHA. The source-run verifier checks the branch, event, and
+run identity; it does not require the run's SHA to remain the current main tip.
+The dashboard makes that separate comparison.
+
+Live producer verification checks the declared cron, unfiltered main trigger,
+job keys, and workflow state. GitHub may disable scheduled public workflows after
+sixty days without repository activity. A disabled or unavailable workflow adds
+a policy mismatch and prevents `review-ready`.
+
+<!-- producer-table:begin -->
+| Repo | Scope | Required | Producer workflow | Job | Schedule (UTC) | Max gap (h) | Policy (max age h) |
+|---|---|---|---|---|---|---|---|
+| verity-policy-coverage-eval-framework | verity.deterministic-py3.12.15 | yes | pr-gate.yml | lint-type-test | `23 5 * * *` | 24 | daily_gate_v1 (36) |
+| verity-policy-coverage-eval-framework | verity.deterministic-py3.13.16 | yes | pr-gate.yml | lint-type-test | `23 5 * * *` | 24 | daily_gate_v1 (36) |
+| verity-policy-coverage-eval-framework | verity.failure-control-py3.12.15 | no (control) | pr-gate.yml | lint-type-test | `23 5 * * *` | 24 | daily_gate_v1 (36) |
+| verity-policy-coverage-eval-framework | verity.failure-control-verification-py3.12.15 | yes | pr-gate.yml | lint-type-test | `23 5 * * *` | 24 | daily_gate_v1 (36) |
+| playwright-typescript-framework | framework-unit | yes | ci.yml | lint-typecheck | `0 6 * * *` | 24 | daily_gate_v1 (36) |
+| playwright-typescript-framework | api | yes | ci.yml | test-api | `0 6 * * *` | 24 | daily_gate_v1 (36) |
+| playwright-typescript-framework | e2e | yes | ci.yml | test-e2e | `0 6 * * *` | 24 | daily_gate_v1 (36) |
+| playwright-typescript-framework | visual | yes | ci.yml | test-visual | `0 6 * * *` | 24 | daily_gate_v1 (36) |
+| playwright-typescript-framework | accessibility | yes | ci.yml | test-accessibility | `0 6 * * *` | 24 | daily_gate_v1 (36) |
+| playwright-typescript-framework | selector-contract | yes | ci.yml | test-selector-contract | `0 6 * * *` | 24 | daily_gate_v1 (36) |
+| playwright-typescript-framework | shared-app-ui | yes | ci.yml | shared-app-ui | `0 6 * * *` | 24 | daily_gate_v1 (36) |
+| playwright-typescript-framework | cross-browser | yes | ci.yml | test-cross-browser | `0 6 * * *` | 24 | daily_gate_v1 (36) |
+| aria-api-framework | aria.deterministic | yes | ci.yml | test | `41 4 * * *` | 24 | daily_gate_v1 (36) |
+| aria-api-framework | aria.contract | yes | ci.yml | test | `41 4 * * *` | 24 | daily_gate_v1 (36) |
+| aria-api-framework | aria.pact-provider | yes | ci.yml | test | `41 4 * * *` | 24 | daily_gate_v1 (36) |
+| aria-api-framework | aria.container | yes | ci.yml | container-test | `41 4 * * *` | 24 | daily_gate_v1 (36) |
+| aria-api-framework | aria.shared-app | yes | ci.yml | shared-reference-app | `41 4 * * *` | 24 | daily_gate_v1 (36) |
+| selenium-testng-java-framework | framework-quality | yes | ui-tests.yml | quality-gates | `13 6 * * *` | 24 | daily_gate_v1 (36) |
+| selenium-testng-java-framework | ui.CHROME | yes | ui-tests.yml | test | `13 6 * * *` | 24 | daily_gate_v1 (36) |
+| selenium-testng-java-framework | ui.FIREFOX | yes | ui-tests.yml | test | `13 6 * * *` | 24 | daily_gate_v1 (36) |
+| selenium-testng-java-framework | ui.EDGE | yes | ui-tests.yml | test | `13 6 * * *` | 24 | daily_gate_v1 (36) |
+| selenium-testng-java-framework | accessibility.CHROME | yes | ui-tests.yml | accessibility | `13 6 * * *` | 24 | daily_gate_v1 (36) |
+| k6-performance-framework | k6.articles-load | yes | main-load.yml | load | `7 3 * * *` | 24 | daily_gate_v1 (36) |
+| k6-performance-framework | k6.authenticated-journey | yes | main-load.yml | load | `7 3 * * *` | 24 | daily_gate_v1 (36) |
+| k6-performance-framework | k6.pr-smoke | yes | pr-smoke.yml | smoke | `27 3 * * *` | 24 | daily_gate_v1 (36) |
+| k6-performance-framework | k6.evidence-failure-control | no (control) | pr-smoke.yml | smoke | `27 3 * * *` | 24 | daily_gate_v1 (36) |
+| k6-performance-framework | k6.evidence-failure-control-verification | yes | pr-smoke.yml | smoke | `27 3 * * *` | 24 | daily_gate_v1 (36) |
+| k6-performance-framework | k6.shared-app-load | yes | shared-app-load.yml | shared-app-load | `47 3 * * *` | 24 | daily_gate_v1 (36) |
+<!-- producer-table:end -->

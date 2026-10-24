@@ -47,6 +47,7 @@ for (const repository of data.repositories) {
     throw new Error(`${repository.name} cannot appear review-ready while current workflow data is unavailable.`);
   }
   if (repository.evidenceState === 'review-ready') {
+    if (repository.evidenceSummary.policyMismatches?.length) throw new Error(`${repository.name} is review-ready with policy mismatches.`);
     if (!repository.currentSha || repository.evidenceSummary.requiredCount === 0 || repository.evidenceSummary.freshRequiredCount !== repository.evidenceSummary.requiredCount) {
       throw new Error(`${repository.name} is review-ready without current, fresh required evidence.`);
     }

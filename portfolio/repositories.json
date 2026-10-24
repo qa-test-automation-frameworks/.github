@@ -35,7 +35,33 @@
       "reportUrl": "https://qa-test-automation-frameworks.github.io/verity-policy-coverage-eval-framework/",
       "docsUrl": "https://github.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/tree/main/docs",
       "screenshotUrl": "https://raw.githubusercontent.com/qa-test-automation-frameworks/verity-policy-coverage-eval-framework/main/docs/screenshots/calibration.png",
-      "reviewMinutes": 12
+      "reviewMinutes": 12,
+      "requiredFreshnessPolicy": "daily_gate_v1",
+      "producers": [
+        {
+          "workflow": "pr-gate.yml",
+          "schedule": "23 5 * * *",
+          "pushToMain": "unfiltered",
+          "scopes": [
+            {
+              "id": "verity.deterministic-py3.12.15",
+              "job": "lint-type-test"
+            },
+            {
+              "id": "verity.deterministic-py3.13.16",
+              "job": "lint-type-test"
+            },
+            {
+              "id": "verity.failure-control-py3.12.15",
+              "job": "lint-type-test"
+            },
+            {
+              "id": "verity.failure-control-verification-py3.12.15",
+              "job": "lint-type-test"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "playwright-typescript-framework",
@@ -60,7 +86,49 @@
       "reportUrl": "https://qa-test-automation-frameworks.github.io/playwright-typescript-framework/",
       "docsUrl": "https://github.com/qa-test-automation-frameworks/playwright-typescript-framework/tree/main/docs",
       "screenshotUrl": "https://raw.githubusercontent.com/qa-test-automation-frameworks/playwright-typescript-framework/main/docs/assets/screenshots/debugging-failure.png",
-      "reviewMinutes": 12
+      "reviewMinutes": 12,
+      "requiredFreshnessPolicy": "daily_gate_v1",
+      "producers": [
+        {
+          "workflow": "ci.yml",
+          "schedule": "0 6 * * *",
+          "pushToMain": "unfiltered",
+          "scopes": [
+            {
+              "id": "framework-unit",
+              "job": "lint-typecheck"
+            },
+            {
+              "id": "api",
+              "job": "test-api"
+            },
+            {
+              "id": "e2e",
+              "job": "test-e2e"
+            },
+            {
+              "id": "visual",
+              "job": "test-visual"
+            },
+            {
+              "id": "accessibility",
+              "job": "test-accessibility"
+            },
+            {
+              "id": "selector-contract",
+              "job": "test-selector-contract"
+            },
+            {
+              "id": "shared-app-ui",
+              "job": "shared-app-ui"
+            },
+            {
+              "id": "cross-browser",
+              "job": "test-cross-browser"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "aria-api-framework",
@@ -83,7 +151,37 @@
       "reportUrl": "https://qa-test-automation-frameworks.github.io/aria-api-framework/",
       "docsUrl": "https://github.com/qa-test-automation-frameworks/aria-api-framework/tree/main/docs",
       "screenshotUrl": "https://raw.githubusercontent.com/qa-test-automation-frameworks/aria-api-framework/main/docs/assets/allure/allure-diagnostic-attachment.png",
-      "reviewMinutes": 10
+      "reviewMinutes": 10,
+      "requiredFreshnessPolicy": "daily_gate_v1",
+      "producers": [
+        {
+          "workflow": "ci.yml",
+          "schedule": "41 4 * * *",
+          "pushToMain": "unfiltered",
+          "scopes": [
+            {
+              "id": "aria.deterministic",
+              "job": "test"
+            },
+            {
+              "id": "aria.contract",
+              "job": "test"
+            },
+            {
+              "id": "aria.pact-provider",
+              "job": "test"
+            },
+            {
+              "id": "aria.container",
+              "job": "container-test"
+            },
+            {
+              "id": "aria.shared-app",
+              "job": "shared-reference-app"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "selenium-testng-java-framework",
@@ -105,7 +203,37 @@
       "reportUrl": "https://qa-test-automation-frameworks.github.io/selenium-testng-java-framework/",
       "docsUrl": "https://github.com/qa-test-automation-frameworks/selenium-testng-java-framework/tree/main/docs",
       "screenshotUrl": "https://raw.githubusercontent.com/qa-test-automation-frameworks/selenium-testng-java-framework/main/docs/images/allure-failed-screenshot-attachment-preview.png",
-      "reviewMinutes": 10
+      "reviewMinutes": 10,
+      "requiredFreshnessPolicy": "daily_gate_v1",
+      "producers": [
+        {
+          "workflow": "ui-tests.yml",
+          "schedule": "13 6 * * *",
+          "pushToMain": "unfiltered",
+          "scopes": [
+            {
+              "id": "framework-quality",
+              "job": "quality-gates"
+            },
+            {
+              "id": "ui.CHROME",
+              "job": "test"
+            },
+            {
+              "id": "ui.FIREFOX",
+              "job": "test"
+            },
+            {
+              "id": "ui.EDGE",
+              "job": "test"
+            },
+            {
+              "id": "accessibility.CHROME",
+              "job": "accessibility"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "k6-performance-framework",
@@ -135,7 +263,55 @@
       "reportUrl": "https://qa-test-automation-frameworks.github.io/k6-performance-framework/",
       "docsUrl": "https://github.com/qa-test-automation-frameworks/k6-performance-framework/tree/main/docs",
       "screenshotUrl": "https://raw.githubusercontent.com/qa-test-automation-frameworks/k6-performance-framework/main/docs/images/performance-overview-example.svg",
-      "reviewMinutes": 12
+      "reviewMinutes": 12,
+      "requiredFreshnessPolicy": "daily_gate_v1",
+      "producers": [
+        {
+          "workflow": "main-load.yml",
+          "schedule": "7 3 * * *",
+          "pushToMain": "unfiltered",
+          "scopes": [
+            {
+              "id": "k6.articles-load",
+              "job": "load"
+            },
+            {
+              "id": "k6.authenticated-journey",
+              "job": "load"
+            }
+          ]
+        },
+        {
+          "workflow": "pr-smoke.yml",
+          "schedule": "27 3 * * *",
+          "pushToMain": "unfiltered",
+          "scopes": [
+            {
+              "id": "k6.pr-smoke",
+              "job": "smoke"
+            },
+            {
+              "id": "k6.evidence-failure-control",
+              "job": "smoke"
+            },
+            {
+              "id": "k6.evidence-failure-control-verification",
+              "job": "smoke"
+            }
+          ]
+        },
+        {
+          "workflow": "shared-app-load.yml",
+          "schedule": "47 3 * * *",
+          "pushToMain": "unfiltered",
+          "scopes": [
+            {
+              "id": "k6.shared-app-load",
+              "job": "shared-app-load"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -5,6 +5,7 @@ import { normalizeRunSummary, publicationState, summarizeEvidence } from './dash
 import { validateEvidence } from './evidence-contract.mjs';
 import { classifyRefreshHealth } from './dashboard-refresh-health.mjs';
 import { githubApiGet } from './github-api.mjs';
+import { verifyProducers } from './verify-producers.mjs';
 import { renderDashboard } from '../site/render.mjs';
 
 const owner = 'qa-test-automation-frameworks';
@@ -206,9 +207,10 @@ const repositories = await Promise.all(
     if (!repo) throw new Error(`Repository ${repository.name} was not returned by GitHub.`);
     const defaultBranch = repo.defaultBranchRef?.name ?? 'main';
     const currentSha = repo.defaultBranchRef?.target?.oid ?? null;
-    const [metrics, durable] = await Promise.all([
+    const [metrics, durable, producerMismatches] = await Promise.all([
       workflowMetrics(repository, defaultBranch, currentSha),
       durableEvidence(repository),
+      verifyProducers(repository, freshnessPolicies, publicGithub),
     ]);
     const evidence = summarizeEvidence(durable.records, {
       repository: `${owner}/${repository.name}`,
@@ -216,6 +218,8 @@ const repositories = await Promise.all(
       now: Date.now(),
       policies: freshnessPolicies,
       requiredScopeIds: repository.requiredScopeIds,
+      requiredFreshnessPolicy: repository.requiredFreshnessPolicy,
+      producerMismatches,
       controlPairs: repository.controlPairs ?? [],
     });
     const evidenceState = metrics.status === 'available' ? evidence.state : 'evidence-unavailable';
