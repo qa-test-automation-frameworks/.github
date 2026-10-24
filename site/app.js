@@ -1,4 +1,4 @@
-import { renderRepositoryRows, renderReviewOrder } from './render.mjs';
+import { renderRepositoryRows, renderReviewOrder, renderScheduledTriage } from './render.mjs';
 
 const freshnessState = document.querySelector('#freshness-state');
 try {
@@ -21,6 +21,7 @@ try {
 
   document.querySelector('#review-order').innerHTML = renderReviewOrder(data.repositories, data.recommendedReviewOrder);
   document.querySelector('#repository-rows').innerHTML = renderRepositoryRows(data.repositories);
+  document.querySelector('#scheduled-triage').innerHTML = renderScheduledTriage(data);
 } catch (error) {
   freshnessState.textContent = 'Dynamic refresh unavailable; showing the static evidence snapshot';
   freshnessState.classList.add('warning');

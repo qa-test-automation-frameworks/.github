@@ -11,6 +11,9 @@ on:
       - "scripts/check-reviewer-links.test.mjs"
       - "site/**"
       - "site/render.mjs"
+      - "scripts/scheduled-triage*.mjs"
+      - ".github/workflows/scheduled-failure-triage.yml"
+      - ".github/workflows/triage-selftest.yml"
       - "scripts/*producer*.mjs"
       - "scripts/*cadence*.mjs"
       - "scripts/dashboard-state.mjs"
@@ -53,7 +56,7 @@ jobs:
         with:
           node-version-file: .nvmrc
       - name: Test portable evidence contract
-        run: node --test scripts/check-reusable-pins.test.mjs scripts/profile-claims.test.mjs scripts/cron-cadence.test.mjs scripts/registry-cadence.test.mjs scripts/verify-producers.test.mjs scripts/dashboard.test.mjs scripts/dashboard-state.test.mjs scripts/dashboard-refresh-health.test.mjs scripts/dashboard-render.test.mjs scripts/evidence-contract.test.mjs scripts/publish-evidence.test.mjs scripts/prune-evidence.test.mjs scripts/render-assurance-packet.test.mjs scripts/github-api.test.mjs
+        run: node --test scripts/scheduled-triage.test.mjs scripts/check-reusable-pins.test.mjs scripts/profile-claims.test.mjs scripts/cron-cadence.test.mjs scripts/registry-cadence.test.mjs scripts/verify-producers.test.mjs scripts/dashboard.test.mjs scripts/dashboard-state.test.mjs scripts/dashboard-refresh-health.test.mjs scripts/dashboard-render.test.mjs scripts/evidence-contract.test.mjs scripts/publish-evidence.test.mjs scripts/prune-evidence.test.mjs scripts/render-assurance-packet.test.mjs scripts/github-api.test.mjs
       - name: Check the generated producer table
         run: node scripts/render-producer-table.mjs --check
       - name: Guard profile claims

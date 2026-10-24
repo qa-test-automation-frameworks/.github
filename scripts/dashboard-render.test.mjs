@@ -1,7 +1,7 @@
 import './check-runtime.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { renderDashboard, renderRepositoryRows } from '../site/render.mjs';
+import { renderDashboard, renderRepositoryRows, renderScheduledTriage } from '../site/render.mjs';
 
 const repository = {
   name: 'framework',
@@ -164,4 +164,16 @@ test('rendered scope rows show the policy rationale once', async () => {
 
 test('repository rows expose stable live evidence anchors', () => {
   assert.match(renderRepositoryRows([repository]), new RegExp(`id="repo-${repository.name}"`));
+});
+
+
+test('scheduled triage renders overdue and unavailable signals without changing evidence states', () => {
+  const html = renderScheduledTriage({ repositories: [{
+    ...repository,
+    triage: { status: 'available', openCount: 1, oldestAgeDays: 8, overdue: true, issues: [{ number: 1, title: '<unsafe>', url: 'https://github.com/owner/repo/issues/1' }] },
+  }], triageOnlyRepositories: [{ label: 'QRA' }] });
+  assert.match(html, /1 open; oldest 8.0 days; overdue/);
+  assert.match(html, /QRA: triage unavailable/);
+  assert.ok(!html.includes('<unsafe>'));
+  assert.match(html, /&lt;unsafe&gt;/);
 });
