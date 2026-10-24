@@ -53,9 +53,11 @@ jobs:
         with:
           node-version-file: .nvmrc
       - name: Test portable evidence contract
-        run: node --test scripts/cron-cadence.test.mjs scripts/registry-cadence.test.mjs scripts/verify-producers.test.mjs scripts/dashboard.test.mjs scripts/dashboard-state.test.mjs scripts/dashboard-refresh-health.test.mjs scripts/dashboard-render.test.mjs scripts/evidence-contract.test.mjs scripts/publish-evidence.test.mjs scripts/prune-evidence.test.mjs scripts/render-assurance-packet.test.mjs scripts/github-api.test.mjs
+        run: node --test scripts/check-reusable-pins.test.mjs scripts/profile-claims.test.mjs scripts/cron-cadence.test.mjs scripts/registry-cadence.test.mjs scripts/verify-producers.test.mjs scripts/dashboard.test.mjs scripts/dashboard-state.test.mjs scripts/dashboard-refresh-health.test.mjs scripts/dashboard-render.test.mjs scripts/evidence-contract.test.mjs scripts/publish-evidence.test.mjs scripts/prune-evidence.test.mjs scripts/render-assurance-packet.test.mjs scripts/github-api.test.mjs
       - name: Check the generated producer table
         run: node scripts/render-producer-table.mjs --check
+      - name: Guard profile claims
+        run: node scripts/profile-claims.mjs
       - name: Test trusted source-run verifier
         run: python3 scripts/test-verify-source-run.py
       - name: Test durable evidence ref-update atomicity
