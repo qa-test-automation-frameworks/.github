@@ -32,7 +32,7 @@ These figures are approximate owner recollections from the focused migration win
 | Critical-scope automation: 100% about one month early | Critical release scope targeted for automation | Schedule-relative; exact dates not recorded | Not recorded | Not recorded | Not recorded | Owner-reported delivery estimate | Led scope migration and rollout; date attribution is not recorded | Original target date and completion records are unavailable |
 | Authoring throughput: about 3x faster | Comparable critical scenarios per authoring period | Focused migration; authoring periods not recorded | Not recorded | Not applicable to throughput | Not recorded | Owner-reported throughput estimate | Introduced shared fixtures, builders, and reporting conventions | Scenario counts and period lengths are unavailable; multiplier is directional |
 
-The [optional professional-impact review template](professional-impact-template.md) describes a small test-change and controlled-failure exercise. It is an invitation only; no external review is claimed by this case study.
+The [optional professional-impact review template](history/professional-impact-template.md) describes a small test-change and controlled-failure exercise. It is an invitation only; no external review is claimed by this case study.
 
 ## Decision Record
 

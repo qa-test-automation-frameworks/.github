@@ -6,6 +6,7 @@ import { validateEvidence } from './evidence-contract.mjs';
 import { classifyRefreshHealth } from './dashboard-refresh-health.mjs';
 import { githubApiGet } from './github-api.mjs';
 import { verifyProducers } from './verify-producers.mjs';
+import { checkReusablePins } from './check-reusable-pins.mjs';
 import { renderDashboard } from '../site/render.mjs';
 
 const owner = 'qa-test-automation-frameworks';
@@ -34,6 +35,7 @@ const trustedEvents = new Set(['push', 'schedule', 'workflow_dispatch']);
 const freshnessPolicies = JSON.parse(
   await readFile(new URL('../portfolio/evidence/freshness-policies.json', import.meta.url), 'utf8'),
 ).policies;
+const reusablePins = JSON.parse(await readFile(new URL('../portfolio/reusable-workflow-pins.json', import.meta.url), 'utf8'));
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
 async function workflowMetrics(repository, defaultBranch, currentSha) {
@@ -207,10 +209,11 @@ const repositories = await Promise.all(
     if (!repo) throw new Error(`Repository ${repository.name} was not returned by GitHub.`);
     const defaultBranch = repo.defaultBranchRef?.name ?? 'main';
     const currentSha = repo.defaultBranchRef?.target?.oid ?? null;
-    const [metrics, durable, producerMismatches] = await Promise.all([
+    const [metrics, durable, producerMismatches, pinMismatches] = await Promise.all([
       workflowMetrics(repository, defaultBranch, currentSha),
       durableEvidence(repository),
       verifyProducers(repository, freshnessPolicies, publicGithub),
+      checkReusablePins(repository, reusablePins, publicGithub),
     ]);
     const evidence = summarizeEvidence(durable.records, {
       repository: `${owner}/${repository.name}`,
@@ -219,7 +222,7 @@ const repositories = await Promise.all(
       policies: freshnessPolicies,
       requiredScopeIds: repository.requiredScopeIds,
       requiredFreshnessPolicy: repository.requiredFreshnessPolicy,
-      producerMismatches,
+      producerMismatches: [...producerMismatches, ...pinMismatches],
       controlPairs: repository.controlPairs ?? [],
     });
     const evidenceState = metrics.status === 'available' ? evidence.state : 'evidence-unavailable';

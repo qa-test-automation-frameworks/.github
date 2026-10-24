@@ -116,7 +116,7 @@ attempt, last successful execution, and reviewed historical attestations separat
 This contract supplies the record rules and controlled-clock freshness checks;
 dashboard implementation and deployed observations are recorded in the dated
 [dashboard verification notes](verification/2026-10-16-dashboard-evidence-state.md)
-and the [operation log](PORTFOLIO_OPERATION_LOG.md).
+and the [operation log](history/PORTFOLIO_OPERATION_LOG.md).
 
 ## Additive migration from the existing dashboard
 
@@ -191,3 +191,16 @@ a policy mismatch and prevents `review-ready`.
 | k6-performance-framework | k6.evidence-failure-control-verification | yes | pr-smoke.yml | smoke | `27 3 * * *` | 24 | daily_gate_v1 (36) |
 | k6-performance-framework | k6.shared-app-load | yes | shared-app-load.yml | shared-app-load | `47 3 * * *` | 24 | daily_gate_v1 (36) |
 <!-- producer-table:end -->
+
+## Re-runs and publication
+
+Partial re-runs (re-run failed jobs) can mix native attempt identities. The
+publisher rejects such bundles, and the dashboard reports
+`not-published-for-latest-attempt`. The last published evidence keeps its own
+source SHA and execution time. Recover with a full workflow re-run or wait for
+the next scheduled run; Playwright's setup-failure recovery uses a full re-run.
+
+`portfolio/reusable-workflow-pins.json` declares reusable workflow revisions.
+Update that file and all callers in a coordinated set of PRs. The dashboard
+shows pin drift until the callers agree; unavailable source reads also prevent
+review readiness.

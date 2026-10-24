@@ -160,3 +160,8 @@ test('rendered scope rows show the policy rationale once', async () => {
 
   assert.equal(html.split(escaped).length - 1, 1);
 });
+
+
+test('repository rows expose stable live evidence anchors', () => {
+  assert.match(renderRepositoryRows([repository]), new RegExp(`id="repo-${repository.name}"`));
+});
